@@ -5,8 +5,10 @@
     <title>Hurricane Florence</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <script src="https://public.tableau.com/javascripts/api/tableau-2.0.0.min.js" type="text/javascript"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
 
     <style>
         body { margin:0; padding:0; }
@@ -25,7 +27,7 @@
 }
 
 .map-overlay .map-overlay-inner {
-    background-color: rgba(0, 0, 0, 0.75);
+background-color: rgba(0, 0, 0, 0.75);
 border-radius: 3px;
 border-top: : 3px solid #4264fb;
 border-left: : 3px solid #4264fb;
@@ -48,6 +50,26 @@ padding: 10px;
 position: fixed;
 right: 30px;
 bottom: 30px;
+background-color: rgba(0, 0, 0, 0.75);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;
+padding: 10px;
+z-index: 1;
+}
+
+.tableau {
+position: fixed;
+width: 300px;
+height: 125px;
+right: 5px;
+top: 5px;
 background-color: rgba(0, 0, 0, 0.75);
 border-radius: 3px;
 border-top: : 3px solid #4264fb;
@@ -93,7 +115,7 @@ margin-right: 5px;
 </style>
 
 <div id='map'></div>
-
+<div class="tableau" id="tableauViz1"></div>
 <div class='map-overlay top'>
     <div class='map-overlay-inner'>
         <h2>Hurricane Florence</h2>
@@ -147,6 +169,22 @@ var times = [
     '2018-09-14T13:03:15Z'
 ];
 
+
+function tableau() {
+        var onePh = document.getElementById("tableauViz1");
+        var oneUrl = "https://public.tableau.com/views/Florence_0/Dashboard1?";
+var params="&:showVizHome=no&:display_spinner=y&:jsdebug=n&:embed=y&:display_overlay=no&:display_static_image=yes&:animate_transition=yes";
+    var vizOptions = {
+    width: "100%",
+    height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+viz1.getWorkbook().changeParameterValueAsync("SweepTime", 0);
+}
+        };
+viz1 = new tableauSoftware.Viz(onePh, oneUrl + params, vizOptions);
+}
+
 function filterBy(time) {
 
     var filters = ['==', 'sweepTime', time];
@@ -157,7 +195,7 @@ function filterBy(time) {
 // 
 
 map.on('load', function() {
-
+tableau();
 
 map.addLayer({
         "id": "Florence",
@@ -206,54 +244,67 @@ switch (sliderval) {
     case 0:
         time = "2018-09-14T12:03:46Z";
         local = "07:03:46";
+        tableau = 1;
         break;
     case 1:
         time = "2018-09-14T12:09:20Z";
         local = "07:09:20";
+        tableau = 2;
         break;
     case 2:
         time = "2018-09-14T12:14:53Z";
         local = "07:14:53";
+        tableau = 3;
         break;
     case 3:
         time = "2018-09-14T12:20:25Z";
         local = "07:20:25";
+        tableau = 4;
         break;
     case 4:
         time = "2018-09-14T12:25:50Z";
         local = "07:25:50";
+        tableau = 5;
         break;
     case 5:
         time = "2018-09-14T12:31:13Z";
         local = "07:31:13";
+        tableau = 6;
         break;
     case 6:
         time = "2018-09-14T12:36:37Z";
         local = "07:36:37";
+        tableau = 7;
         break;
         case 7:
         time = "2018-09-14T12:42:01Z";
         local = "07:42:01";
+        tableau = 8;
         break;
         case 8:
         time = "2018-09-14T12:47:25Z";
         local = "07:47:25";
+        tableau = 9;
         break;
         case 9:
         time = "2018-09-14T12:52:42Z";
         local = "07:57:58";
+        tableau = 10;
         break;
         case 10:
         time = "2018-09-14T12:57:58Z";
         local = "07:57:50";
+        tableau = 11;
         break;
         case 11:
         time = "2018-09-14T13:03:15Z";
         local = "08:03:15";
+        tableau = 12;
         
 }
-            document.getElementById('new').innerHTML = local;
-            filterBy(time);
+document.getElementById('new').innerHTML = local;
+viz1.getWorkbook().changeParameterValueAsync("SweepTime", tableau);
+filterBy(time);
         });
     ;
 ;
