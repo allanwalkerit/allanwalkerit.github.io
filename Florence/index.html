@@ -20,13 +20,14 @@
 <style>
 .map-overlay {
     position: absolute;
-    width: 25%;
     top: 0;
     left: 0;
     padding: 10px;
 }
 
 .map-overlay .map-overlay-inner {
+width: 350px;
+height: 200px;
 background-color: rgba(0, 0, 0, 0.75);
 border-radius: 3px;
 border-top: : 3px solid #4264fb;
@@ -50,6 +51,7 @@ padding: 10px;
 position: fixed;
 right: 30px;
 bottom: 30px;
+height: 200px;
 background-color: rgba(0, 0, 0, 0.75);
 border-radius: 3px;
 border-top: : 3px solid #4264fb;
@@ -66,8 +68,8 @@ z-index: 1;
 
 .tableau {
 position: fixed;
-width: 400px;
-height: 250px;
+width: 350px;
+height: 200px;
 right: 5px;
 top: 5px;
 background-color: rgba(0, 0, 0, 0.75);
@@ -122,6 +124,7 @@ margin-right: 5px;
         <h4>Nexrad Level 2, Wilmington, NC 09-14-2018</h4>
         <label id='time'></label>
         <div id='new'></div>
+        <br><br>
         <input id='slider' type='range' min='0' max='11' step='1' value='0' />
     </div>
     <div>
