@@ -75,7 +75,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v9',
+    style: 'mapbox://styles/mapbox/dark-v9',
     center: [-77.777092, 33.414060],
     pitch: 60,
     zoom: 7.3
@@ -119,11 +119,30 @@ map.addLayer({
         "source-layer": "Florencegeojson",
         "paint": {
         'fill-extrusion-color': [
-        "rgb",
-        ["get", "value"],
-        0,
-        ["-", 100, ["get", "value"]]
-    ],
+  "interpolate",
+  ["linear"],
+  ["get", "value"],
+  -16.5,
+  "#440154",
+  -9.7,
+  "#472878",
+  -2.9,
+  "#3e4a89",
+  3.9,
+  "hsl(205, 49%, 37%)",
+  10.7,
+  "#25838e",
+  17.5,
+  "#1e9e89",
+  24.3,
+  "#35b779",
+  31.1,
+  "#6cce59",
+  37.9,
+  "#b5de2c",
+  44.7,
+  "#fde725"
+],
             'fill-extrusion-height': ['get', 'heightASL'],
         }
     });
