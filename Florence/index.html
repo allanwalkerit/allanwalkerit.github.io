@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Create a time slider</title>
+    <title>Hurricane Florence</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
@@ -57,7 +57,7 @@
 
 <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-        <h2>Significant earthquakes in 2015</h2>
+        <h2>Hurricane Florence</h2>
         <label id='time'></label>
         <div id='new'></div>
         <input id='slider' type='range' min='0' max='11' step='1' value='0' />
@@ -97,50 +97,38 @@ var times = [
 
 function filterBy(time) {
 
-    var filters = ['==', 'time', time];
-    map.setFilter('earthquake-circles', filters);
+    var filters = ['==', 'sweepTime', time];
+    map.setFilter('Florence', filters);
     document.getElementById('time').textContent = times[time];
 }
 
+// 
+
 map.on('load', function() {
-    d3.json('mapbox://allanwalker.9nwirujo', function(err, data) {
-        if (err) throw err;
-console.log(data);
 
-        data.features = data.features.map(function(d) {
-            d.properties.times = new Date(d.properties.time).getMonth();
-            return d;
-        });
 
-        map.addSource('earthquakes', {
-            'type': 'geojson',
-            'data': data
-        });
+map.addLayer({
+        "id": "Florence",
+        "type": 'fill-extrusion',
+        'filter': ['==', 'sweepTime', '2018-09-14T12:03:46Z'],
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.9nwirujo'
+        },
+        "source-layer": "Florencegeojson",
+        "paint": {
+        'fill-extrusion-color': [
+        "rgb",
+        ["get", "value"],
+        0,
+        ["-", 100, ["get", "value"]]
+    ],
+            'fill-extrusion-height': ['get', 'heightASL'],
+        }
+    });
+});
 
-        map.addLayer({
-            'id': 'earthquake-circles',
-            'type': 'circle',
-            'source': 'earthquakes',
-            'paint': {
-                'circle-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', 'mag'],
-                    6, '#FCA107',
-                    8, '#7F3121'
-                ],
-                'circle-opacity': 0.75,
-                'circle-radius': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', 'mag'],
-                    6, 20,
-                    8, 40
-                ]
-            }
-        });
-
-        filterBy(0);
+document.getElementById('new').innerHTML = "2018-09-14T12:03:46Z";
 
         document.getElementById('slider').addEventListener('input', function(e) {
             var sliderval = parseInt(e.target.value, 10);
@@ -186,8 +174,8 @@ switch (sliderval) {
             document.getElementById('new').innerHTML = time;
             filterBy(time);
         });
-    });
-});
+    ;
+;
 </script>
 
 </body>
