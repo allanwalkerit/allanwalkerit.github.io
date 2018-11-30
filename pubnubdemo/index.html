@@ -1,1 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Manhattan LIDAR</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.js"></script>
+    <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
+<style>
+
+body {
+background-color:#000000;
+}
+
+.navbar-default {
+background-color: #000000;
+border-bottom: 0px;
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+border-radius:0;
+}
+
+.hamburger {
+float: left;
+font-size: 30px;
+cursor: pointer;
+padding-left:5px;
+padding-right:10px;
+color: #4264fb;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+.sidemenu {
+height: 100%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: #000000;
+overflow-x: hidden;
+transition: 0.5s;
+font-size:large;
+color: #ffffff;
+}
+
+.sidemenu .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 30px;
+margin-left: 50px;
+color: #4264fb;
+}
+
+#main {
+transition: margin-left .5s;
+height:1000%;
+width:100%;
+}
+
+#map {
+height: 90vh;
+width: 100%;
+margin: 0 auto;
+}
+
+.mapboxgl-popup-content {
+    color: #4264fb;
+    background-color: #000000;
+    border-color: #4264fb;
+    border-width: 1px;
+    max-width: 250px;
+    font-family: "Open Sans";
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: #4264fb;
+    }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: #4264fb;
+    }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #4264fb;
+    }
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #4264fb;
+    }
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib { 
+    background-color:#000000; 
+    border-top: : 1px solid #4264fb;
+    border-left: : 1px solid #4264fb;
+    border-right: : 1px solid #4264fb;
+    border-bottom: : 0px solid #4264fb;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib a {
+font-family: "Open Sans";
+color: #4264fb; 
+}
+
+p {
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;  
+}
+
+ul,li { 
+list-style-type: none;
+list-style-position:inside;
+margin:0;
+padding:0; 
+}
+
+.bannerhide {
+height: 125px;
+width: 95%;
+overflow:hidden;
+margin: 0 auto;
+}
+
+.tableau {
+height: 150px;
+width: 95%;
+margin: 0 auto;
+}
+
+#HEIGHTFEET {
+display:none;  
+}
+
+#HEIGHTMETERS {
+display:none;  
+}
+
+#GROUNDFEET {
+display:none;  
+}
+
+#GROUNDMETERS {
+display:none;  
+}
+
+#YEAR {
+display:none;  
+}
+
+#BLOCK {
+display:none;  
+}
+
+.btn .btn-info {
+backgroud-color: #4264fb !important;    
+}
+
+.a {
+font-family: "Open Sans";
+font-size: small !important; 
+color: #ffffff !important;  
+}
+
+</style>
+</head>
+<body onload="tableau1()">
+
+<div id="sidenav" class="sidemenu">
+<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<br><br>
+<div id="Charts">
+<p>5 Year Trends for Census Block: <p><p id="BLOCKINFO"></p>
+<ul>
+<li><div class='bannerhide'><div id='tableauViz1' class='tableau'><p>Total Population</p></div></div></li>
+<li><div class='bannerhide'><div id='tableauViz2' class='tableau'><p>Males</p></div></div></li>
+<li><div class='bannerhide'><div id='tableauViz3' class='tableau'><p>Females</p></div></div></li>
+<li><div class='bannerhide'><div id='tableauViz4' class='tableau'><p>Income</p></div></div></li>
+</ul>
+<p>Data courtesy: </p><a href="https://www.census.gov/geo/maps-data/data/tiger-data.html">USGS American Community Survey</a>
+</div>
+<div id="HEIGHTFEET"></div>
+<div id="HEIGHTMETERS"></div>
+<div id="GROUNDFEET"></div>
+<div id="GROUNDMETERS"></div>
+<div id="YEAR"></div>
+<div id="BLOCK"></div>
+</div>
+</div>
+
+<div id="main">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <!--<span class="hamburger" onclick="openNav()">&#9776;</span>-->
+    <a class="navbar-brand"><img src="mapbox-logo.png" alt="Mapbox"></a>
+    </div>
+  </div>
+</nav>
+
+<div id="chart" class="container-fluid">
+<div id ="DashboardsTop" class="row">
+<div class="col-lg-12">
+<div id='map'></div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</body>
+
+<script>
+
+var a = function tableau1(){
+     a = function tableau1(){};
+};
+
+var b = function tableau2(){
+     b = function tableau2(){};
+};
+
+var c = function tableau3(){
+     c = function tableau3(){};
+};
+
+var d = function tableau4(){
+     d = function tableau4(){};
+};
+
+var onePh = document.getElementById("tableauViz1");
+var twoPh = document.getElementById("tableauViz2");
+var threePh = document.getElementById("tableauViz3");
+var fourPh = document.getElementById("tableauViz4");
+
+var oneUrl = "https://public.tableau.com/views/ACS_6/Total?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+var twoUrl = "https://public.tableau.com/views/ACS_6/Male?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+var threeUrl = "https://public.tableau.com/views/ACS_6/Female?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+var fourUrl = "https://public.tableau.com/views/ACS_6/Income?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+
+var bounds = [
+    [-74.04728500751165, 40.68392799015035], // Southwest coordinates
+    [-73.91058699000139, 40.87764500765852]  // Northeast coordinates
+];
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/allanwalker/cjbgrhpxv2dbp2rqshlep2mmz?fresh=true',
+    center: [-74.012021, 40.706993],
+    zoom: 15,
+    bearing: 0,
+    pitch: 60,
+    maxBounds: bounds
+});
+
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+
+}));
+
+map.on('click', 'MetaData', function (e) {
+        new mapboxgl.Popup()
+            .setLngLat(map.unproject(e.point))
+            .setHTML('Roof Height Ft/Meters: '+Math.round(e.features[0].properties.Roof_ft)+'/'+e.features[0].properties.Roof_m+'<br><br>'+'Ground Elevation Ft/Meters: '+e.features[0].properties.Ground_ft+'/'+e.features[0].properties.Ground_m+'<br><br>'+'Year of Construction: '+e.features[0].properties.Year+'<br><br>'+'Nearest Census Block: '+e.features[0].properties.GEOID+'<br><br>'+'<button type="button" class="btn btn-info" onclick="mapspeak()"><span class="glyphicon glyphicon-volume-up"></span> Audio</button>'+'&nbsp;'+'<button type="button" class="btn btn-info" onclick="openNav()"><span class="glyphicon glyphicon-stats"></span> Charts</button>')
+            .addTo(map);
+            var BLOCK = e.features[0].properties.GEOID;
+            var HEIGHTFEET = Math.round(e.features[0].properties.Roof_ft);
+            var HEIGHTMETERS = e.features[0].properties.Roof_m;
+            var GROUNDFEET = e.features[0].properties.Ground_ft;
+            var GROUNDMETERS = e.features[0].properties.Ground_m;
+            var YEAR = e.features[0].properties.Year;
+
+document.getElementById("BLOCK").innerHTML = BLOCK;
+document.getElementById("BLOCKINFO").innerHTML = BLOCK;
+document.getElementById("HEIGHTFEET").innerHTML = HEIGHTFEET;
+document.getElementById("HEIGHTMETERS").innerHTML = HEIGHTMETERS;
+document.getElementById("GROUNDFEET").innerHTML = GROUNDFEET;
+document.getElementById("GROUNDMETERS").innerHTML = GROUNDMETERS;
+document.getElementById("YEAR").innerHTML = YEAR;
+
+viz1.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
+viz2.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
+viz3.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
+viz4.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
+    });
+
+function mapspeak() {
+var hf = document.getElementById("HEIGHTFEET").innerHTML;
+var hm = document.getElementById("HEIGHTMETERS").innerHTML;
+var gf = document.getElementById("GROUNDFEET").innerHTML;
+var gm = document.getElementById("GROUNDMETERS").innerHTML;
+var yr = document.getElementById("YEAR").innerHTML;
+var bl = document.getElementById("BLOCK").innerHTML;
+
+    responsiveVoice.speak('The height of the roof of this building in feet is'+hf+'and in meters'+hm+'The Ground elevation in Feet is'+gf+'and in meters'+gm+'The year of the buildings construction was:'+yr+'and the nearest census block identification number is'+bl, "UK English Female", {rate: 1});
+}
+
+
+function openNav() {
+    document.getElementById("sidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("sidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+
+function tableau1(){
+    var onevizOptions = {
+    width: "100%",
+    height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {                
+tableau2();
+}
+        };
+viz1 = new tableauSoftware.Viz(onePh, oneUrl, onevizOptions);
+}
+
+function tableau2(){
+
+    var twovizOptions = {
+    width: "100%",
+    height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+tableau3();
+}
+        };
+viz2 = new tableauSoftware.Viz(twoPh, twoUrl, twovizOptions);
+}
+
+function tableau3(){
+    var threevizOptions = {
+    width: "100%",
+    height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+tableau4();                
+}
+        };
+viz3 = new tableauSoftware.Viz(threePh, threeUrl, threevizOptions);
+}
+
+function tableau4(){
+    var fourvizOptions = {
+    width: "100%",
+    height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+}
+        };
+viz4 = new tableauSoftware.Viz(fourPh, fourUrl, fourvizOptions);
+}
+</script>
+</html>
