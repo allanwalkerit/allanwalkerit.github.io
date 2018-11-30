@@ -186,7 +186,7 @@ color: #ffffff !important;
 
 </style>
 </head>
-<body onload="tableau1()">
+<body>
 
 <div id="sidenav" class="sidemenu">
 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -234,152 +234,53 @@ color: #ffffff !important;
 </body>
 
 <script>
-
-var a = function tableau1(){
-     a = function tableau1(){};
-};
-
-var b = function tableau2(){
-     b = function tableau2(){};
-};
-
-var c = function tableau3(){
-     c = function tableau3(){};
-};
-
-var d = function tableau4(){
-     d = function tableau4(){};
-};
-
-var onePh = document.getElementById("tableauViz1");
-var twoPh = document.getElementById("tableauViz2");
-var threePh = document.getElementById("tableauViz3");
-var fourPh = document.getElementById("tableauViz4");
-
-var oneUrl = "https://public.tableau.com/views/ACS_6/Total?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
-var twoUrl = "https://public.tableau.com/views/ACS_6/Male?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
-var threeUrl = "https://public.tableau.com/views/ACS_6/Female?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
-var fourUrl = "https://public.tableau.com/views/ACS_6/Income?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
-
-var bounds = [
-    [-74.04728500751165, 40.68392799015035], // Southwest coordinates
-    [-73.91058699000139, 40.87764500765852]  // Northeast coordinates
-];
-
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/allanwalker/cjbgrhpxv2dbp2rqshlep2mmz?fresh=true',
-    center: [-74.012021, 40.706993],
-    zoom: 15,
-    bearing: 0,
-    pitch: 60,
-    maxBounds: bounds
+var pubnub = new PubNub({
+  publishKey: 'demo',
+  subscribeKey: 'demo'
 });
+var map = eon.map({
+  id: 'map',
+  mbId: 'allanwalker.cjh6hab274vj62rohqy2616rt',
+  mbToken: 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA',
+  pubnub: pubnub,
+  channels: ['sfo-flight-data'],
+  rotate: true,
+  history: true,
+  marker: function (latlng, data) {
 
-var nav = new mapboxgl.NavigationControl();
-map.addControl(nav, 'top-left');
-
-map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
-
-}));
-
-map.on('click', 'MetaData', function (e) {
-        new mapboxgl.Popup()
-            .setLngLat(map.unproject(e.point))
-            .setHTML('Roof Height Ft/Meters: '+Math.round(e.features[0].properties.Roof_ft)+'/'+e.features[0].properties.Roof_m+'<br><br>'+'Ground Elevation Ft/Meters: '+e.features[0].properties.Ground_ft+'/'+e.features[0].properties.Ground_m+'<br><br>'+'Year of Construction: '+e.features[0].properties.Year+'<br><br>'+'Nearest Census Block: '+e.features[0].properties.GEOID+'<br><br>'+'<button type="button" class="btn btn-info" onclick="mapspeak()"><span class="glyphicon glyphicon-volume-up"></span> Audio</button>'+'&nbsp;'+'<button type="button" class="btn btn-info" onclick="openNav()"><span class="glyphicon glyphicon-stats"></span> Charts</button>')
-            .addTo(map);
-            var BLOCK = e.features[0].properties.GEOID;
-            var HEIGHTFEET = Math.round(e.features[0].properties.Roof_ft);
-            var HEIGHTMETERS = e.features[0].properties.Roof_m;
-            var GROUNDFEET = e.features[0].properties.Ground_ft;
-            var GROUNDMETERS = e.features[0].properties.Ground_m;
-            var YEAR = e.features[0].properties.Year;
-
-document.getElementById("BLOCK").innerHTML = BLOCK;
-document.getElementById("BLOCKINFO").innerHTML = BLOCK;
-document.getElementById("HEIGHTFEET").innerHTML = HEIGHTFEET;
-document.getElementById("HEIGHTMETERS").innerHTML = HEIGHTMETERS;
-document.getElementById("GROUNDFEET").innerHTML = GROUNDFEET;
-document.getElementById("GROUNDMETERS").innerHTML = GROUNDMETERS;
-document.getElementById("YEAR").innerHTML = YEAR;
-
-viz1.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
-viz2.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
-viz3.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
-viz4.getWorkbook().changeParameterValueAsync("GEOID", [BLOCK]);
+    var marker = new L.RotatedMarker(latlng, {
+      icon: L.icon({
+        iconUrl: '/wp-content/uploads/2016/05/airplane.png',
+        iconSize: [24, 24]
+      })
     });
 
-function mapspeak() {
-var hf = document.getElementById("HEIGHTFEET").innerHTML;
-var hm = document.getElementById("HEIGHTMETERS").innerHTML;
-var gf = document.getElementById("GROUNDFEET").innerHTML;
-var gm = document.getElementById("GROUNDMETERS").innerHTML;
-var yr = document.getElementById("YEAR").innerHTML;
-var bl = document.getElementById("BLOCK").innerHTML;
+    var popup = '';
+    if(data[13]) {
+      popup = 'Flight ' + data[13] + '';
+    }
+    if(data[11]) {
+      if(!popup.length) {
+        popup = 'Flight from ' + data[11];
+      } else {
+        popup += ' from ' + data[11];
+      }
+    }
+    if(data[12]) {
+      if(!popup.length) {
+        popup = 'Flight to ' + data[12];
+      } else {
+        popup += ' to ' + data[12];
+      }
+    }
+    if(!popup.length) {
+      var popup = 'No data available';
+    }
 
-    responsiveVoice.speak('The height of the roof of this building in feet is'+hf+'and in meters'+hm+'The Ground elevation in Feet is'+gf+'and in meters'+gm+'The year of the buildings construction was:'+yr+'and the nearest census block identification number is'+bl, "UK English Female", {rate: 1});
-}
+    marker.bindPopup(popup);
 
-
-function openNav() {
-    document.getElementById("sidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("sidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-}
-
-function tableau1(){
-    var onevizOptions = {
-    width: "100%",
-    height: "100%",
-            hideTabs: false,
-            onFirstInteractive: function() {                
-tableau2();
-}
-        };
-viz1 = new tableauSoftware.Viz(onePh, oneUrl, onevizOptions);
-}
-
-function tableau2(){
-
-    var twovizOptions = {
-    width: "100%",
-    height: "100%",
-            hideTabs: false,
-            onFirstInteractive: function() {
-tableau3();
-}
-        };
-viz2 = new tableauSoftware.Viz(twoPh, twoUrl, twovizOptions);
-}
-
-function tableau3(){
-    var threevizOptions = {
-    width: "100%",
-    height: "100%",
-            hideTabs: false,
-            onFirstInteractive: function() {
-tableau4();                
-}
-        };
-viz3 = new tableauSoftware.Viz(threePh, threeUrl, threevizOptions);
-}
-
-function tableau4(){
-    var fourvizOptions = {
-    width: "100%",
-    height: "100%",
-            hideTabs: false,
-            onFirstInteractive: function() {
-}
-        };
-viz4 = new tableauSoftware.Viz(fourPh, fourUrl, fourvizOptions);
-}
+    return marker;
+  }
+});
 </script>
 </html>
