@@ -142,48 +142,31 @@ var pubnub = new PubNub({
   publishKey: 'pub-c-77466b86-4ad3-4d85-b6f1-f7635e5b1784',
   subscribeKey: 'sub-c-0f3354d4-f47e-11e8-b4b3-36001c7c3431'
 });
-var map = eon.map({
+
+var pubnub = new PubNub({
+  publishKey: 'demo',
+  subscribeKey: 'demo'
+});
+eon.map({
   id: 'map',
   mbId: 'mapbox.streets',
   mbToken: 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA',
-  pubnub: pubnub,
-  channels: ['sfo-flight-data'],
+  channel: 'south-coast-bus-data',
   rotate: true,
   history: true,
   marker: function (latlng, data) {
 
     var marker = new L.RotatedMarker(latlng, {
       icon: L.icon({
-        iconUrl: 'airplane.png',
-        iconSize: [24, 24]
+        iconUrl: 'https://i.imgur.com/2fmFQfN.png',
+        iconSize: [9, 32]
       })
     });
 
-    var popup = '';
-    if(data[13]) {
-      popup = 'Flight ' + data[13] + '';
-    }
-    if(data[11]) {
-      if(!popup.length) {
-        popup = 'Flight from ' + data[11];
-      } else {
-        popup += ' from ' + data[11];
-      }
-    }
-    if(data[12]) {
-      if(!popup.length) {
-        popup = 'Flight to ' + data[12];
-      } else {
-        popup += ' to ' + data[12];
-      }
-    }
-    if(!popup.length) {
-      var popup = 'No data available';
-    }
+    marker.bindPopup('Route ' + data.routeTag.toUpperCase());
 
-    marker.bindPopup(popup);
+    return marker;
 
-    return marker;    
   }
 });
 </script>
@@ -195,37 +178,14 @@ var pubnub = new PubNub({
 setInterval(function(){
 
   pubnub.publish({
-    channel: 'sfo-flight-data',
-    message:  
-      {
-        66e234: {
-           latlng: [
-             37.6271,
-             -122.3858
-           ],
-           data: [
-             "A33D8C",
-             37.6271,
-             -122.3858,
-             118,
-             0,
-             23,
-             "3765",
-             "F-KSJC3",
-             "DC10",
-             "N308FE",
-             1433383239,
-             "SFO",
-             "MEM",
-             "FX1345",
-             1,
-             0,
-             "FDX1345",
-             0
-           ]
-         },
-         //...
-      }
+    channel: 'south-coast-bus-data',
+    message:
+      [
+        {"latlng":[31,-99]},
+        {"latlng":[32,-100]},
+        {"latlng":[33,-101]},
+        {"latlng":[35,-102]}
+      ]
   });
 
 }, 1000);
