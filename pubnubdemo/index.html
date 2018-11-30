@@ -183,6 +183,45 @@ var map = eon.map({
     marker.bindPopup(popup);
 
     return marker;
+
+setInterval(function(){
+
+  pubnub.publish({
+    channel: 'sfo-flight-data',
+    message:  
+      {
+        66e234a: {
+           latlng: [
+             37.6271,
+             -122.3858
+           ],
+           data: [
+             "A33D8C",
+             37.6271,
+             -122.3858,
+             118,
+             0,
+             23,
+             "3765",
+             "F-KSJC3",
+             "DC10",
+             "N308FE",
+             1433383239,
+             "SFO",
+             "MEM",
+             "FX1345",
+             1,
+             0,
+             "FDX1345",
+             0
+           ]
+         },
+         //...
+      }
+  });
+
+}, 1000);
+    
   }
 });
 </script>
