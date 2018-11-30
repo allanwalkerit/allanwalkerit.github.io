@@ -2,22 +2,14 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Manhattan LIDAR</title>
+    <title>Pubnub Demo</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.js"></script>
     <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
     <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
-
 <style>
 
 body {
@@ -33,15 +25,6 @@ border-right: 0px;
 border-radius:0;
 }
 
-.hamburger {
-float: left;
-font-size: 30px;
-cursor: pointer;
-padding-left:5px;
-padding-right:10px;
-color: #4264fb;
-}
-
 .navbar-brand {
   padding: 0px;
 }
@@ -49,35 +32,6 @@ color: #4264fb;
   height: 100%;
   padding: 15px;
   width: auto;
-}
-
-.sidemenu {
-height: 100%;
-width: 0;
-position: fixed;
-z-index: 1;
-top: 0;
-left: 0;
-background-color: #000000;
-overflow-x: hidden;
-transition: 0.5s;
-font-size:large;
-color: #ffffff;
-}
-
-.sidemenu .closebtn {
-position: absolute;
-top: 0;
-right: 25px;
-font-size: 30px;
-margin-left: 50px;
-color: #4264fb;
-}
-
-#main {
-transition: margin-left .5s;
-height:1000%;
-width:100%;
 }
 
 #map {
@@ -146,36 +100,6 @@ overflow:hidden;
 margin: 0 auto;
 }
 
-.tableau {
-height: 150px;
-width: 95%;
-margin: 0 auto;
-}
-
-#HEIGHTFEET {
-display:none;  
-}
-
-#HEIGHTMETERS {
-display:none;  
-}
-
-#GROUNDFEET {
-display:none;  
-}
-
-#GROUNDMETERS {
-display:none;  
-}
-
-#YEAR {
-display:none;  
-}
-
-#BLOCK {
-display:none;  
-}
-
 .btn .btn-info {
 backgroud-color: #4264fb !important;    
 }
@@ -189,28 +113,6 @@ color: #ffffff !important;
 </style>
 </head>
 <body>
-
-<div id="sidenav" class="sidemenu">
-<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-<br><br>
-<div id="Charts">
-<p>5 Year Trends for Census Block: <p><p id="BLOCKINFO"></p>
-<ul>
-<li><div class='bannerhide'><div id='tableauViz1' class='tableau'><p>Total Population</p></div></div></li>
-<li><div class='bannerhide'><div id='tableauViz2' class='tableau'><p>Males</p></div></div></li>
-<li><div class='bannerhide'><div id='tableauViz3' class='tableau'><p>Females</p></div></div></li>
-<li><div class='bannerhide'><div id='tableauViz4' class='tableau'><p>Income</p></div></div></li>
-</ul>
-<p>Data courtesy: </p><a href="https://www.census.gov/geo/maps-data/data/tiger-data.html">USGS American Community Survey</a>
-</div>
-<div id="HEIGHTFEET"></div>
-<div id="HEIGHTMETERS"></div>
-<div id="GROUNDFEET"></div>
-<div id="GROUNDMETERS"></div>
-<div id="YEAR"></div>
-<div id="BLOCK"></div>
-</div>
-</div>
 
 <div id="main">
 <nav class="navbar navbar-default">
