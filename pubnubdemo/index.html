@@ -183,15 +183,22 @@ var map = eon.map({
 
     marker.bindPopup(popup);
 
-    return marker;
-
+    return marker;    
+  }
+});
+</script>
+<script>
+var pubnub = new PubNub({
+  publishKey: 'pub-c-77466b86-4ad3-4d85-b6f1-f7635e5b1784',
+  subscribeKey: 'sub-c-0f3354d4-f47e-11e8-b4b3-36001c7c3431'
+});
 setInterval(function(){
 
   pubnub.publish({
     channel: 'sfo-flight-data',
     message:  
       {
-        66e234a: {
+        66e234: {
            latlng: [
              37.6271,
              -122.3858
@@ -222,8 +229,5 @@ setInterval(function(){
   });
 
 }, 1000);
-    
-  }
-});
 </script>
 </html>
