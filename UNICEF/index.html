@@ -154,6 +154,12 @@ var svg = d3.select("#chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var array = [];
+array.push(d3datawithheaders);
+console.log(array);
+
+//need to use the csv-like array from kepler rather than a separate csv... 
+
 d3.csv("data.csv", function(error, data) {
     data.forEach(function(d) {
         d.date = parseDate(d.date);
