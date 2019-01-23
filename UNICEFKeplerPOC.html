@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>UNICEF Kepler.gl Demo</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+
+<style>
+
+.navbar-default {
+background-color: #FFFFFF;
+border-bottom: 0px;
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+border-radius:0;
+}
+
+.navbar-brand {
+height: 70px;
+padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+#main {
+height:1000%;
+width:100%;
+}
+
+#Kepler {
+height: 100%;
+width: 100%;
+margin: 0 auto;
+}
+
+iframe {
+float:left;
+height: calc(100vh - 100px);
+width:  calc(100% - 600px);
+margin: 0 auto;	
+}
+
+#chart {
+float:left;
+height: calc(100vh - 100px);
+width: 600px;
+margin: 0 auto;
+padding: 5px;
+background-color:#FFFFFF;
+color: #000000;
+font: 12px Arial;
+}
+
+/* d3 */
+
+path { 
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}
+ 
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+</style>
+</head>
+<body>
+<div id="main">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <a class="navbar-brand"><img src="unicef_for-every-child_EN.png" alt="UNICEF"></a>
+    </div>
+  </div>
+</nav>
+
+<div id="Viz" class="container-fluid">
+<div id ="DashboardsTop" class="row">
+<div class="col-lg-12">
+<div id='Kepler'><iframe src="https://kepler.gl/#/demo?mapUrl=https://gist.githubusercontent.com/allanwalkerit/8aa5725863f91ad9f6c92fcbd4ec2555/raw/777112ab32c15a77e3508f1860e465857588abf5/keplergl.json" frameBorder="0"></iframe><div id='chart'></div></div>
+</div>
+</div>
+</div>
+</div>
+</body>
+<script>
+$.getJSON("https://gist.githubusercontent.com/allanwalkerit/8aa5725863f91ad9f6c92fcbd4ec2555/raw/777112ab32c15a77e3508f1860e465857588abf5/keplergl.json", function (keplerdata) {
+var firstdataset = keplerdata.datasets[0];
+var csv = firstdataset.data.allData;
+var d3data = ConvertToCSV(csv);
+var header = 'date,lat,long,alt';
+//hardcoded headers!!! These should come from keplerdata.fields
+d3datawithheaders = header+'\n'+d3data;
+
+function ConvertToCSV(csv) {
+            var array = typeof csv != 'object' ? JSON.parse(csv) : csv;
+            var str = '';
+
+            for (var i = 0; i < array.length; i++) {
+                var line = '';
+                for (var index in array[i]) {
+                    if (line != '') line += ','
+
+                    line += array[i][index];
+                }
+
+                str += line + '\r\n';
+            }
+
+            return str;
+        }
+
+
+// Typical d3 pattern for line chart
+var	margin = {top: 5, right: 5, bottom: 20, left: 50},
+	width = 600 - margin.left - margin.right,
+	height = 200 - margin.top - margin.bottom;
+ 
+var parseDate = d3.time.format("%d-%b-%y").parse;
+var x = d3.time.scale()
+.range([0, width]);
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.alt); });
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("https://allanwalkerit.github.io/data.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.alt = +d.alt;
+    });
+
+
+x.domain(d3.extent(data, function(d) { return d.date; }));
+y.domain(d3.extent(data, function(d) { return d.alt; }));
+
+svg.append("path")  
+        .attr("class", "line")
+        .attr("d", valueline(data));
+ 
+
+    svg.append("g")     
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+ 
+
+    svg.append("g")     
+        .attr("class", "y axis")
+        .call(yAxis);
+});
+});
+
+</script> 
+</html>
