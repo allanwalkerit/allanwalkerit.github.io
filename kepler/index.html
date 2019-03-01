@@ -39,12 +39,6 @@ height:1000%;
 width:100%;
 }
 
-#Kepler {
-height: 100%;
-width: 100%;
-margin: 0 auto;
-}
-
 iframe {
 float:right;
 height: calc(100vh - 100px);
@@ -121,7 +115,6 @@ $('#jstree').on("changed.jstree", function (e, data) {
 console.log()
 var data = data.selected;
 jstreeselected = data[0];
-console.log(data[0]);
 
 switch (jstreeselected) {
     case 'j1_1':
