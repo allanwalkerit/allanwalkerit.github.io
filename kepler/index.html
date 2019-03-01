@@ -34,42 +34,19 @@ padding: 0px;
   width: auto;
 }
 
-#main {
-height:1000%;
-width:100%;
+.container {
+    width: 100%;
+    height: 100%;
+    margin: auto;
 }
-
-iframe {
-float:right;
-height: calc(100vh - 100px);
-width:  calc(100% - 300px);
-margin: 0 auto;	
+.one {
+    width: 300px;
+    height: 100px;
+    float: left;
 }
-
-#tree {
-float:left;
-height: calc(100vh - 100px);
-width: 300px;
-margin: 0 auto;
-padding: 5px;
-color: #000000;
-font: 12px Arial;
-}
-
-/* d3 */
-
-path { 
-  stroke: black;
-  stroke-width: 1;
-  fill: none;
-}
- 
-.axis path,
-.axis line {
-	fill: none;
-	stroke: black;
-	stroke-width: 1;
-	shape-rendering: crispEdges;
+.two {
+   width: calc(100% - 300px);
+   height: calc(100vh - 100px);
 }
 
 </style>
@@ -87,7 +64,8 @@ path {
 <div id="Viz" class="container-fluid">
 <div id ="DashboardsTop" class="row">
 <div class="col-lg-12">
-<div id='tree'>
+<section class = "container">
+<div id='tree' class="one">
 <div id="jstree">
  <ul>
     <li>World
@@ -105,8 +83,9 @@ path {
 </ul>
   </div>
 </div>
-<div id='Kepler'><iframe class="kepler" src="https://kepler.gl/#/demo?mapUrl=https://gist.githubusercontent.com/allanwalkerit/8f120fc7b472be20c7e07e210df514fa/raw/abb404e426fc5d755f87c277712a44de26f9a201/global.json" frameBorder="0"></iframe>
+<iframe id='kepler' class="two" src="https://kepler.gl/#/demo?mapUrl=https://gist.githubusercontent.com/allanwalkerit/8f120fc7b472be20c7e07e210df514fa/raw/abb404e426fc5d755f87c277712a44de26f9a201/global.json" frameBorder="0"></iframe>
 </div>
+</section>
 </body>
 <script>
 
@@ -136,7 +115,7 @@ switch (jstreeselected) {
     url="https://kepler.gl/#/demo?mapUrl=https://gist.githubusercontent.com/allanwalkerit/a16d46e2880ea24b13fb7a3561c1b4e1/raw/d49ee908a5a2a58e1d7db01f13a355989095290d/liberty.json";
 }
 
-$('.kepler').attr('src', url);
+$('#kepler').attr('src', url);
 
 
 });
