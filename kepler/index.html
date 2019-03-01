@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,6 +144,12 @@ switch (jstreeselected) {
 }
 
 $('.kepler').attr('src', url);
+
+
+});
+
+$('#jstree').on('select_node.jstree', function (e, data) {
+    data.instance.toggle_node(data.node);
 
 });
 
