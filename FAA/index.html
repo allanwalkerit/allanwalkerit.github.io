@@ -30,11 +30,11 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-var classairspaceurl = 'http://ais-faa.opendata.arcgis.com/datasets/c6a62360338e408cb1512366ad61559e_0.geojson';
+//var classairspaceurl = 'http://ais-faa.opendata.arcgis.com/datasets/c6a62360338e408cb1512366ad61559e_0.geojson';
 var specialuseurl = 'http://ais-faa.opendata.arcgis.com/datasets/dd0d1b726e504137ab3c41b21835d05b_0.geojson';
 var airspaceboundariesurl = 'http://ais-faa.opendata.arcgis.com/datasets/67885972e4e940b2aa6d74024901c561_0.geojson';
 
-map.addSource('class', { type: 'geojson', data: classairspaceurl });
+//map.addSource('class', { type: 'geojson', data: classairspaceurl });
 map.addSource('specialuse', { type: 'geojson', data: specialuseurl });
 map.addSource('boundaries', { type: 'geojson', data: airspaceboundariesurl });
 
@@ -45,20 +45,20 @@ map.addLayer({
         "layout": {},
         'paint': {
 'line-color': '#000000',
-'line-width': 0.8
+'line-width': 0.25
 }
     });
 
-map.addLayer({
-        "id": "class",
-        "type": "line",
-        "source": "class",
-        "layout": {},
-        'paint': {
-'line-color': '#082878',
-'line-width': 0.8
-}
-    });
+//map.addLayer({
+//        "id": "class",
+//        "type": "line",
+//        "source": "class",
+//        "layout": {},
+//        'paint': {
+//'line-color': '#082878',
+//'line-width': 0.8
+//}
+//    });
 
 map.addLayer({
         "id": "specialuse",
@@ -67,7 +67,7 @@ map.addLayer({
         "layout": {},
         'paint': {
 'line-color': '#790838',
-'line-width': 0.8
+'line-width': 1
 }
     });
 
