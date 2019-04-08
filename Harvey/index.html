@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>FAA POC</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+// Goal Statement: Attempt to recrate VFR with vector tiles from FAA Open Data
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/allanwalker/cjtte29x008ow1fp338zg7hu4?fresh=true',
+    center: [-97.922211, 39.381266],
+        zoom: 3,
+        pitch: 0,
+        bearing: 0
+});
+
+map.on('load', function () {
+var specialuseurl = 'http://ais-faa.opendata.arcgis.com/datasets/dd0d1b726e504137ab3c41b21835d05b_0.geojson';
+var airspaceboundariesurl = 'http://ais-faa.opendata.arcgis.com/datasets/67885972e4e940b2aa6d74024901c561_0.geojson';
+
+
+map.addSource('specialuse', { type: 'geojson', data: specialuseurl });
+map.addSource('boundaries', { type: 'geojson', data: airspaceboundariesurl });
+
+map.addLayer({
+        "id": "boundaries",
+        "type": "line",
+        "source": "boundaries",
+        "layout": {},
+        'paint': {
+'line-color': '#000000',
+'line-width': 0.25
+}
+    });
+
+map.addLayer({
+        "id": "specialuse",
+        "type": "line",
+        "source": "specialuse",
+        "layout": {},
+        'paint': {
+'line-color': '#790838',
+'line-width': 1
+}
+    });
+
+});
+
+</script>
+
+</body>
+</html>
