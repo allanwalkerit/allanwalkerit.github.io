@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>FAA POC</title>
+    <title>Hurricane Harvey</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
+
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -13,54 +17,809 @@
 </head>
 <body>
 
+<style>
+.map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+
+.map-overlay .map-overlay-inner {
+width: 350px;
+height: 200px;
+background-color: rgba(0, 0, 0, 0.75);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;
+padding: 10px;
+}
+
+.map-overlay h2 {
+    line-height: 24px;
+    display: block;
+    margin: 0 0 10px;
+}
+
+.legend {
+position: fixed;
+right: 30px;
+bottom: 30px;
+height: 200px;
+background-color: rgba(0, 0, 0, 0.75);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;
+padding: 10px;
+z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.a {
+font-family: "Open Sans";
+font-size: small !important; 
+color: #ffffff !important; 
+}
+
+
+.map-overlay input {
+    background-color: transparent;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    margin: 0;
+    cursor: ew-resize;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+width: 10px;
+margin-right: 5px;
+}
+
+</style>
+
 <div id='map'></div>
+<div class='map-overlay top'>
+    <div class='map-overlay-inner'>
+        <h2>Hurricane Harvey</h2>
+        <h4>Nexrad Level 2</h4>
+        <label id='time'></label>
+        <div id='new'></div>
+        <br><br>
+        <input id='slider' type='range' min='0' max='542' step='1' value='0' />
+    </div>
+    <div>
+<div id='PopulationLegend' class='legend'>
+<h4>Reflectivity</h4>
+<div><span style='background-color: #0d0887'></span>21</div>
+<div><span style='background-color: #46039f'></span>22</div>
+<div><span style='background-color: #7300a8'></span>24</div>
+<div><span style='background-color: #9c179e'></span>25</div>
+<div><span style='background-color: #be3785'></span>27</div>
+<div><span style='background-color: #d8576c'></span>29</div>
+<div><span style='background-color: #ed7953'></span>30</div>
+<div><span style='background-color: #fb9f3a'></span>32</div>
+<div><span style='background-color: #fdc926'></span>34</div>
+<div><span style='background-color: #f0f921'></span>36</div>
+<a href="https://www.ncdc.noaa.gov/nexradinv/">Data: NOAA NCEI</a>
+</div>
+    </div>
+</div>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.min.js' charset='utf-8'></script>
 <script>
-
-// Goal Statement: Attempt to recrate VFR with vector tiles from FAA Open Data
-
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/allanwalker/cjtte29x008ow1fp338zg7hu4?fresh=true',
-    center: [-97.922211, 39.381266],
-        zoom: 3,
-        pitch: 0,
-        bearing: 0
+    style: 'mapbox://styles/mapbox/dark-v9',
+    center: [-94.683851, 28.534641],
+    pitch: 60,
+    zoom: 6.61
 });
 
-map.on('load', function () {
-var specialuseurl = 'http://ais-faa.opendata.arcgis.com/datasets/dd0d1b726e504137ab3c41b21835d05b_0.geojson';
-var airspaceboundariesurl = 'http://ais-faa.opendata.arcgis.com/datasets/67885972e4e940b2aa6d74024901c561_0.geojson';
+function filterBy(time) {
+var filters = ['==', 'DateTime', time];
+map.setFilter('25th', filters);
+map.setFilter('26th', filters);
+map.setFilter('Ships', filters);
+}
 
-
-map.addSource('specialuse', { type: 'geojson', data: specialuseurl });
-map.addSource('boundaries', { type: 'geojson', data: airspaceboundariesurl });
+map.on('load', function() {
 
 map.addLayer({
-        "id": "boundaries",
-        "type": "line",
-        "source": "boundaries",
-        "layout": {},
-        'paint': {
-'line-color': '#000000',
-'line-width': 0.25
+'id': 'Ships',
+'type': 'circle',
+'source': {
+type: 'vector',
+url: 'mapbox://allanwalker.0lfwbo9m'
+},
+'source-layer': 'Shipsgeojson',
+'paint': {
+'circle-radius': {
+'base': 1,
+'stops': [[12, 2], [22, 5]]
+},
+'circle-color': [
+'match',
+['get', 'ethnicity'],
+'White', '#fbb03b',
+'Black', '#223b53',
+'Hispanic', '#e55e5e',
+'Asian', '#3bb2d0',
+/* other */ '#ffffff'
+]
 }
+});
+
+map.addLayer({
+'id': 'Buildings',
+'type': 'fill',
+'source': {
+type: 'vector',
+url: 'mapbox://allanwalker.9pkkdee4'
+},
+'source-layer': 'Texasgeojson',
+'layout': {},
+'paint': {
+'fill-color': '#FFFFFF',
+'fill-opacity': 1
+}
+});
+
+map.addLayer({
+        "id": "25th",
+        "type": 'fill-extrusion',
+        'filter': ['==', 'DateTime', '2017-08-25 00:00:53'],
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.0edpautn'
+        },
+        "source-layer": "25thgeojson",
+        "paint": {
+        'fill-extrusion-opacity': 0.75,
+        'fill-extrusion-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "Reflect"],
+  21,
+  "#0d0887",
+  22,
+  "#46039f",
+  24,
+  "#7300a8",
+  25,
+  "#9c179e",
+  27,
+  "#be3785",
+  29,
+  "#d8576c",
+  30,
+  "#ed7953",
+  32,
+  "#fb9f3a",
+  34,
+  "#fdc926",
+  36,
+  "#f0f921"
+],
+            'fill-extrusion-height': ['get', 'Height'],
+        }
     });
 
 map.addLayer({
-        "id": "specialuse",
-        "type": "line",
-        "source": "specialuse",
-        "layout": {},
-        'paint': {
-'line-color': '#790838',
-'line-width': 1
-}
+        "id": "26th",
+        "type": 'fill-extrusion',
+        'filter': ['==', 'DateTime', '2017-08-26 00:03:06'],
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.c8vo57tk'
+        },
+        "source-layer": "26thgeojson",
+        "paint": {
+        'fill-extrusion-opacity': 0.75,
+        'fill-extrusion-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "Reflect"],
+  21,
+  "#0d0887",
+  22,
+  "#46039f",
+  24,
+  "#7300a8",
+  25,
+  "#9c179e",
+  27,
+  "#be3785",
+  29,
+  "#d8576c",
+  30,
+  "#ed7953",
+  32,
+  "#fb9f3a",
+  34,
+  "#fdc926",
+  36,
+  "#f0f921"
+],
+            'fill-extrusion-height': ['get', 'Height'],
+        }
     });
-
 });
 
+document.getElementById('new').innerHTML = "2017-08-26 00:03:06";
+document.getElementById('slider').addEventListener('input', function(e) {
+var sliderval = parseInt(e.target.value, 10);
+
+
+switch (sliderval) {
+case 0:time="2017-08-25 00:00:53";break;
+case 1:time="2017-08-25 00:06:09";break;
+case 2:time="2017-08-25 00:11:27";break;
+case 3:time="2017-08-25 00:16:43";break;
+case 4:time="2017-08-25 00:22:00";break;
+case 5:time="2017-08-25 00:27:17";break;
+case 6:time="2017-08-25 00:32:34";break;
+case 7:time="2017-08-25 00:37:51";break;
+case 8:time="2017-08-25 00:43:08";break;
+case 9:time="2017-08-25 00:48:26";break;
+case 10:time="2017-08-25 00:53:43";break;
+case 11:time="2017-08-25 00:58:59";break;
+case 12:time="2017-08-25 01:04:14";break;
+case 13:time="2017-08-25 01:09:43";break;
+case 14:time="2017-08-25 01:15:01";break;
+case 15:time="2017-08-25 01:20:17";break;
+case 16:time="2017-08-25 01:25:33";break;
+case 17:time="2017-08-25 01:30:48";break;
+case 18:time="2017-08-25 01:36:04";break;
+case 19:time="2017-08-25 01:41:20";break;
+case 20:time="2017-08-25 01:46:36";break;
+case 21:time="2017-08-25 01:51:53";break;
+case 22:time="2017-08-25 01:57:11";break;
+case 23:time="2017-08-25 02:02:26";break;
+case 24:time="2017-08-25 02:09:39";break;
+case 25:time="2017-08-25 02:14:55";break;
+case 26:time="2017-08-25 02:20:12";break;
+case 27:time="2017-08-25 02:25:29";break;
+case 28:time="2017-08-25 02:30:45";break;
+case 29:time="2017-08-25 02:36:02";break;
+case 30:time="2017-08-25 02:41:18";break;
+case 31:time="2017-08-25 02:46:47";break;
+case 32:time="2017-08-25 02:52:03";break;
+case 33:time="2017-08-25 02:57:20";break;
+case 34:time="2017-08-25 03:02:36";break;
+case 35:time="2017-08-25 03:07:53";break;
+case 36:time="2017-08-25 03:13:23";break;
+case 37:time="2017-08-25 03:18:38";break;
+case 38:time="2017-08-25 03:24:09";break;
+case 39:time="2017-08-25 03:29:26";break;
+case 40:time="2017-08-25 03:34:55";break;
+case 41:time="2017-08-25 03:40:25";break;
+case 42:time="2017-08-25 03:45:56";break;
+case 43:time="2017-08-25 03:51:25";break;
+case 44:time="2017-08-25 03:57:08";break;
+case 45:time="2017-08-25 04:02:39";break;
+case 46:time="2017-08-25 04:08:21";break;
+case 47:time="2017-08-25 04:14:04";break;
+case 48:time="2017-08-25 04:19:47";break;
+case 49:time="2017-08-25 04:25:30";break;
+case 50:time="2017-08-25 04:31:12";break;
+case 51:time="2017-08-25 04:36:55";break;
+case 52:time="2017-08-25 04:42:38";break;
+case 53:time="2017-08-25 04:48:21";break;
+case 54:time="2017-08-25 04:54:04";break;
+case 55:time="2017-08-25 04:59:47";break;
+case 56:time="2017-08-25 05:05:29";break;
+case 57:time="2017-08-25 05:11:13";break;
+case 58:time="2017-08-25 05:16:56";break;
+case 59:time="2017-08-25 05:22:38";break;
+case 60:time="2017-08-25 05:28:22";break;
+case 61:time="2017-08-25 05:34:05";break;
+case 62:time="2017-08-25 05:39:48";break;
+case 63:time="2017-08-25 05:45:32";break;
+case 64:time="2017-08-25 05:51:14";break;
+case 65:time="2017-08-25 05:56:58";break;
+case 66:time="2017-08-25 06:02:40";break;
+case 67:time="2017-08-25 06:08:22";break;
+case 68:time="2017-08-25 06:14:06";break;
+case 69:time="2017-08-25 06:19:48";break;
+case 70:time="2017-08-25 06:25:31";break;
+case 71:time="2017-08-25 06:31:14";break;
+case 72:time="2017-08-25 06:36:58";break;
+case 73:time="2017-08-25 06:42:41";break;
+case 74:time="2017-08-25 06:48:23";break;
+case 75:time="2017-08-25 06:54:06";break;
+case 76:time="2017-08-25 06:59:49";break;
+case 77:time="2017-08-25 07:05:18";break;
+case 78:time="2017-08-25 07:10:48";break;
+case 79:time="2017-08-25 07:16:18";break;
+case 80:time="2017-08-25 07:21:48";break;
+case 81:time="2017-08-25 07:27:32";break;
+case 82:time="2017-08-25 07:33:01";break;
+case 83:time="2017-08-25 07:38:44";break;
+case 84:time="2017-08-25 07:44:28";break;
+case 85:time="2017-08-25 07:50:13";break;
+case 86:time="2017-08-25 07:55:56";break;
+case 87:time="2017-08-25 08:01:38";break;
+case 88:time="2017-08-25 08:07:20";break;
+case 89:time="2017-08-25 08:13:03";break;
+case 90:time="2017-08-25 08:18:04";break;
+case 91:time="2017-08-25 08:23:04";break;
+case 92:time="2017-08-25 08:28:07";break;
+case 93:time="2017-08-25 08:33:11";break;
+case 94:time="2017-08-25 08:38:14";break;
+case 95:time="2017-08-25 08:43:24";break;
+case 96:time="2017-08-25 08:48:49";break;
+case 97:time="2017-08-25 08:54:20";break;
+case 98:time="2017-08-25 08:59:52";break;
+case 99:time="2017-08-25 09:05:23";break;
+case 100:time="2017-08-25 09:10:55";break;
+case 101:time="2017-08-25 09:16:35";break;
+case 102:time="2017-08-25 09:22:08";break;
+case 103:time="2017-08-25 09:27:40";break;
+case 104:time="2017-08-25 09:33:12";break;
+case 105:time="2017-08-25 09:38:43";break;
+case 106:time="2017-08-25 09:44:15";break;
+case 107:time="2017-08-25 09:49:45";break;
+case 108:time="2017-08-25 09:54:58";break;
+case 109:time="2017-08-25 09:59:57";break;
+case 110:time="2017-08-25 10:04:55";break;
+case 111:time="2017-08-25 10:12:03";break;
+case 112:time="2017-08-25 10:17:05";break;
+case 113:time="2017-08-25 10:22:23";break;
+case 114:time="2017-08-25 10:27:41";break;
+case 115:time="2017-08-25 10:32:59";break;
+case 116:time="2017-08-25 10:38:17";break;
+case 117:time="2017-08-25 10:43:49";break;
+case 118:time="2017-08-25 10:49:06";break;
+case 119:time="2017-08-25 10:54:24";break;
+case 120:time="2017-08-25 10:59:43";break;
+case 121:time="2017-08-25 11:04:59";break;
+case 122:time="2017-08-25 11:10:18";break;
+case 123:time="2017-08-25 11:15:35";break;
+case 124:time="2017-08-25 11:21:07";break;
+case 125:time="2017-08-25 11:26:40";break;
+case 126:time="2017-08-25 11:32:12";break;
+case 127:time="2017-08-25 11:37:44";break;
+case 128:time="2017-08-25 11:43:14";break;
+case 129:time="2017-08-25 11:48:46";break;
+case 130:time="2017-08-25 11:54:19";break;
+case 131:time="2017-08-25 11:59:50";break;
+case 132:time="2017-08-25 12:05:22";break;
+case 133:time="2017-08-25 12:10:54";break;
+case 134:time="2017-08-25 12:16:27";break;
+case 135:time="2017-08-25 12:21:59";break;
+case 136:time="2017-08-25 12:27:30";break;
+case 137:time="2017-08-25 12:33:01";break;
+case 138:time="2017-08-25 12:38:34";break;
+case 139:time="2017-08-25 12:44:06";break;
+case 140:time="2017-08-25 12:49:38";break;
+case 141:time="2017-08-25 12:55:08";break;
+case 142:time="2017-08-25 13:00:38";break;
+case 143:time="2017-08-25 13:06:10";break;
+case 144:time="2017-08-25 13:11:42";break;
+case 145:time="2017-08-25 13:17:13";break;
+case 146:time="2017-08-25 13:22:46";break;
+case 147:time="2017-08-25 13:28:16";break;
+case 148:time="2017-08-25 13:33:46";break;
+case 149:time="2017-08-25 13:39:18";break;
+case 150:time="2017-08-25 13:44:48";break;
+case 151:time="2017-08-25 13:50:18";break;
+case 152:time="2017-08-25 13:55:51";break;
+case 153:time="2017-08-25 14:01:22";break;
+case 154:time="2017-08-25 14:06:55";break;
+case 155:time="2017-08-25 14:12:27";break;
+case 156:time="2017-08-25 14:17:59";break;
+case 157:time="2017-08-25 14:23:30";break;
+case 158:time="2017-08-25 14:29:00";break;
+case 159:time="2017-08-25 14:34:31";break;
+case 160:time="2017-08-25 14:40:03";break;
+case 161:time="2017-08-25 14:45:35";break;
+case 162:time="2017-08-25 14:51:07";break;
+case 163:time="2017-08-25 14:56:39";break;
+case 164:time="2017-08-25 15:02:10";break;
+case 165:time="2017-08-25 15:07:42";break;
+case 166:time="2017-08-25 15:13:12";break;
+case 167:time="2017-08-25 15:18:44";break;
+case 168:time="2017-08-25 15:24:16";break;
+case 169:time="2017-08-25 15:29:49";break;
+case 170:time="2017-08-25 15:35:20";break;
+case 171:time="2017-08-25 15:40:52";break;
+case 172:time="2017-08-25 15:46:23";break;
+case 173:time="2017-08-25 15:51:53";break;
+case 174:time="2017-08-25 15:57:24";break;
+case 175:time="2017-08-25 16:02:54";break;
+case 176:time="2017-08-25 16:08:24";break;
+case 177:time="2017-08-25 16:13:56";break;
+case 178:time="2017-08-25 16:19:28";break;
+case 179:time="2017-08-25 16:24:59";break;
+case 180:time="2017-08-25 16:30:31";break;
+case 181:time="2017-08-25 16:36:02";break;
+case 182:time="2017-08-25 16:41:32";break;
+case 183:time="2017-08-25 16:47:04";break;
+case 184:time="2017-08-25 16:52:35";break;
+case 185:time="2017-08-25 16:58:06";break;
+case 186:time="2017-08-25 17:03:38";break;
+case 187:time="2017-08-25 17:09:10";break;
+case 188:time="2017-08-25 17:14:15";break;
+case 189:time="2017-08-25 17:19:20";break;
+case 190:time="2017-08-25 17:24:23";break;
+case 191:time="2017-08-25 17:29:28";break;
+case 192:time="2017-08-25 17:34:18";break;
+case 193:time="2017-08-25 17:39:09";break;
+case 194:time="2017-08-25 17:44:11";break;
+case 195:time="2017-08-25 17:48:55";break;
+case 196:time="2017-08-25 17:53:40";break;
+case 197:time="2017-08-25 17:58:24";break;
+case 198:time="2017-08-25 18:02:56";break;
+case 199:time="2017-08-25 18:07:28";break;
+case 200:time="2017-08-25 18:14:01";break;
+case 201:time="2017-08-25 18:18:19";break;
+case 202:time="2017-08-25 18:22:37";break;
+case 203:time="2017-08-25 18:26:54";break;
+case 204:time="2017-08-25 18:31:15";break;
+case 205:time="2017-08-25 18:35:32";break;
+case 206:time="2017-08-25 18:40:03";break;
+case 207:time="2017-08-25 18:44:20";break;
+case 208:time="2017-08-25 18:48:38";break;
+case 209:time="2017-08-25 18:53:22";break;
+case 210:time="2017-08-25 18:57:52";break;
+case 211:time="2017-08-25 19:02:36";break;
+case 212:time="2017-08-25 19:07:26";break;
+case 213:time="2017-08-25 19:12:12";break;
+case 214:time="2017-08-25 19:16:55";break;
+case 215:time="2017-08-25 19:21:53";break;
+case 216:time="2017-08-25 19:27:05";break;
+case 217:time="2017-08-25 19:32:17";break;
+case 218:time="2017-08-25 19:37:29";break;
+case 219:time="2017-08-25 19:42:41";break;
+case 220:time="2017-08-25 19:47:53";break;
+case 221:time="2017-08-25 19:52:51";break;
+case 222:time="2017-08-25 19:57:50";break;
+case 223:time="2017-08-25 20:02:47";break;
+case 224:time="2017-08-25 20:07:44";break;
+case 225:time="2017-08-25 20:12:42";break;
+case 226:time="2017-08-25 20:17:40";break;
+case 227:time="2017-08-25 20:22:38";break;
+case 228:time="2017-08-25 20:27:24";break;
+case 229:time="2017-08-25 20:32:27";break;
+case 230:time="2017-08-25 20:37:30";break;
+case 231:time="2017-08-25 20:42:34";break;
+case 232:time="2017-08-25 20:47:31";break;
+case 233:time="2017-08-25 20:52:29";break;
+case 234:time="2017-08-25 20:57:27";break;
+case 235:time="2017-08-25 21:02:24";break;
+case 236:time="2017-08-25 21:07:21";break;
+case 237:time="2017-08-25 21:12:05";break;
+case 238:time="2017-08-25 21:16:50";break;
+case 239:time="2017-08-25 21:21:55";break;
+case 240:time="2017-08-25 21:27:10";break;
+case 241:time="2017-08-25 21:32:08";break;
+case 242:time="2017-08-25 21:37:13";break;
+case 243:time="2017-08-25 21:42:17";break;
+case 244:time="2017-08-25 21:47:21";break;
+case 245:time="2017-08-25 21:52:26";break;
+case 246:time="2017-08-25 21:57:37";break;
+case 247:time="2017-08-25 22:02:33";break;
+case 248:time="2017-08-25 22:07:24";break;
+case 249:time="2017-08-25 22:12:09";break;
+case 250:time="2017-08-25 22:16:40";break;
+case 251:time="2017-08-25 22:21:10";break;
+case 252:time="2017-08-25 22:25:41";break;
+case 253:time="2017-08-25 22:30:12";break;
+case 254:time="2017-08-25 22:34:35";break;
+case 255:time="2017-08-25 22:38:53";break;
+case 256:time="2017-08-25 22:43:16";break;
+case 257:time="2017-08-25 22:47:20";break;
+case 258:time="2017-08-25 22:51:23";break;
+case 259:time="2017-08-25 22:55:26";break;
+case 260:time="2017-08-25 22:59:29";break;
+case 261:time="2017-08-25 23:03:33";break;
+case 262:time="2017-08-25 23:07:37";break;
+case 263:time="2017-08-25 23:11:41";break;
+case 264:time="2017-08-25 23:15:44";break;
+case 265:time="2017-08-25 23:19:47";break;
+case 266:time="2017-08-25 23:23:51";break;
+case 267:time="2017-08-25 23:27:55";break;
+case 268:time="2017-08-25 23:32:00";break;
+case 269:time="2017-08-25 23:36:04";break;
+case 270:time="2017-08-25 23:40:09";break;
+case 271:time="2017-08-25 23:44:23";break;
+case 272:time="2017-08-25 23:48:28";break;
+case 273:time="2017-08-25 23:52:31";break;
+case 274:time="2017-08-25 23:56:35";break;
+case 275:time="2017-08-26 00:03:06";break;
+case 276:time="2017-08-26 00:08:34";break;
+case 277:time="2017-08-26 00:14:04";break;
+case 278:time="2017-08-26 00:19:35";break;
+case 279:time="2017-08-26 00:25:06";break;
+case 280:time="2017-08-26 00:30:37";break;
+case 281:time="2017-08-26 00:36:08";break;
+case 282:time="2017-08-26 00:41:39";break;
+case 283:time="2017-08-26 00:47:09";break;
+case 284:time="2017-08-26 00:52:39";break;
+case 285:time="2017-08-26 00:58:11";break;
+case 286:time="2017-08-26 01:03:42";break;
+case 287:time="2017-08-26 01:09:11";break;
+case 288:time="2017-08-26 01:14:42";break;
+case 289:time="2017-08-26 01:20:11";break;
+case 290:time="2017-08-26 01:25:42";break;
+case 291:time="2017-08-26 01:31:13";break;
+case 292:time="2017-08-26 01:36:42";break;
+case 293:time="2017-08-26 01:42:11";break;
+case 294:time="2017-08-26 01:47:42";break;
+case 295:time="2017-08-26 01:53:14";break;
+case 296:time="2017-08-26 01:58:45";break;
+case 297:time="2017-08-26 02:04:15";break;
+case 298:time="2017-08-26 02:09:44";break;
+case 299:time="2017-08-26 02:15:14";break;
+case 300:time="2017-08-26 02:20:43";break;
+case 301:time="2017-08-26 02:26:13";break;
+case 302:time="2017-08-26 02:31:42";break;
+case 303:time="2017-08-26 02:37:12";break;
+case 304:time="2017-08-26 02:42:42";break;
+case 305:time="2017-08-26 02:48:11";break;
+case 306:time="2017-08-26 02:53:41";break;
+case 307:time="2017-08-26 02:59:11";break;
+case 308:time="2017-08-26 03:04:41";break;
+case 309:time="2017-08-26 03:10:10";break;
+case 310:time="2017-08-26 03:15:39";break;
+case 311:time="2017-08-26 03:21:10";break;
+case 312:time="2017-08-26 03:26:41";break;
+case 313:time="2017-08-26 03:32:12";break;
+case 314:time="2017-08-26 03:37:41";break;
+case 315:time="2017-08-26 03:42:58";break;
+case 316:time="2017-08-26 03:48:29";break;
+case 317:time="2017-08-26 03:53:46";break;
+case 318:time="2017-08-26 03:59:04";break;
+case 319:time="2017-08-26 04:04:21";break;
+case 320:time="2017-08-26 04:09:38";break;
+case 321:time="2017-08-26 04:14:54";break;
+case 322:time="2017-08-26 04:20:11";break;
+case 323:time="2017-08-26 04:25:27";break;
+case 324:time="2017-08-26 04:30:44";break;
+case 325:time="2017-08-26 04:36:01";break;
+case 326:time="2017-08-26 04:41:17";break;
+case 327:time="2017-08-26 04:46:33";break;
+case 328:time="2017-08-26 04:51:49";break;
+case 329:time="2017-08-26 04:57:06";break;
+case 330:time="2017-08-26 05:02:23";break;
+case 331:time="2017-08-26 05:07:45";break;
+case 332:time="2017-08-26 05:13:08";break;
+case 333:time="2017-08-26 05:18:30";break;
+case 334:time="2017-08-26 05:24:00";break;
+case 335:time="2017-08-26 05:29:30";break;
+case 336:time="2017-08-26 05:34:59";break;
+case 337:time="2017-08-26 05:40:29";break;
+case 338:time="2017-08-26 05:46:00";break;
+case 339:time="2017-08-26 05:51:29";break;
+case 340:time="2017-08-26 05:57:00";break;
+case 341:time="2017-08-26 06:02:16";break;
+case 342:time="2017-08-26 06:07:34";break;
+case 343:time="2017-08-26 06:12:51";break;
+case 344:time="2017-08-26 06:18:15";break;
+case 345:time="2017-08-26 06:23:39";break;
+case 346:time="2017-08-26 06:29:02";break;
+case 347:time="2017-08-26 06:34:31";break;
+case 348:time="2017-08-26 06:40:00";break;
+case 349:time="2017-08-26 06:45:16";break;
+case 350:time="2017-08-26 06:50:47";break;
+case 351:time="2017-08-26 06:56:16";break;
+case 352:time="2017-08-26 07:01:46";break;
+case 353:time="2017-08-26 07:07:16";break;
+case 354:time="2017-08-26 07:12:46";break;
+case 355:time="2017-08-26 07:18:15";break;
+case 356:time="2017-08-26 07:23:44";break;
+case 357:time="2017-08-26 07:29:07";break;
+case 358:time="2017-08-26 07:34:37";break;
+case 359:time="2017-08-26 07:40:06";break;
+case 360:time="2017-08-26 07:47:29";break;
+case 361:time="2017-08-26 07:53:00";break;
+case 362:time="2017-08-26 07:58:17";break;
+case 363:time="2017-08-26 08:03:33";break;
+case 364:time="2017-08-26 08:08:49";break;
+case 365:time="2017-08-26 08:14:19";break;
+case 366:time="2017-08-26 08:19:50";break;
+case 367:time="2017-08-26 08:25:22";break;
+case 368:time="2017-08-26 08:30:32";break;
+case 369:time="2017-08-26 08:35:49";break;
+case 370:time="2017-08-26 08:41:06";break;
+case 371:time="2017-08-26 08:46:23";break;
+case 372:time="2017-08-26 08:51:46";break;
+case 373:time="2017-08-26 08:57:03";break;
+case 374:time="2017-08-26 09:02:20";break;
+case 375:time="2017-08-26 09:07:35";break;
+case 376:time="2017-08-26 09:12:45";break;
+case 377:time="2017-08-26 09:17:55";break;
+case 378:time="2017-08-26 09:23:07";break;
+case 379:time="2017-08-26 09:28:17";break;
+case 380:time="2017-08-26 09:33:28";break;
+case 381:time="2017-08-26 09:38:39";break;
+case 382:time="2017-08-26 09:43:49";break;
+case 383:time="2017-08-26 09:49:00";break;
+case 384:time="2017-08-26 09:54:10";break;
+case 385:time="2017-08-26 09:59:27";break;
+case 386:time="2017-08-26 10:04:37";break;
+case 387:time="2017-08-26 10:09:48";break;
+case 388:time="2017-08-26 10:14:59";break;
+case 389:time="2017-08-26 10:20:09";break;
+case 390:time="2017-08-26 10:25:25";break;
+case 391:time="2017-08-26 10:30:41";break;
+case 392:time="2017-08-26 10:35:57";break;
+case 393:time="2017-08-26 10:41:14";break;
+case 394:time="2017-08-26 10:46:31";break;
+case 395:time="2017-08-26 10:51:46";break;
+case 396:time="2017-08-26 10:57:03";break;
+case 397:time="2017-08-26 11:02:19";break;
+case 398:time="2017-08-26 11:07:41";break;
+case 399:time="2017-08-26 11:13:04";break;
+case 400:time="2017-08-26 11:18:27";break;
+case 401:time="2017-08-26 11:23:49";break;
+case 402:time="2017-08-26 11:29:12";break;
+case 403:time="2017-08-26 11:34:35";break;
+case 404:time="2017-08-26 11:39:52";break;
+case 405:time="2017-08-26 11:45:14";break;
+case 406:time="2017-08-26 11:50:36";break;
+case 407:time="2017-08-26 11:56:05";break;
+case 408:time="2017-08-26 12:01:28";break;
+case 409:time="2017-08-26 12:06:37";break;
+case 410:time="2017-08-26 12:11:48";break;
+case 411:time="2017-08-26 12:16:59";break;
+case 412:time="2017-08-26 12:22:10";break;
+case 413:time="2017-08-26 12:27:20";break;
+case 414:time="2017-08-26 12:32:37";break;
+case 415:time="2017-08-26 12:37:52";break;
+case 416:time="2017-08-26 12:43:02";break;
+case 417:time="2017-08-26 12:48:19";break;
+case 418:time="2017-08-26 12:53:34";break;
+case 419:time="2017-08-26 12:58:44";break;
+case 420:time="2017-08-26 13:04:02";break;
+case 421:time="2017-08-26 13:09:18";break;
+case 422:time="2017-08-26 13:14:36";break;
+case 423:time="2017-08-26 13:19:52";break;
+case 424:time="2017-08-26 13:25:03";break;
+case 425:time="2017-08-26 13:30:11";break;
+case 426:time="2017-08-26 13:35:28";break;
+case 427:time="2017-08-26 13:40:44";break;
+case 428:time="2017-08-26 13:46:00";break;
+case 429:time="2017-08-26 13:51:24";break;
+case 430:time="2017-08-26 13:56:47";break;
+case 431:time="2017-08-26 14:02:04";break;
+case 432:time="2017-08-26 14:07:26";break;
+case 433:time="2017-08-26 14:12:49";break;
+case 434:time="2017-08-26 14:18:12";break;
+case 435:time="2017-08-26 14:23:30";break;
+case 436:time="2017-08-26 14:28:47";break;
+case 437:time="2017-08-26 14:34:03";break;
+case 438:time="2017-08-26 14:39:05";break;
+case 439:time="2017-08-26 14:44:09";break;
+case 440:time="2017-08-26 14:49:24";break;
+case 441:time="2017-08-26 14:54:41";break;
+case 442:time="2017-08-26 15:00:04";break;
+case 443:time="2017-08-26 15:05:34";break;
+case 444:time="2017-08-26 15:11:03";break;
+case 445:time="2017-08-26 15:16:19";break;
+case 446:time="2017-08-26 15:21:35";break;
+case 447:time="2017-08-26 15:27:05";break;
+case 448:time="2017-08-26 15:32:35";break;
+case 449:time="2017-08-26 15:37:45";break;
+case 450:time="2017-08-26 15:43:16";break;
+case 451:time="2017-08-26 15:50:22";break;
+case 452:time="2017-08-26 15:55:51";break;
+case 453:time="2017-08-26 16:01:08";break;
+case 454:time="2017-08-26 16:06:24";break;
+case 455:time="2017-08-26 16:11:53";break;
+case 456:time="2017-08-26 16:17:17";break;
+case 457:time="2017-08-26 16:22:46";break;
+case 458:time="2017-08-26 16:28:16";break;
+case 459:time="2017-08-26 16:33:46";break;
+case 460:time="2017-08-26 16:39:15";break;
+case 461:time="2017-08-26 16:44:44";break;
+case 462:time="2017-08-26 16:50:07";break;
+case 463:time="2017-08-26 16:55:31";break;
+case 464:time="2017-08-26 17:00:53";break;
+case 465:time="2017-08-26 17:06:23";break;
+case 466:time="2017-08-26 17:11:53";break;
+case 467:time="2017-08-26 17:17:23";break;
+case 468:time="2017-08-26 17:22:52";break;
+case 469:time="2017-08-26 17:28:04";break;
+case 470:time="2017-08-26 17:33:14";break;
+case 471:time="2017-08-26 17:38:26";break;
+case 472:time="2017-08-26 17:43:35";break;
+case 473:time="2017-08-26 17:48:46";break;
+case 474:time="2017-08-26 17:53:57";break;
+case 475:time="2017-08-26 17:59:07";break;
+case 476:time="2017-08-26 18:04:18";break;
+case 477:time="2017-08-26 18:09:28";break;
+case 478:time="2017-08-26 18:14:39";break;
+case 479:time="2017-08-26 18:19:50";break;
+case 480:time="2017-08-26 18:25:00";break;
+case 481:time="2017-08-26 18:30:29";break;
+case 482:time="2017-08-26 18:36:00";break;
+case 483:time="2017-08-26 18:41:30";break;
+case 484:time="2017-08-26 18:46:59";break;
+case 485:time="2017-08-26 18:52:28";break;
+case 486:time="2017-08-26 18:57:58";break;
+case 487:time="2017-08-26 19:03:28";break;
+case 488:time="2017-08-26 19:08:58";break;
+case 489:time="2017-08-26 19:14:21";break;
+case 490:time="2017-08-26 19:19:44";break;
+case 491:time="2017-08-26 19:25:07";break;
+case 492:time="2017-08-26 19:30:23";break;
+case 493:time="2017-08-26 19:35:52";break;
+case 494:time="2017-08-26 19:41:22";break;
+case 495:time="2017-08-26 19:46:45";break;
+case 496:time="2017-08-26 19:52:15";break;
+case 497:time="2017-08-26 19:57:33";break;
+case 498:time="2017-08-26 20:03:03";break;
+case 499:time="2017-08-26 20:08:33";break;
+case 500:time="2017-08-26 20:13:55";break;
+case 501:time="2017-08-26 20:19:25";break;
+case 502:time="2017-08-26 20:24:47";break;
+case 503:time="2017-08-26 20:30:04";break;
+case 504:time="2017-08-26 20:35:21";break;
+case 505:time="2017-08-26 20:40:52";break;
+case 506:time="2017-08-26 20:46:22";break;
+case 507:time="2017-08-26 20:51:45";break;
+case 508:time="2017-08-26 20:57:01";break;
+case 509:time="2017-08-26 21:02:18";break;
+case 510:time="2017-08-26 21:07:33";break;
+case 511:time="2017-08-26 21:12:51";break;
+case 512:time="2017-08-26 21:18:07";break;
+case 513:time="2017-08-26 21:23:37";break;
+case 514:time="2017-08-26 21:28:53";break;
+case 515:time="2017-08-26 21:34:24";break;
+case 516:time="2017-08-26 21:39:53";break;
+case 517:time="2017-08-26 21:45:22";break;
+case 518:time="2017-08-26 21:50:51";break;
+case 519:time="2017-08-26 21:56:21";break;
+case 520:time="2017-08-26 22:01:52";break;
+case 521:time="2017-08-26 22:07:14";break;
+case 522:time="2017-08-26 22:12:23";break;
+case 523:time="2017-08-26 22:17:19";break;
+case 524:time="2017-08-26 22:22:14";break;
+case 525:time="2017-08-26 22:27:10";break;
+case 526:time="2017-08-26 22:32:33";break;
+case 527:time="2017-08-26 22:37:41";break;
+case 528:time="2017-08-26 22:43:10";break;
+case 529:time="2017-08-26 22:48:41";break;
+case 530:time="2017-08-26 22:53:52";break;
+case 531:time="2017-08-26 22:59:02";break;
+case 532:time="2017-08-26 23:04:13";break;
+case 533:time="2017-08-26 23:09:24";break;
+case 534:time="2017-08-26 23:14:34";break;
+case 535:time="2017-08-26 23:19:44";break;
+case 536:time="2017-08-26 23:24:55";break;
+case 537:time="2017-08-26 23:30:06";break;
+case 538:time="2017-08-26 23:35:15";break;
+case 539:time="2017-08-26 23:40:37";break;
+case 540:time="2017-08-26 23:46:00";break;
+case 541:time="2017-08-26 23:53:18";break;
+case 542:time="2017-08-26 23:58:29";break;
+}
+document.getElementById('new').innerHTML = time;
+filterBy(time);
+        });
+    ;
+;
 </script>
 
 </body>
