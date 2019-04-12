@@ -19,7 +19,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
+    style: 'mapbox://styles/mapbox/satellite-streets-v10',
     zoom: 17,
     center: [-95.355099, 29.757341],
     bearing: -20,
@@ -37,7 +37,15 @@ map.addLayer({
         },
         "source-layer": "DowntownHouston",
         "paint": {
-        'fill-extrusion-opacity': 1,
+        'fill-extrusion-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  16.99,
+  0,
+  17,
+  0.95
+],
         'fill-extrusion-color': [
 'to-color',
                 ['get', 'Color']
