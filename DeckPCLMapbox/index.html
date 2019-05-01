@@ -1,1 +1,161 @@
 
+<html>
+
+<head>
+  <title>Deckgl RGB PointCloud + Mapbox</title>
+  <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css">
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+  <style>
+    body {
+      background-color: #000000;
+      margin: 0;
+    }
+
+    .navbar-default {
+      background-color: #000000;
+      border-bottom: 0px;
+      border-top: 0px;
+      border-left: 0px;
+      border-right: 0px;
+      border-radius: 0;
+    }
+
+    .navbar-brand {
+      padding: 0px;
+    }
+
+    .navbar-brand>img {
+      height: 100%;
+      padding: 15px;
+      width: auto;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      height: 100%;
+      width: 100%;
+    }
+
+    #map {
+      height: 90vh;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .mapboxgl-popup-content {
+      color: #4264fb;
+      background-color: #000000;
+      border-color: #4264fb;
+      border-width: 1px;
+      max-width: 250px;
+      font-family: "Open Sans";
+    }
+
+    .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+    .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+    .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+      border-bottom-color: #4264fb;
+    }
+
+    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+    .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+    .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+      border-top-color: #4264fb;
+    }
+
+    .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+      border-right-color: #4264fb;
+    }
+
+    .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+      border-left-color: #4264fb;
+    }
+
+    .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+      background-color: #000000;
+      border-top: : 1px solid #4264fb;
+      border-left: : 1px solid #4264fb;
+      border-right: : 1px solid #4264fb;
+      border-bottom: : 0px solid #4264fb;
+      border-radius: 15px 15px 0px 0px;
+    }
+
+    .mapboxgl-ctrl.mapboxgl-ctrl-attrib a {
+      font-family: "Open Sans";
+      color: #4264fb;
+    }
+
+    p {
+      font-family: "Open Sans";
+      font-size: small !important;
+      color: #4264fb !important;
+    }
+
+
+    .a {
+      font-family: "Open Sans";
+      font-size: small !important;
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand"><img src="mapbox-logo.png" alt="Mapbox"></a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="chart" class="container-fluid">
+      <div id="DashboardsTop" class="row">
+        <div class="col-lg-12">
+          <div id="map"></div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+<script type="text/javascript">
+
+  const { MapboxLayer, PointCloudLayer } = deck;
+
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [-74.044727, 40.689512],
+    zoom: 17.66,
+    bearing: -32.00,
+    pitch: 60
+  });
+
+  map.on('style.load', () => {
+    map.addLayer(new MapboxLayer({
+      id: 'deckgl-PointCloudLayer',
+      type: PointCloudLayer,
+      data: 'https://dl.dropbox.com/s/1jysj3enccgw7lf/lidar-data-190501.json',
+      getPosition: d => [d[0], d[1], d[2]],
+      getColor: d => [d[3], d[4], d[5]],
+      sizeUnits: 'meters',
+      pointSize: 0.5,
+      opacity: 1
+    }));
+  });
+
+</script>
+
+</html>
