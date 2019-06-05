@@ -61,8 +61,7 @@ map.on('load', function() {
     });
 
 map.on('click', function (e) {
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
+map.getCanvas().style.cursor = 'pointer';
 var features = map.queryRenderedFeatures(e.point, { layers: ['States'] });
     if (!features.length) {
         return;
@@ -72,6 +71,8 @@ var featuredata = feature.properties.JSON;
 var State = feature.properties.NAME;
 var popup = new mapboxgl.Popup()
         .setLngLat(map.unproject(e.point))
+        // What we will do is to point this at the Tableau URL and say if State Name = Parameter change the parameter.
+        // Strongly suggest we look at sizes of the viz, the map will fill your screen no matter what size it is
         .setHTML(State+'<img width="800" height="545" src="CA.jpg"/>')
         .addTo(map);
     });
