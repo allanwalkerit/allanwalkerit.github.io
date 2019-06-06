@@ -16,14 +16,14 @@
 
 <style>
     .mapboxgl-popup-content {
-    width: 2200px;
-    height: 1500px;	
+    width: 2000px;
+    height: 1200px;	
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     }
 
     #tableauViz {
-    width: 2200px;
-    height: 1500px;	
+    width: 2000px;
+    height: 1200px; 
     }
 
     #State {
@@ -43,8 +43,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMyc
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/satellite-streets-v9',
-        center: [0, 0],
-        zoom: 1,
+    center: [-97.922211, 39.381266],
+        zoom: 2,
         pitch: 0,
         bearing: 0
 });
@@ -52,7 +52,7 @@ var map = new mapboxgl.Map({
 map.on('load', function() {
     map.addLayer({
     id: "States",
-    type: "fill",
+    type: "line",
     source: {
       type: "vector",
       url: "mapbox://allanwalker.49hvjob0"
@@ -60,8 +60,8 @@ map.on('load', function() {
     "source-layer": "States",
     layout: {},
     paint: {
-      "fill-opacity": 1,
-      "fill-color": "rgba(0,0,0,0)"
+      "line-opacity": 1,
+      "line-color": "white"
     }
   },);
 });
