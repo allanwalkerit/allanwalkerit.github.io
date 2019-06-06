@@ -17,7 +17,7 @@
 <style>
     .mapboxgl-popup-content {
     width: 2000px;
-    height: 1200px;	
+    height: 1200px; 
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     }
 
@@ -44,7 +44,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/satellite-streets-v9',
     center: [-97.922211, 39.381266],
-        zoom: 2,
+        zoom: 1,
         pitch: 0,
         bearing: 0
 });
@@ -52,7 +52,7 @@ var map = new mapboxgl.Map({
 map.on('load', function() {
     map.addLayer({
     id: "States",
-    type: "line",
+    type: "fill",
     source: {
       type: "vector",
       url: "mapbox://allanwalker.49hvjob0"
@@ -60,13 +60,14 @@ map.on('load', function() {
     "source-layer": "States",
     layout: {},
     paint: {
-      "line-opacity": 1,
-      "line-color": "white"
+      "fill-opacity": 1,
+      "fill-color": "rgba(0,0,0,0)",
+      'fill-outline-color': '#FFFFFF'
     }
-  },);
+  });
 });
 
-    var popup = new mapboxgl.Popup({
+var popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false
     });
@@ -85,7 +86,7 @@ var popup = new mapboxgl.Popup()
         .setHTML('<div id="tableauViz"></div>')
         .addTo(map);
 document.getElementById("State").innerHTML = State;
-	tableau();
+    tableau();
     });
 
     map.on('mouseleave', 'places', function() {
@@ -98,9 +99,9 @@ function tableau() {
         var onePh = document.getElementById("tableauViz");
         var oneUrl = "https://public.tableau.com/views/Ken/ChangeDB?";
 var params="&:showVizHome=no&:display_spinner=n&:jsdebug=n&:embed=y&:display_overlay=no&:display_static_image=no&:animate_transition=yes";
-	var vizOptions = {
-	width: "100%",
-	height: "100%",
+    var vizOptions = {
+    width: "100%",
+    height: "100%",
             hideTabs: false,
             onFirstInteractive: function() {
 var x = document.getElementById("State").innerHTML;
