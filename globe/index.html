@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Animated Globe</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
 
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div class='square-content' id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/allanwalker/cjxh0ufzl31jq1cp8ew7pntbz',
+    zoom: 2,
+    center: [0, 0]
+});
+
+map.on('load', function () {
+
+    map.addLayer({
+        "id": "Globe",
+        "type": "line",
+        'filter': ['==', 'Order', 1],
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.6ogh9073'
+        },
+        "source-layer": "Globe",
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": "#FFFFFF",
+            "line-width": 1
+        }
+    });
+    animate();
+   
+});
+
+i=1;
+
+function animate() {
+if(i<=360) {
+window.setTimeout("animate()","50");
+animate1(i);
+i++;
+}
+if(i>=360) {
+i=-1;
+}
+}
+
+function animate1(a) {
+map.setFilter("Globe", ["==", "Order", a]);
+}
+
+</script>
+
+</body>
+</html>
