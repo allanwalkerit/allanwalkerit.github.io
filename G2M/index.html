@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>SS2Mapbox</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        iframe {
+    display: block;
+    background: #FFFFFF;
+    border: none;         
+    height: 90vh;       
+    width: 50vw;
+}
+.column {
+    float: left;
+    width: 50%;
+}
 
+.container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#map {
+    display: block;
+    background: #FFFFFF;
+    border: none;         
+    height: 90vh;        
+    width: 50vw;
+}
+
+#gsheetforms {
+    display: block;
+    background: #FFFFFF;
+    border: none;         
+    height: 50px; 
+    line-height: 50px;       
+    width: 50vw;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#mapboxforms {
+display: block;
+    background: #FFFFFF;
+    border: none;         
+    height: 50px; 
+    line-height: 50px;       
+    width: 50vw;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#Footer {
+    background: #FFFFFF;
+    border: none;         
+    height: 10px; 
+    line-height: 10px;
+    text-align: center;     
+    width: 100vw;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Hidden {
+display: none;
+}
+    </style>
+</head>
+<body>
+<div id="HideOne" class="Hidden"></div>
+<div id="HideTwo" class="Hidden"></div>
+<div id="HideThree" class="Hidden"></div>
+<div class="container">
+<div class="column"><div id='gsheetforms'>&nbsp;GSheet embed code: <input type="text" id="gsheetembed" name="valueId" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRbQ4mzUR4PmRiQ0Aa72fMNbwARDcS2Hgk9tDdGTu7woUwSYB46xGhOiWiaLkli0CrXbRZeK3QB1fwn/pubhtml?widget=true&amp;headers=false"/>
+    <button id="gsheetembedbutton" onClick="getgsheetembedvalue();">Apply</button>&nbsp;GSheet CSV URL: <input type="text" id="gsheetcsvurl" name="valueId" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRbQ4mzUR4PmRiQ0Aa72fMNbwARDcS2Hgk9tDdGTu7woUwSYB46xGhOiWiaLkli0CrXbRZeK3QB1fwn/pub?output=csv"/><button id="gsheetcsvurlbutton" onClick="getgsheeturlvalue();">Apply</button></div></div>
+<div class="column"><div id='mapboxforms'>&nbsp;Mapbox Token: <input type="text" id="mapboxtoken" name="valueId" value="pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA"/>
+    <button id="mapboxtokenbutton" onClick="getmapboxtoken();"/>Apply</button>&nbsp;Mapbox Style: <input type="text" id="mapboxstyle" name="valueId" value="mapbox://styles/mapbox/light-v10"/>
+    <button id="mapboxstylebutton" onClick="getmapboxstyle();"/>Apply</button><button onClick="sync();">Sync to Map &#8635;</button></div></div>
+</div>
+<div class="container">
+<div class="column"><iframe id='gsheet' src="about:blank"></iframe></div>
+<div class="column"><div id='map'></div></div>
+</div>
+<div id="Footer">Functional Proof of Concept only for the purposes of SA Team Sprint Week.  Not intended for production.</div>
+<script>
+
+function getgsheetembedvalue() {
+var gsheetembedvalue = document.getElementById("gsheetembed").value;
+document.getElementById('gsheet').src = gsheetembedvalue;
+  }
+
+function getgsheeturlvalue() {
+var gsheeturlvalue = document.getElementById("gsheetcsvurl").value;
+document.getElementById("HideOne").innerHTML = gsheeturlvalue;
+  }
+
+function getmapboxtoken() {
+var mapboxtokenvalue = document.getElementById("mapboxtoken").value;
+document.getElementById("HideTwo").innerHTML = mapboxtokenvalue;
+  }
+
+function getmapboxstyle() {
+var mapboxstylevalue = document.getElementById("mapboxstyle").value;
+document.getElementById("HideThree").innerHTML = mapboxstylevalue;
+  }
+
+function sync() {
+makemapboxmap();
+  }
+
+function makemapboxmap() {
+var gsheetdata = document.getElementById('HideOne').innerHTML;
+var mapboxtoken = document.getElementById('HideTwo').innerHTML;
+var mapboxstyle = document.getElementById('HideThree').innerHTML;
+
+mapboxgl.accessToken = mapboxtoken;
+var map = new mapboxgl.Map({
+    container: 'map', 
+    style: mapboxstyle, 
+    center: [-74.50, 40],
+    zoom: 9
+});
+
+map.on('load', function() {
+map.addSource('data', {
+type: 'geojson',
+data: gsheetdata
+});
+
+map.addLayer({
+    id: 'point',
+    type: 'circle',
+    source: 'data',
+    paint: {
+      'circle-radius': 5,
+      'circle-color': "#000000"
+    }
+  }, 'waterway-label');
+});
+};
+
+
+</script>
+
+</body>
+</html>
