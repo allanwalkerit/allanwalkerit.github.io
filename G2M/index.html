@@ -142,25 +142,13 @@ csv2geojson.csv2geojson(results, {
 });
 }
 });
-
-
-
-map.addSource('data', {
-type: 'geojson',
-data: data
 });
-
-map.addLayer({
-    id: 'point',
-    type: 'circle',
-    source: 'data',
-    paint: {
-      'circle-radius': 5,
-      'circle-color': "#000000"
-    }
-  }, 'waterway-label');
 };
 ;
+
+
+
+
 
 
 </script>
