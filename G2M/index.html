@@ -5,6 +5,8 @@
     <title>SS2Mapbox</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js'></script>
+    <script src='https://unpkg.com/papaparse@5.1.0/papaparse.min.js'></script>
+    <script src='https://npmcdn.com/csv2geojson@5.1.1/csv2geojson.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
@@ -127,9 +129,25 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function() {
+
+Papa.parse(gsheetdata, {
+    download: true,
+    complete: function(results) {
+        console.log(results);
+    }
+});
+
+csv2geojson.csv2geojson(results, {
+    latfield: 'latitude',
+    lonfield: 'longitude',
+    delimiter: ','
+}, function(err, data) {
+    console.log(data);
+});
+
 map.addSource('data', {
 type: 'geojson',
-data: gsheetdata
+data: data
 });
 
 map.addLayer({
