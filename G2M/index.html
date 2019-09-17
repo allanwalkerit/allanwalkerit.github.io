@@ -133,10 +133,6 @@ map.on('load', function() {
 Papa.parse(gsheetdata, {
     download: true,
     complete: function(results) {
-        console.log(results);
-    }
-}
-
 csv2geojson.csv2geojson(results, {
     latfield: 'latitude',
     lonfield: 'longitude',
@@ -144,6 +140,10 @@ csv2geojson.csv2geojson(results, {
 }, function(err, data) {
     console.log(data);
 });
+}
+});
+
+
 
 map.addSource('data', {
 type: 'geojson',
@@ -160,7 +160,7 @@ map.addLayer({
     }
   }, 'waterway-label');
 });
-};
+;
 
 
 </script>
