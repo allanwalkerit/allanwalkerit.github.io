@@ -146,16 +146,18 @@ function makeGeoJSON(csvData) {
         map.on('load', function () {
 
             map.addLayer({
-                'id': 'airports',
-                'type': 'symbol',
+                'id': 'gsheetdata',
+                'type': 'circle',
                 'source': {
                     'type': 'geojson',
                     'data': data
                 },
                 'layout': {
-                    "icon-image": "marker-15"
                 },
-                'paint': {}
+                'paint': {
+                    "circle-radius": 10,
+                    "circle-color": "#000000"
+                }
             });
         });    
     });
