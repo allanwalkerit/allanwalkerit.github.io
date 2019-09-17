@@ -133,6 +133,7 @@ map.on('load', function() {
 Papa.parse(gsheetdata, {
     download: true,
     complete: function(results) {
+    console.log(results);
 csv2geojson.csv2geojson(results, {
     latfield: 'latitude',
     lonfield: 'longitude',
