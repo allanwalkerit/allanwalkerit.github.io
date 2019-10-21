@@ -1,1 +1,219 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title></title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.0/mapbox-gl.js'></script>
+<link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.0/mapbox-gl.css' rel='stylesheet' />
+<style>
 
+body {
+        margin: 0;
+        padding: 0;
+        background-color: #000000;
+}
+
+#histogram {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 400px;
+        height: 300px;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1;
+
+}
+
+text {
+        fill: #FFFFFF;
+        font-size: 10px;
+}
+
+path {
+        stroke: #FFFFFF;;
+}
+
+#map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+}
+    
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+        background-color: rgba(0, 0, 0, 0.5);
+}
+    
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib a {
+        color: #fff;
+}
+    
+</style>
+
+<body>
+<div id="histogram"></div>
+<div id='map'></div>
+</body>
+
+<script>
+
+var data = [];
+var margin = {
+        top: 10,
+        right: 30,
+        bottom: 30,
+        left: 40
+    },
+    width = 400 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+var mincolor = 0;
+var maxcolor = 1;
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v10',
+    zoom: 1.5,
+    center: [0, 0],
+    pitch: 0
+});
+
+map.on('load', function() {
+
+    map.addLayer({
+        "id": "UNADJPOP2015",
+        "type": "fill",
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.4fj18r2m'
+        },
+        "source-layer": "UNADJPOP2015",
+        "layout": {},
+        "paint": {
+            "fill-opacity": 0.5,
+            "fill-color": [
+                "interpolate",
+                ["linear"],
+                ["get", "UNADJPOP2015"],
+                mincolor,
+                "hsl(0, 0%, 0%)",
+                maxcolor,
+                "#ffffff"
+            ],
+        }
+    });
+
+    map.once('idle', function() {
+        var features = map.queryRenderedFeatures({
+            layers: ['UNADJPOP2015']
+        });
+        for (var i = 0; i < features.length; i++) {
+            data.push(features[i].properties.UNADJPOP2015);
+
+        };
+        mincolor = d3.min(data);
+        maxcolor = d3.max(data);
+        var svg = d3.select("#histogram")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+        var x = d3.scaleLinear()
+            .domain([0, 1000])
+            .range([0, width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+        var histogram = d3.histogram()
+            .value(function(d) {
+                return d;
+            })
+            .domain(x.domain())
+            .thresholds(x.ticks(70));
+        var bins = histogram(data);
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+        y.domain([0, d3.max(bins, function(d) {
+            return d.length;
+        })]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+        svg.selectAll("rect")
+            .data(bins)
+            .enter()
+            .append("rect")
+            .attr("x", 1)
+            .attr("transform", function(d) {
+                return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+            })
+            .attr("width", function(d) {
+                return x(d.x1) - x(d.x0) - 1;
+            })
+            .attr("height", function(d) {
+                return height - y(d.length);
+            })
+            .style("fill", "#FFFFFF")
+    });
+
+    map.on('moveend', function() {
+        d3.select("#histogram").select("svg").remove();
+        var features = map.queryRenderedFeatures({
+            layers: ['UNADJPOP2015']
+        });
+        for (var i = 0; i < features.length; i++) {
+            data.push(features[i].properties.UNADJPOP2015);
+
+        };
+        mincolor = d3.min(data);
+        maxcolor = d3.max(data);
+        var svg = d3.select("#histogram")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+        var x = d3.scaleLinear()
+            .domain([0, 1000])
+            .range([0, width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+        var histogram = d3.histogram()
+            .value(function(d) {
+                return d;
+            })
+            .domain(x.domain())
+            .thresholds(x.ticks(70));
+        var bins = histogram(data);
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+        y.domain([0, d3.max(bins, function(d) {
+            return d.length;
+        })]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+        svg.selectAll("rect")
+            .data(bins)
+            .enter()
+            .append("rect")
+            .attr("x", 1)
+            .attr("transform", function(d) {
+                return "translate(" + x(d.x0) + "," + y(d.length) + ")";
+            })
+            .attr("width", function(d) {
+                return x(d.x1) - x(d.x0) - 1;
+            })
+            .attr("height", function(d) {
+                return height - y(d.length);
+            })
+            .style("fill", "#FFFFFF")
+    });
+});
+
+</script>
+</html>
