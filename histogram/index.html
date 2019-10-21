@@ -85,6 +85,7 @@ map.on('load', function() {
     map.addLayer({
         "id": "UNADJPOP2015",
         "type": "fill",
+        "filter": ['>', 'UNADJPOP2015', 0],
         "source": {
             type: 'vector',
             url: 'mapbox://allanwalker.4fj18r2m'
