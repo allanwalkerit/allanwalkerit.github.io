@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<body onload="zero()">
+<select id="selector">
+ 	<option value="0" selected="selected">Plasma</option>
+  	<option value="1">Turbo</option>
+  	<option value="2">Virdis</option>
+  	<option value="3">Inferno</option>
+  	<option value="4">Rainbow</option>
+</select>
+<div id="divContinuous"></div>
+</body>
+
+<script>
+
+var e = document.getElementById("selector");
+var val= e.options[e.selectedIndex].value;
+var svg = d3.select("#divContinuous").append("svg").attr("width", 1000).attr("height",400)
+var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+$( "#selector" ).change(function() {
+var val = (this.value);
+if (val == 0) {
+zero();
+} 
+if (val == 1) {
+one();
+}
+if  (val == 2) {
+two();
+}
+if  (val == 3) {
+three();
+}
+if  (val == 4) {
+four();
+}
+});
+
+
+
+function zero(){
+var myColor = d3.scaleSequential().domain([1,data.length])
+.interpolator(d3.interpolatePlasma);
+svg.selectAll(".firstrow").data(data).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 250).attr("r", 19).attr("fill", function(d){return myColor(d) });
+}
+
+function one(){
+var myColor = d3.scaleSequential().domain([1,data.length])
+.interpolator(d3.interpolateTurbo);
+svg.selectAll(".firstrow").data(data).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 250).attr("r", 19).attr("fill", function(d){return myColor(d) });
+}
+
+function two(){
+var myColor = d3.scaleSequential().domain([1,data.length])
+.interpolator(d3.interpolateViridis);
+svg.selectAll(".firstrow").data(data).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 250).attr("r", 19).attr("fill", function(d){return myColor(d) });
+}
+
+function three(){
+var myColor = d3.scaleSequential().domain([1,data.length])
+.interpolator(d3.interpolateInferno);
+svg.selectAll(".firstrow").data(data).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 250).attr("r", 19).attr("fill", function(d){return myColor(d) });
+}
+
+function four(){
+var myColor = d3.scaleSequential().domain([1,data.length])
+.interpolator(d3.interpolateRainbow);
+svg.selectAll(".firstrow").data(data).enter().append("circle").attr("cx", function(d,i){return 30 + i*60}).attr("cy", 250).attr("r", 19).attr("fill", function(d){return myColor(d) });
+}
+
+
+
+</script>

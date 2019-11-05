@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='robots' content='noindex, nofollow'>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        h2, h3 {
+            margin: 10px;
+            font-size: 1.2em;
+        }
+        h3 {
+            font-size: 1em;
+        }
+        p {
+            font-size: 0.85em;
+            margin: 10px;
+            text-align: left;
+        }
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            margin-right: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+        #map {
+            position:absolute;
+            top:0;
+            bottom:0;
+            width:100%;
+        }
+        #features {
+            top: 0;
+            height: 150px;
+            margin-top: 20px;
+            width: 250px;
+        }
+        #legend {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+            line-height: 18px;
+            height: 150px;
+            margin-bottom: 40px;
+            width: 100px;
+        }
+        .legend-key {
+            display:inline-block;
+            border-radius: 20%;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<div class='map-overlay' id='features'><p>Choose Color Palette: </p><select id="selector">
+    <option value="0" selected="selected">Plasma</option>
+    <option value="1">Turbo</option>
+    <option value="2">Virdis</option>
+    <option value="3">Inferno</option>
+</select><div id='pd'><p>Hover over a state!</p></div></div>
+<div class='map-overlay' id='legend'></div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/dark-v9'
+});
+
+var layers = ['0-10', '10-20', '20-50', '50-100', '100-200', '200-500', '500-1000', '1000+'];
+var mapcolors = [];
+var myColor = d3.scaleSequential().domain([1,layers.length])
+.interpolator(d3.interpolatePlasma);
+map.on('load', function() {
+map.getCanvas().style.cursor = 'default';
+
+    // set map bounds to the continental US
+    map.fitBounds([[-133.2421875, 16.972741], [-47.63671875, 52.696361]]);
+
+    // make a pointer cursor
+    map.getCanvas().style.cursor = 'default';
+
+    // define layer names
+
+for (i=0; i<layers.length; i++) {
+        var layer = layers[i];
+        var color = myColor(i);
+        var item = document.createElement('div');
+        var key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+        mapcolors.push(color);
+        var value = document.createElement('span');
+        value.innerHTML = layer;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    }
+
+map.addLayer({
+        "id": "state-data",
+        "type": 'fill',
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.54i6xarx'
+        },
+        "source-layer": "stateData-8pank2",
+        "paint": {
+        'fill-opacity': 1,
+        'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "density"],
+  0,
+  mapcolors[0],
+  10,
+  mapcolors[1],
+  20,
+  mapcolors[2],
+  50,
+  mapcolors[3],
+  100,
+  mapcolors[4],
+  200,
+  mapcolors[5],
+  500,
+  mapcolors[6],
+  1000,
+  mapcolors[7],
+],
+        }
+    });
+;
+
+$( "#selector" ).change(function() {
+$("#legend").html("");
+var val = (this.value);
+if (val == 0) {
+var myColor = d3.scaleSequential().domain([1,layers.length])
+.interpolator(d3.interpolatePlasma);
+ for (i=0; i<layers.length; i++) {
+        var layer = layers[i];
+        var color = myColor(i);
+        var item = document.createElement('div');
+        var key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+        var value = document.createElement('span');
+        value.innerHTML = layer;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    }
+} 
+if (val == 1) {
+var myColor = d3.scaleSequential().domain([1,layers.length])
+.interpolator(d3.interpolateTurbo);
+ for (i=0; i<layers.length; i++) {
+        var layer = layers[i];
+        var color = myColor(i);
+        var item = document.createElement('div');
+        var key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+
+        var value = document.createElement('span');
+        value.innerHTML = layer;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    }
+}
+if  (val == 2) {
+var myColor = d3.scaleSequential().domain([1,layers.length])
+.interpolator(d3.interpolateViridis);
+ for (i=0; i<layers.length; i++) {
+        var layer = layers[i];
+        var color = myColor(i);
+        var item = document.createElement('div');
+        var key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+
+        var value = document.createElement('span');
+        value.innerHTML = layer;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    }
+}
+if  (val == 3) {
+var myColor = d3.scaleSequential().domain([1,layers.length])
+.interpolator(d3.interpolateInferno);
+ for (i=0; i<layers.length; i++) {
+        var layer = layers[i];
+        var color = myColor(i);
+        var item = document.createElement('div');
+        var key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+
+        var value = document.createElement('span');
+        value.innerHTML = layer;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    }
+}
+});
+});
+
+// change info window on hover
+    map.on('mousemove', function (e) {
+        var states = map.queryRenderedFeatures(e.point, {
+            layers: ['state-data']
+        });
+
+        if (states.length > 0) {
+            document.getElementById('pd').innerHTML = "<h3><strong>" + states[0].properties.name + "</strong></h3><p><strong><em>" + states[0].properties.density + "</strong> people per square mile</em></p>";
+        } else {
+            document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>';
+        }
+    });
+
+;    
+
+</script>
+
+</body>
+</html>
