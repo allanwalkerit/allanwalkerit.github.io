@@ -72,7 +72,8 @@
     <option value="1">Turbo</option>
     <option value="2">Virdis</option>
     <option value="3">Inferno</option>
-</select><div id='pd'><p>Hover over a state!</p></div></div>
+</select>
+</div>
 <div class='map-overlay' id='legend'></div>
 
 <script>
@@ -151,23 +152,81 @@ map.addLayer({
 
 $( "#selector" ).change(function() {
 $("#legend").html("");
+var mapcolors = [];
 var val = (this.value);
+if (map.getLayer('state-data')){
+map.removeLayer('state-data');
+map.removeSource('state-data');
+}
+if (map.getLayer('state-data1')){
+map.removeLayer('state-data1');
+map.removeSource('state-data1');
+}
+if (map.getLayer('state-data2')){
+map.removeLayer('state-data2');
+map.removeSource('state-data2');
+}
+if (map.getLayer('state-data3')){
+map.removeLayer('state-data3');
+map.removeSource('state-data3');
+}
+if (map.getLayer('state-data4')){
+map.removeLayer('state-data4');
+map.removeSource('state-data4');
+}
+
 if (val == 0) {
 var myColor = d3.scaleSequential().domain([1,layers.length])
 .interpolator(d3.interpolatePlasma);
  for (i=0; i<layers.length; i++) {
-        var layer = layers[i];
+       var layer = layers[i];
         var color = myColor(i);
         var item = document.createElement('div');
         var key = document.createElement('span');
         key.className = 'legend-key';
         key.style.backgroundColor = color;
+        mapcolors.push(color);
         var value = document.createElement('span');
         value.innerHTML = layer;
         item.appendChild(key);
         item.appendChild(value);
         legend.appendChild(item);
     }
+
+map.addLayer({
+        "id": "state-data1",
+        "type": 'fill',
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.54i6xarx'
+        },
+        "source-layer": "stateData-8pank2",
+        "paint": {
+        'fill-opacity': 1,
+        'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "density"],
+  0,
+  mapcolors[0],
+  10,
+  mapcolors[1],
+  20,
+  mapcolors[2],
+  50,
+  mapcolors[3],
+  100,
+  mapcolors[4],
+  200,
+  mapcolors[5],
+  500,
+  mapcolors[6],
+  1000,
+  mapcolors[7],
+],
+        }
+    });
+;
 } 
 if (val == 1) {
 var myColor = d3.scaleSequential().domain([1,layers.length])
@@ -179,13 +238,48 @@ var myColor = d3.scaleSequential().domain([1,layers.length])
         var key = document.createElement('span');
         key.className = 'legend-key';
         key.style.backgroundColor = color;
-
+        mapcolors.push(color);
         var value = document.createElement('span');
         value.innerHTML = layer;
         item.appendChild(key);
         item.appendChild(value);
         legend.appendChild(item);
     }
+
+map.addLayer({
+        "id": "state-data2",
+        "type": 'fill',
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.54i6xarx'
+        },
+        "source-layer": "stateData-8pank2",
+        "paint": {
+        'fill-opacity': 1,
+        'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "density"],
+  0,
+  mapcolors[0],
+  10,
+  mapcolors[1],
+  20,
+  mapcolors[2],
+  50,
+  mapcolors[3],
+  100,
+  mapcolors[4],
+  200,
+  mapcolors[5],
+  500,
+  mapcolors[6],
+  1000,
+  mapcolors[7],
+],
+        }
+    });
+;
 }
 if  (val == 2) {
 var myColor = d3.scaleSequential().domain([1,layers.length])
@@ -197,13 +291,48 @@ var myColor = d3.scaleSequential().domain([1,layers.length])
         var key = document.createElement('span');
         key.className = 'legend-key';
         key.style.backgroundColor = color;
-
+        mapcolors.push(color);
         var value = document.createElement('span');
         value.innerHTML = layer;
         item.appendChild(key);
         item.appendChild(value);
         legend.appendChild(item);
     }
+
+map.addLayer({
+        "id": "state-data3",
+        "type": 'fill',
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.54i6xarx'
+        },
+        "source-layer": "stateData-8pank2",
+        "paint": {
+        'fill-opacity': 1,
+        'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "density"],
+  0,
+  mapcolors[0],
+  10,
+  mapcolors[1],
+  20,
+  mapcolors[2],
+  50,
+  mapcolors[3],
+  100,
+  mapcolors[4],
+  200,
+  mapcolors[5],
+  500,
+  mapcolors[6],
+  1000,
+  mapcolors[7],
+],
+        }
+    });
+;
 }
 if  (val == 3) {
 var myColor = d3.scaleSequential().domain([1,layers.length])
@@ -215,31 +344,52 @@ var myColor = d3.scaleSequential().domain([1,layers.length])
         var key = document.createElement('span');
         key.className = 'legend-key';
         key.style.backgroundColor = color;
-
+        mapcolors.push(color);
         var value = document.createElement('span');
         value.innerHTML = layer;
         item.appendChild(key);
         item.appendChild(value);
         legend.appendChild(item);
     }
+
+map.addLayer({
+        "id": "state-data4",
+        "type": 'fill',
+        "source": {
+            type: 'vector',
+            url: 'mapbox://allanwalker.54i6xarx'
+        },
+        "source-layer": "stateData-8pank2",
+        "paint": {
+        'fill-opacity': 1,
+        'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "density"],
+  0,
+  mapcolors[0],
+  10,
+  mapcolors[1],
+  20,
+  mapcolors[2],
+  50,
+  mapcolors[3],
+  100,
+  mapcolors[4],
+  200,
+  mapcolors[5],
+  500,
+  mapcolors[6],
+  1000,
+  mapcolors[7],
+],
+        }
+    });
+;
 }
 });
 });
-
-// change info window on hover
-    map.on('mousemove', function (e) {
-        var states = map.queryRenderedFeatures(e.point, {
-            layers: ['state-data']
-        });
-
-        if (states.length > 0) {
-            document.getElementById('pd').innerHTML = "<h3><strong>" + states[0].properties.name + "</strong></h3><p><strong><em>" + states[0].properties.density + "</strong> people per square mile</em></p>";
-        } else {
-            document.getElementById('pd').innerHTML = '<p>Hover over a state!</p>';
-        }
-    });
-
-;    
+   
 
 </script>
 
