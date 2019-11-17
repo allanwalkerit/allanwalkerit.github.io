@@ -12,7 +12,7 @@ var config = {
         {
             id: 'KenyaMaizeProduction2011',
             title: 'Dry Maize Production in Kenya',
-            image: 'https://public.tableau.com/thumb/views/KenyaMaizeProduction2011-2014/KenyaMaizeProduction2011',
+            image: 'https://public.tableau.com/views/KenyaMaizeProduction2011-2014/KenyaMaizeProduction2011.png?:showVizHome=no',
             description: '2011',
             location: {
                 center: [37.908000, 0.130000],
