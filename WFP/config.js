@@ -36,7 +36,7 @@ onChapterExit: [
         {
             id: 'KenyaMaizeProduction2012',
             title: 'Dry Maize Production in Kenya',
-            image: '',
+            image: 'https://public.tableau.com/views/KenyaMaizeProduction2011-2014/KenyaMaizeProduction2012.png?:showVizHome=no',
             description: '2012',
             location: {
                 center: [37.908000, 0.130000],
@@ -60,7 +60,7 @@ onChapterExit: [
          {
             id: 'KenyaMaizeProduction2013',
             title: 'Dry Maize Production in Kenya',
-            image: '',
+            image: 'https://public.tableau.com/views/KenyaMaizeProduction2011-2014/KenyaMaizeProduction2013.png?:showVizHome=no',
             description: '2013',
             location: {
                 center: [37.908000, 0.130000],
@@ -84,7 +84,7 @@ onChapterExit: [
          {
             id: 'KenyaMaizeProduction2014',
             title: 'Dry Maize Production in Kenya',
-            image: '',
+            image: 'https://public.tableau.com/views/KenyaMaizeProduction2011-2014/KenyaMaizeProduction2014.png?:showVizHome=no',
             description: '2014',
             location: {
                 center: [37.908000, 0.130000],
