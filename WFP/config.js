@@ -20,34 +20,18 @@ var config = {
                 pitch: 0,
                 bearing: 0
             },
-            onChapterEnter: [
-                {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2011',
-                    opacity: 1
-                }
-            ],
-            onChapterExit: [
-             {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2011',
-                    opacity: 0
-                }
-            ]
+onChapterEnter: [
+  {
+      layer: 'kenya-maize-production-2011',
+      opacity: 1
+  }
+],
+onChapterExit: [
+  {
+      layer: 'kenya-maize-production-2011',
+      opacity: 0
+  }
+]
         },
         {
             id: 'KenyaMaizeProduction2012',
@@ -61,33 +45,17 @@ var config = {
                 bearing: 0
             },
             onChapterEnter: [
-                {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2012',
-                    opacity: 1
-                }
-            ],
-            onChapterExit: [
-             {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2012',
-                    opacity: 0
-                }
-            ]
+  {
+      layer: 'kenya-maize-production-2012',
+      opacity: 1
+  }
+],
+onChapterExit: [
+  {
+      layer: 'kenya-maize-production-2012',
+      opacity: 0
+  }
+]
         },
          {
             id: 'KenyaMaizeProduction2013',
@@ -100,34 +68,18 @@ var config = {
                 pitch: 0,
                 bearing: 0
             },
-            onChapterEnter: [
-                {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2013',
-                    opacity: 1
-                }
-            ],
-            onChapterExit: [
-             {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2013',
-                    opacity: 0
-                }
-            ]
+onChapterEnter: [
+  {
+      layer: 'kenya-maize-production-2013',
+      opacity: 1
+  }
+],
+onChapterExit: [
+  {
+      layer: 'kenya-maize-production-2013',
+      opacity: 0
+  }
+]
         },
          {
             id: 'KenyaMaizeProduction2014',
@@ -140,34 +92,18 @@ var config = {
                 pitch: 0,
                 bearing: 0
             },
-            onChapterEnter: [
-                {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2014',
-                    opacity: 1
-                }
-            ],
-            onChapterExit: [
-             {
-                    layer: 'kenya-counties-labels',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-counties-line',
-                    opacity: 1
-                },
-                {
-                    layer: 'kenya-maize-production-2014',
-                    opacity: 0
-                }
-            ]
+onChapterEnter: [
+  {
+      layer: 'kenya-maize-production-2014',
+      opacity: 1
+  }
+],
+onChapterExit: [
+  {
+      layer: 'kenya-maize-production-2014',
+      opacity: 0
+  }
+]
         }
     ]
 };
