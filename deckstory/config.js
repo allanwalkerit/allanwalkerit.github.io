@@ -4,10 +4,10 @@ var config = {
     showMarkers: false,
     theme: 'light',
     alignment: 'left',
-    title: 'LIDAR',
+    title: 'Liberty Island',
     subtitle: '',
-    byline: 'By Allan Walker',
-    footer: 'Sources: USGS',
+    byline: '',
+    footer: 'Sources: USGS, NAIP & NPS',
     chapters: [
         {
             id: 'One',
