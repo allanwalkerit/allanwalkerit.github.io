@@ -31,8 +31,8 @@
             width: 90vw;
             padding: 2vh;
             text-align: center;
-            background-color: rgba(0,0,0,0.25);
-            color: #FFFFFF;
+            background-color: #F5F5F5;
+            color: #000000;
         }
         #footer {
             width: 100%;
@@ -61,8 +61,8 @@
             margin-left: 62vw;
         }
         .light {
-            background-color: rgba(0,0,0,0.25);
-            color: #FFFFFF;
+            background-color: #F5F5F5;
+            color: #000000;
         }
         .dark {
             color: #fafafa;
@@ -241,9 +241,20 @@ map.on("load", function() {
     // setup the instance, pass callback functions
 
     map.addLayer(new MapboxLayer({
-      id: 'deckgl-PointCloudLayer',
+      id: 'deckgl-PointCloudLayerLiberty',
       type: PointCloudLayer,
       data: 'https://dl.dropboxusercontent.com/s/1jysj3enccgw7lf/lidar-data-190501.json',
+      getPosition: d => [d[0], d[1], d[2]],
+      getColor: d => [d[3], d[4], d[5]],
+      sizeUnits: 'meters',
+      pointSize: 0.5,
+      opacity: 1
+    }));
+
+    map.addLayer(new MapboxLayer({
+      id: 'deckgl-PointCloudLayerEllis',
+      type: PointCloudLayer,
+      data: 'https://dl.dropboxusercontent.com/s/95g862s9w19femv/eliis.json',
       getPosition: d => [d[0], d[1], d[2]],
       getColor: d => [d[3], d[4], d[5]],
       sizeUnits: 'meters',
