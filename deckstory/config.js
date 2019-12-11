@@ -88,6 +88,45 @@ var config = {
             onChapterExit: []
         },
         {
+            id: 'System Map',
+            title: '',
+            image: 'https://www.nps.gov/stli/planyourvisit/images/Ferry-Map-2015j.jpg',
+            description: "",
+            location: {
+            center: [-74.03330, 40.69695],
+            zoom: 13.94,
+            pitch: 0.50,
+            bearing: 0.00
+            },
+            onChapterEnter: [
+     {
+      layer: 'NY2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_2',
+      opacity: 1
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 1
+  }
+            ],
+            onChapterExit: []
+        },
+        {
             id: 'NYIntro',
             title: '',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Battery_Park.JPG/1200px-Battery_Park.JPG',
