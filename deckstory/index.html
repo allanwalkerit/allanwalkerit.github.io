@@ -262,6 +262,28 @@ map.on("load", function() {
       opacity: 1
     }));
 
+    map.addLayer(new MapboxLayer({
+      id: 'deckgl-PointCloudLayerBattery',
+      type: PointCloudLayer,
+      data: 'https://dl.dropboxusercontent.com/s/jcp9ih32m8p94wk/Battery.json',
+      getPosition: d => [d[0], d[1], d[2]],
+      getColor: d => [d[3], d[4], d[5]],
+      sizeUnits: 'meters',
+      pointSize: 0.75,
+      opacity: 0.75
+    }));
+
+    map.addLayer(new MapboxLayer({
+      id: 'deckgl-PointCloudLayerBatteryBuildings',
+      type: PointCloudLayer,
+      data: 'https://dl.dropboxusercontent.com/s/2scu1hrivig2f7r/batterybuildings.json',
+      getPosition: d => [d[0], d[1], d[2]],
+      getColor: d => [d[3], d[4], d[5]],
+      sizeUnits: 'meters',
+      pointSize: 0.5,
+      opacity: 0.25
+    }));
+
     scroller
     .setup({
         step: '.step',
