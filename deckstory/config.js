@@ -88,10 +88,49 @@ var config = {
             onChapterExit: []
         },
         {
-            id: 'NY',
+            id: 'NYIntro',
             title: '',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Battery_Park.JPG/1200px-Battery_Park.JPG',
             description: "The Battery (formerly known as Battery Park) is a 25-acre (10 ha) public park located at the southern tip of Manhattan Island in New York City facing New York Harbor. It is bounded by Battery Place on the north, State Street on the east, New York Harbor to the south, and the Hudson River to the west. The park contains attractions such as an old fort named Castle Clinton; multiple monuments; and the SeaGlass Carousel. <br><br>The surrounding area, known as South Ferry, contains multiple ferry terminals, including the Staten Island Ferry's Whitehall Terminal as well as boat launches to the Statue of Liberty National Monument.",
+            location: {
+            center: [-74.01734, 40.70319],
+            zoom: 19.04,
+            pitch: 0.00,
+            bearing: -28.80
+            },
+            onChapterEnter: [
+     {
+      layer: 'NY2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_2',
+      opacity: 1
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NJ2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 0
+  }
+            ],
+            onChapterExit: []
+        },
+        {
+            id: 'NYDock',
+            title: '',
+            image: '',
+            description: "",
             location: {
             center: [-74.01734, 40.70319],
             zoom: 19.37,
@@ -127,15 +166,54 @@ var config = {
             onChapterExit: []
         },
                 {
-            id: 'NJ',
+            id: 'NJIntro',
             title: '',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg/1200px-Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg',
             description: "Liberty State Park is a park in the U.S. state of New Jersey, located on Upper New York Bay in Jersey City, opposite both Liberty Island and Ellis Island. The park opened in 1976 to coincide with bicentennial celebrations and is operated and maintained by the New Jersey Division of Parks and Forestry. Liberty State Park covers 1,212 acres (490 ha). The main part of the park is bordered by water on three sides: on the north by the Morris Canal Big Basin and on the south and east by Upper New York Bay. The New Jersey Turnpike Newark Bay Extension (I-78) marks its western perimeter.<br><br>Most of the park's area is on landfill created by the Central Railroad of New Jersey (CRRNJ) and the Lehigh Valley Railroad, defunct companies whose lines once terminated there. In the northeast corner of the park is the CRRNJ Terminal, a historic transportation building. Statue Cruises offers ferries to Statue of Liberty National Monument, Ellis Island and Liberty Island that depart nearby.",
             location: {
-                center: [-74.03441, 40.70753],
-                zoom: 16.28,
-                pitch: 0.50,
-                bearing: 8.00
+            center: [-74.03390, 40.70729],
+            zoom: 16.81,
+            pitch: 1.50,
+            bearing: 8.00
+            },
+            onChapterEnter: [
+      {
+      layer: 'NY2LI',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 1
+  }
+            ],
+            onChapterExit: []
+        },
+        {
+            id: 'NJDock',
+            title: '',
+            image: '',
+            description: "",
+            location: {
+            center: [-74.03415, 40.70738],
+            zoom: 18.91,
+            pitch: 60.00,
+            bearing: -148.00
             },
             onChapterEnter: [
       {
