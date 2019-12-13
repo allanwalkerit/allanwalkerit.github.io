@@ -7,7 +7,7 @@ var config = {
     title: 'Statue of Liberty National Monument',
     subtitle: 'Ellis Island and Liberty Island',
     byline: '',
-    footer: 'Sources: NYC Open Data, NOAA, NPS, Wikipedia, OpenStreetMap',
+    footer: 'Sources: NJGIN, NYC Open Data, NOAA, NPS, Wikipedia, OpenStreetMap',
     chapters: [
         {
             id: 'Libery Intro',
@@ -43,6 +43,38 @@ var config = {
   },
   {
       layer: 'Firefly_NJ2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
       opacity: 0
   }
             ],
@@ -83,6 +115,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 0
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -91,7 +155,7 @@ var config = {
             id: 'System Map',
             title: '',
             image: 'https://www.nps.gov/stli/planyourvisit/images/Ferry-Map-2015j.jpg',
-            description: "",
+            description: "Text here about the System Map",
             location: {
             center: [-74.03330, 40.69695],
             zoom: 13.94,
@@ -122,7 +186,40 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 1
+  },
+  {
+      layer: 'ginm',
+      opacity: 1
+  },
+  {
+      layer: 'parks',
+      opacity: 1
+  },
+  {
+      layer: 'water_outline',
+      opacity: 1
+  },
+  {
+      layer: 'water',
+      opacity: 1
+  },
+  {
+      layer: 'road',
+      opacity: 1
+  },
+  {
+      layer: 'NYC',
+      opacity: 1
+  },
+  {
+      layer: 'NJ',
+      opacity: 1
   }
+
             ],
             onChapterExit: []
         },
@@ -160,6 +257,38 @@ var config = {
   },
   {
       layer: 'Firefly_NJ2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
       opacity: 0
   }
             ],
@@ -200,6 +329,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 0
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -239,6 +400,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -278,6 +471,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -317,6 +542,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -356,6 +613,38 @@ var config = {
   {
       layer: 'Firefly_NJ2LI_2',
       opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
   }
             ],
             onChapterExit: []
@@ -394,6 +683,38 @@ var config = {
   },
   {
       layer: 'Firefly_NJ2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'NJ',
       opacity: 0
   }
             ],
