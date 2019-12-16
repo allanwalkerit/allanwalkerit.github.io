@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +8,6 @@
 body {
 background-color: #000000;
 }
-
-
 #tableauViz1 {
 width:95vw;
 height:95vh;
@@ -19,16 +16,12 @@ margin: 0 auto;
 </style>
 </head>
 <body>
-
 <div id=tableauViz1></div>
-	
 </body> 
 <script>
-    var viz, one, two, three, four, workbooka, workbookb, workbookc, workbookd, activeSheet, Worksheet, worksheet;
     $(function() {
         var onePh = document.getElementById("tableauViz1");
-        var oneUrl = "https://public.tableau.com/views/SlalomHackathon/SlalomHackathon2?:showVizHome=no&:display_spinner=no&:jsdebug=y&:embed=y&:display_overlay=no&:display_static_image=no&:animate_transition=yes";
-
+        var oneUrl = "https://public.tableau.com/views/TieFighter/TIE?:showVizHome=no&:display_spinner=no&:jsdebug=n&:embed=y&:display_overlay=no&:display_static_image=no&:animate_transition=yes";
 	var vizOptions = {
 	width: "100%",
 	height: "100%",
@@ -42,7 +35,7 @@ viz1 = new tableauSoftware.Viz(onePh, oneUrl, vizOptions);
 });
 function animate() {
 if(i<=31) {
-window.setTimeout("animate()","4000");
+window.setTimeout("animate()","2000");
 animate1(i);
 i++;
 }
@@ -50,10 +43,10 @@ if(i>=31) {
 i=-1;
 }
 }
-
 function animate1(a) {
-viz1.getWorkbook().changeParameterValueAsync("ANIMATE", [a]);
-}
+viz1.getWorkbook().changeParameterValueAsync("ANIMATEXY", [a]);
+viz1.getWorkbook().changeParameterValueAsync("ANIMATEXZ", [a]);
 
+}
 </script>
 </html>
