@@ -229,10 +229,10 @@ var config = {
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Battery_Park.JPG/1200px-Battery_Park.JPG',
             description: "The Battery (formerly known as Battery Park) is a 25-acre (10 ha) public park located at the southern tip of Manhattan Island in New York City facing New York Harbor. It is bounded by Battery Place on the north, State Street on the east, New York Harbor to the south, and the Hudson River to the west. The park contains attractions such as an old fort named Castle Clinton; multiple monuments; and the SeaGlass Carousel. <br><br>The surrounding area, known as South Ferry, contains multiple ferry terminals, including the Staten Island Ferry's Whitehall Terminal as well as boat launches to the Statue of Liberty National Monument.",
             location: {
-            center: [-74.01734, 40.70319],
-            zoom: 19.04,
-            pitch: 0.00,
-            bearing: -28.80
+            center: [-74.01588, 40.70322],
+            zoom: 16.74,
+            pitch: 3.50,
+            bearing: 0.00
             },
             onChapterEnter: [
      {
@@ -296,7 +296,7 @@ var config = {
         },
         {
             id: 'Castle Clinton',
-            title: 'Castle Clinton',
+            title: 'Castle Clinton National Monument',
             image: 'https://www.nps.gov/common/uploads/grid_builder/cacl/crop16_9/AFF5989A-1DD8-B71B-0B427FCF399C7233.JPG',
             description: "Castle Clinton or Fort Clinton, previously known as Castle Garden, is a circular sandstone fort now located in Battery Park, in Manhattan, New York City. Built from 1808 to 1811, it was the first U.S. immigration station (predating Ellis Island), where more than 8 million people arrived in the United States from 1855 to 1890. Over its active life, it has also functioned as a beer garden, exhibition hall, theater, and public aquarium. Castle Clinton National Monument was listed on the National Register of Historic Places on October 15, 1966.<br><br>Castle Clinton National Monument currently serves as a departure point for ferry to Statue of Liberty National Monument and Ellis Island.",
             location: {
@@ -371,10 +371,10 @@ var config = {
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg/1200px-Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg',
             description: "Liberty State Park is a park in the U.S. state of New Jersey, located on Upper New York Bay in Jersey City, opposite both Liberty Island and Ellis Island. The park opened in 1976 to coincide with bicentennial celebrations and is operated and maintained by the New Jersey Division of Parks and Forestry. Liberty State Park covers 1,212 acres (490 ha). The main part of the park is bordered by water on three sides: on the north by the Morris Canal Big Basin and on the south and east by Upper New York Bay. The New Jersey Turnpike Newark Bay Extension (I-78) marks its western perimeter.<br><br>Most of the park's area is on landfill created by the Central Railroad of New Jersey (CRRNJ) and the Lehigh Valley Railroad, defunct companies whose lines once terminated there. In the northeast corner of the park is the CRRNJ Terminal, a historic transportation building.",
             location: {
-            center: [-74.03390, 40.70729],
-            zoom: 16.81,
-            pitch: 1.50,
-            bearing: 8.00
+            center: [-74.05094, 40.70264],
+            zoom: 14.00,
+            pitch: 3.50,
+            bearing: 0.00
             },
             onChapterEnter: [
       {
