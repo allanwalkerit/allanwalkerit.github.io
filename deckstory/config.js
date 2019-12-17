@@ -367,7 +367,7 @@ var config = {
         },
                 {
             id: 'NJIntro',
-            title: '',
+            title: 'Liberty State Park',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg/1200px-Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg',
             description: "Liberty State Park is a park in the U.S. state of New Jersey, located on Upper New York Bay in Jersey City, opposite both Liberty Island and Ellis Island. The park opened in 1976 to coincide with bicentennial celebrations and is operated and maintained by the New Jersey Division of Parks and Forestry. Liberty State Park covers 1,212 acres (490 ha). The main part of the park is bordered by water on three sides: on the north by the Morris Canal Big Basin and on the south and east by Upper New York Bay. The New Jersey Turnpike Newark Bay Extension (I-78) marks its western perimeter.<br><br>Most of the park's area is on landfill created by the Central Railroad of New Jersey (CRRNJ) and the Lehigh Valley Railroad, defunct companies whose lines once terminated there. In the northeast corner of the park is the CRRNJ Terminal, a historic transportation building.",
             location: {
