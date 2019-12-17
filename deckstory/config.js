@@ -74,6 +74,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -142,6 +166,30 @@ var config = {
   },
   {
       layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
       opacity: 0
   },
   {
@@ -216,6 +264,30 @@ var config = {
       opacity: 1
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 1
   }
@@ -288,6 +360,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 1
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 1
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -356,6 +452,30 @@ var config = {
   },
   {
       layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
       opacity: 0
   },
   {
@@ -430,6 +550,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 1
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -498,6 +642,30 @@ var config = {
   },
   {
       layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
       opacity: 0
   },
   {
@@ -572,6 +740,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -643,6 +835,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -711,6 +927,30 @@ var config = {
   },
   {
       layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
       opacity: 0
   },
   {
