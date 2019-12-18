@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/scrollama"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
+    <script src="https://unpkg.com/three@0.106.2/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
     <style>
         body {
             margin:0; 
@@ -218,21 +220,120 @@ const transformRequest = (url) => {
     }	  
 }
 
-var map = new mapboxgl.Map({
-    container: 'map',
+var map = (window.map = new mapboxgl.Map({
+  container: 'map',
     style: config.style,
     center: config.chapters[0].location.center,
     zoom: config.chapters[0].location.zoom,
     bearing: config.chapters[0].location.bearing,
     pitch: config.chapters[0].location.pitch,
     scrollZoom: false,
+    antialias: true,
     transformRequest: transformRequest
-});
+}));
 
-var marker = new mapboxgl.Marker();
-if (config.showMarkers) {
-    marker.setLngLat(config.chapters[0].location.center).addTo(map);
-}
+// parameters to ensure the model is georeferenced correctly on the map
+var modelOrigin = [-74.04451, 40.68930];
+var modelAltitude = 0;
+var modelRotate = [Math.PI / 2, 0, 0];
+
+var modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
+  modelOrigin,
+  modelAltitude
+);
+
+
+var modelTransform = {
+  translateX: modelAsMercatorCoordinate.x,
+  translateY: modelAsMercatorCoordinate.y,
+  translateZ: modelAsMercatorCoordinate.z,
+  rotateX: modelRotate[0],
+  rotateY: modelRotate[1],
+  rotateZ: modelRotate[2],
+
+  scale: modelAsMercatorCoordinate.meterInMercatorCoordinateUnits()
+};
+
+var THREE = window.THREE;
+
+
+var customLayer = {
+  id: "LibertyIsland3d-model",
+  type: "custom",
+  renderingMode: "3d",
+  onAdd: function(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+
+    // create two three.js lights to illuminate the model
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight);
+
+    var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+    directionalLight2.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight2);
+
+    // use the three.js GLTF loader to add the 3D model to the three.js scene
+    var loader = new THREE.GLTFLoader();
+    loader.load("https://allanwalkerit.github.io/liberty/Liberty.gltf",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      }.bind(this)
+    );
+    this.map = map;
+
+    // use the Mapbox GL JS map canvas for three.js
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true
+    });
+
+    this.renderer.autoClear = false;
+  },
+  render: function(gl, matrix) {
+    var rotationX = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      modelTransform.rotateX
+    );
+    var rotationY = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      modelTransform.rotateY
+    );
+    var rotationZ = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      modelTransform.rotateZ
+    );
+
+    var m = new THREE.Matrix4().fromArray(matrix);
+    var l = new THREE.Matrix4()
+      .makeTranslation(
+        modelTransform.translateX,
+        modelTransform.translateY,
+        modelTransform.translateZ
+      )
+      .scale(
+        new THREE.Vector3(
+          modelTransform.scale,
+          -modelTransform.scale,
+          modelTransform.scale
+        )
+      )
+      .multiply(rotationX)
+      .multiply(rotationY)
+      .multiply(rotationZ);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.state.reset();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  }
+};
+
+map.on("style.load", function() {
+  map.addLayer(customLayer, "waterway-label");
+});
 
 // instantiate the scrollama
 var scroller = scrollama();
@@ -247,8 +348,8 @@ map.on("load", function() {
       getPosition: d => [d[0], d[1], d[2]],
       getColor: d => [d[3], d[4], d[5]],
       sizeUnits: 'meters',
-      pointSize: 0.5,
-      opacity: 1
+      pointSize: 0.25,
+      opacity: 0.1
     }));
 
     map.addLayer(new MapboxLayer({
@@ -295,6 +396,11 @@ map.on("load", function() {
       opacity: 0.25
     }));
 
+var marker = new mapboxgl.Marker();
+if (config.showMarkers) {
+    marker.setLngLat(config.chapters[0].location.center).addTo(map);
+}
+
     scroller
     .setup({
         step: '.step',
@@ -321,7 +427,6 @@ map.on("load", function() {
     });
 });
 
-// setup resize event
 window.addEventListener('resize', scroller.resize);
 
 </script>
