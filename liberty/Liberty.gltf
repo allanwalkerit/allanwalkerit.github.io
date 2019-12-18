@@ -6987,6 +6987,26 @@
    "images":[
       {
          "mimeType":"image/png",
+         "uri":"Textures/ge_ne.jpg"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/ge_nw_jpg"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/ge_se.jpg"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/ge_sw_jpg"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/Location_Snapshot.jpg"
+      },
+      {
+         "mimeType":"image/png",
          "uri":"Textures/Gate_Post.png"
       },
       {
