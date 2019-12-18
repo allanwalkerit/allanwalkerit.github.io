@@ -6999,22 +6999,6 @@
       },
       {
          "mimeType":"image/png",
-         "uri":"Textures/ge_se.jpg"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/ge_sw.jpg"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/ge_ne.jpg"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/ge_nw.jpg"
-      },
-      {
-         "mimeType":"image/png",
          "uri":"Textures/wall2.jpg"
       },
       {
@@ -7116,10 +7100,6 @@
       {
          "mimeType":"image/png",
          "uri":"Textures/Gateway.png"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/Location_Snapshot.jpg"
       },
       {
          "mimeType":"image/png",
