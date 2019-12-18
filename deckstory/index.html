@@ -232,8 +232,7 @@ var map = (window.map = new mapboxgl.Map({
     transformRequest: transformRequest
 }));
 
-// parameters to ensure the model is georeferenced correctly on the map
-var modelOrigin = [-74.04451, 40.68930];
+var modelOrigin = [-74.04095, 40.69852];
 var modelAltitude = 0;
 var modelRotate = [Math.PI / 2, 0, 0];
 
@@ -265,7 +264,7 @@ var customLayer = {
     this.camera = new THREE.Camera();
     this.scene = new THREE.Scene();
 
-    // create two three.js lights to illuminate the model
+
     var directionalLight = new THREE.DirectionalLight(0xffffff);
     directionalLight.position.set(100, 100, 100).normalize();
     this.scene.add(directionalLight);
@@ -274,16 +273,14 @@ var customLayer = {
     directionalLight2.position.set(100, 100, 100).normalize();
     this.scene.add(directionalLight2);
 
-    // use the three.js GLTF loader to add the 3D model to the three.js scene
     var loader = new THREE.GLTFLoader();
-    loader.load("https://allanwalkerit.github.io/liberty/Liberty.gltf",
+    loader.load("https://allanwalkerit.github.io/ellis/Ellis.gltf",
       function(gltf) {
         this.scene.add(gltf.scene);
       }.bind(this)
     );
     this.map = map;
 
-    // use the Mapbox GL JS map canvas for three.js
     this.renderer = new THREE.WebGLRenderer({
       canvas: map.getCanvas(),
       context: gl,
@@ -348,8 +345,8 @@ map.on("load", function() {
       getPosition: d => [d[0], d[1], d[2]],
       getColor: d => [d[3], d[4], d[5]],
       sizeUnits: 'meters',
-      pointSize: 0.25,
-      opacity: 0.1
+      pointSize: 0.5,
+      opacity: 0.25
     }));
 
     map.addLayer(new MapboxLayer({
