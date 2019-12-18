@@ -6987,11 +6987,15 @@
    "images":[
       {
          "mimeType":"image/png",
-         "uri":"Textures/ge_ne.jpg"
+         "uri":"Textures/Gate_Post.png"
       },
       {
          "mimeType":"image/png",
-         "uri":"Textures/ge_nw.jpg"
+         "uri":"Textures/Legs_end.jpg"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/Gateway_Flag.png"
       },
       {
          "mimeType":"image/png",
@@ -7003,19 +7007,11 @@
       },
       {
          "mimeType":"image/png",
-         "uri":"Textures/Location_Snapshot.jpg"
+         "uri":"Textures/ge_ne.jpg"
       },
       {
          "mimeType":"image/png",
-         "uri":"Textures/Gate_Post.png"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/Legs_end.jpg"
-      },
-      {
-         "mimeType":"image/png",
-         "uri":"Textures/Gateway_Flag.png"
+         "uri":"Textures/ge_nw.jpg"
       },
       {
          "mimeType":"image/png",
@@ -7120,6 +7116,10 @@
       {
          "mimeType":"image/png",
          "uri":"Textures/Gateway.png"
+      },
+      {
+         "mimeType":"image/png",
+         "uri":"Textures/Location_Snapshot.jpg"
       },
       {
          "mimeType":"image/png",
