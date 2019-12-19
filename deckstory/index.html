@@ -232,8 +232,112 @@ var map = (window.map = new mapboxgl.Map({
     transformRequest: transformRequest
 }));
 
+//Liberty Model
+
+var modelOriginLiberty = [-74.04455, 40.68922];
+var modelAltitudeLiberty = 5;
+var modelRotateLiberty = [Math.PI / 2, 0, 0];
+
+var modelAsMercatorCoordinateLiberty = mapboxgl.MercatorCoordinate.fromLngLat(
+  modelOriginLiberty,
+  modelAltitudeLiberty
+);
+
+
+var modelTransformLiberty = {
+  translateXLiberty: modelAsMercatorCoordinateLiberty.x,
+  translateYLiberty: modelAsMercatorCoordinateLiberty.y,
+  translateZLiberty: modelAsMercatorCoordinateLiberty.z,
+  rotateXLiberty: modelRotateLiberty[0],
+  rotateYLiberty: modelRotateLiberty[1],
+  rotateZLiberty: modelRotateLiberty[2],
+
+  scale: modelAsMercatorCoordinateLiberty.meterInMercatorCoordinateUnits()
+};
+
+var THREE = window.THREE;
+
+
+var customLayerLiberty = {
+  id: "Liberty_Island_3D_Model",
+  type: "custom",
+  renderingMode: "3d",
+  onAdd: function(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight);
+
+    var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+    directionalLight2.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight2);
+
+    var loaderLiberty = new THREE.GLTFLoader();
+    loaderLiberty.load("https://allanwalkerit.github.io/liberty/Liberty.gltf",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      }.bind(this)
+    );
+    this.map = map;
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true
+    });
+
+    this.renderer.autoClear = false;
+  },
+  render: function(gl, matrix) {
+    var rotationXLiberty = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      modelTransformLiberty.rotateXLiberty
+    );
+    var rotationYLiberty = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      modelTransformLiberty.rotateYLiberty
+    );
+    var rotationZLiberty = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      modelTransformLiberty.rotateZLiberty
+    );
+
+    var m = new THREE.Matrix4().fromArray(matrix);
+    var l = new THREE.Matrix4()
+      .makeTranslation(
+        modelTransformLiberty.translateXLiberty,
+        modelTransformLiberty.translateYLiberty,
+        modelTransformLiberty.translateZLiberty
+      )
+      .scale(
+        new THREE.Vector3(
+          modelTransformLiberty.scale,
+          -modelTransformLiberty.scale,
+          modelTransformLiberty.scale
+        )
+      )
+      .multiply(rotationXLiberty)
+      .multiply(rotationYLiberty)
+      .multiply(rotationZLiberty);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.state.reset();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  }
+};
+
+map.on("style.load", function() {
+  map.addLayer(customLayerLiberty, "waterway-label");
+});
+
+// Ellis Model
+
 var modelOrigin = [-74.04092, 40.69855];
-var modelAltitude = 0;
+var modelAltitude = 5;
 var modelRotate = [Math.PI / 2, 0, 0];
 
 var modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
@@ -257,7 +361,7 @@ var THREE = window.THREE;
 
 
 var customLayer = {
-  id: "LibertyIsland3d-model",
+  id: "Ellis_Island_3D_Model",
   type: "custom",
   renderingMode: "3d",
   onAdd: function(map, gl) {
@@ -332,11 +436,11 @@ map.on("style.load", function() {
   map.addLayer(customLayer, "waterway-label");
 });
 
-// instantiate the scrollama
 var scroller = scrollama();
 
 map.on("load", function() {
-    // setup the instance, pass callback functions
+
+// LIDAR
 
     map.addLayer(new MapboxLayer({
       id: 'deckgl-PointCloudLayerLiberty',
@@ -346,7 +450,7 @@ map.on("load", function() {
       getColor: d => [d[3], d[4], d[5]],
       sizeUnits: 'meters',
       pointSize: 0.5,
-      opacity: 1
+      opacity: 0.25
     }));
 
     map.addLayer(new MapboxLayer({
@@ -357,7 +461,7 @@ map.on("load", function() {
       getColor: d => [d[3], d[4], d[5]],
       sizeUnits: 'meters',
       pointSize: 0.5,
-      opacity: 1
+      opacity: 0.25
     }));
 
     map.addLayer(new MapboxLayer({
