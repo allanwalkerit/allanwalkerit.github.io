@@ -21,6 +21,12 @@
         a, a:hover, a:visited {
             color: #0071bc;
         }
+        .tableauPlaceholder  {
+        width: 480px;
+        height: 380px;
+        margin: 0 auto;
+        }
+
         #map {
             top:0; 
             height: 100vh;
@@ -72,11 +78,8 @@
         }
         .step {
             padding-bottom: 50vh;
-            /* margin-bottom: 10vh; */
-            /* opacity: 0.25; */
         }
         .step.active {
-            /* opacity: 0.9;  */
         }
 
         .step div {
@@ -103,6 +106,7 @@
 <div id="story"></div>
 <script src="./config.js"></script>
 <script>
+
 var layerTypes = {
     'fill': ['fill-opacity'],
     'line': ['line-opacity'],
@@ -527,6 +531,7 @@ if (config.showMarkers) {
         }
     });
 });
+
 
 window.addEventListener('resize', scroller.resize);
 
