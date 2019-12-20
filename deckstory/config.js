@@ -586,10 +586,10 @@ var config = {
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/USA-NYC-Jersey_Historic_Train_Station_crop.jpg/1200px-USA-NYC-Jersey_Historic_Train_Station_crop.jpg',
             description: "The Central Railroad of New Jersey Terminal, also known as Communipaw Terminal and Jersey City Terminal, was the Central Railroad of New Jersey's waterfront passenger terminal in Jersey City, New Jersey. It was also serviced by CNJ-operated Reading Railroad trains, the Baltimore and Ohio Railroad, and the Lehigh Valley Railroad during various periods in its 78 years of operation.<br><br>The terminal was built in 1889, replacing an earlier one that had been in use since 1864. The terminal was one of five passenger railroad terminals that lined the Hudson Waterfront during the 19th and 20th centuries, the others being Weehawken, Hoboken, Pavonia and Exchange Place, with Hoboken being the only station that is still in use. It operated until April 30, 1967.<br><br>The headhouse was renovated and incorporated into Liberty State Park. The station has been listed on the New Jersey Register of Historic Places and National Register of Historic Places since September 12, 1975. Additionally it is a New Jersey State Historic Site.<br><br>Statue Cruises offers ferries to Statue of Liberty National Monument, Ellis Island and Liberty Island that depart nearby.",
             location: {
-            center: [-74.03415, 40.70738],
-            zoom: 18.91,
+            center: [-74.03518, 40.70745],
+            zoom: 17.42,
             pitch: 60.00,
-            bearing: -148.00
+            bearing: -126.40
             },
             onChapterEnter: [
       {

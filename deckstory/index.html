@@ -338,6 +338,108 @@ map.on("style.load", function() {
   map.addLayer(customLayerLiberty, "waterway-label");
 });
 
+// CRRNJT Model
+
+var modelOriginCRRNJT = [-74.03645, 40.70740];
+var modelAltitudeCRRNJT = 2;
+var modelRotateCRRNJT = [Math.PI / 2, 0, 0];
+
+var modelAsMercatorCoordinateCRRNJT = mapboxgl.MercatorCoordinate.fromLngLat(
+  modelOriginCRRNJT,
+  modelAltitudeCRRNJT
+);
+
+
+var modelTransformCRRNJT = {
+  translateXCRRNJT: modelAsMercatorCoordinateCRRNJT.x,
+  translateYCRRNJT: modelAsMercatorCoordinateCRRNJT.y,
+  translateZCRRNJT: modelAsMercatorCoordinateCRRNJT.z,
+  rotateXCRRNJT: modelRotateCRRNJT[0],
+  rotateYCRRNJT: modelRotateCRRNJT[1],
+  rotateZCRRNJT: modelRotateCRRNJT[2],
+
+  scale: modelAsMercatorCoordinateCRRNJT.meterInMercatorCoordinateUnits()
+};
+
+var THREE = window.THREE;
+
+
+var customLayerCRRNJT = {
+  id: "CRRNJT_3D_Model",
+  type: "custom",
+  renderingMode: "3d",
+  onAdd: function(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight);
+
+    var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+    directionalLight2.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight2);
+
+    var loaderCRRNJT = new THREE.GLTFLoader();
+    loaderCRRNJT.load("https://allanwalkerit.github.io/ccrrnjt/CRRNJT.gltf",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      }.bind(this)
+    );
+    this.map = map;
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true
+    });
+
+    this.renderer.autoClear = false;
+  },
+  render: function(gl, matrix) {
+    var rotationXCRRNJT = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      modelTransformCRRNJT.rotateXCRRNJT
+    );
+    var rotationYCRRNJT = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      modelTransformCRRNJT.rotateYCRRNJT
+    );
+    var rotationZCRRNJT = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      modelTransformCRRNJT.rotateZCRRNJT
+    );
+
+    var m = new THREE.Matrix4().fromArray(matrix);
+    var l = new THREE.Matrix4()
+      .makeTranslation(
+        modelTransformCRRNJT.translateXCRRNJT,
+        modelTransformCRRNJT.translateYCRRNJT,
+        modelTransformCRRNJT.translateZCRRNJT
+      )
+      .scale(
+        new THREE.Vector3(
+          modelTransformCRRNJT.scale,
+          -modelTransformCRRNJT.scale,
+          modelTransformCRRNJT.scale
+        )
+      )
+      .multiply(rotationXCRRNJT)
+      .multiply(rotationYCRRNJT)
+      .multiply(rotationZCRRNJT);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.state.reset();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  }
+};
+
+map.on("style.load", function() {
+  map.addLayer(customLayerCRRNJT, "waterway-label");
+});
+
 // Ellis Model
 
 var modelOrigin = [-74.04092, 40.69855];
