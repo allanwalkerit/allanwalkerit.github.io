@@ -402,10 +402,10 @@ var config = {
             image: 'https://www.nps.gov/common/uploads/grid_builder/cacl/crop16_9/AFF5989A-1DD8-B71B-0B427FCF399C7233.JPG',
             description: "Castle Clinton or Fort Clinton, previously known as Castle Garden, is a circular sandstone fort now located in Battery Park, in Manhattan, New York City. Built from 1808 to 1811, it was the first U.S. immigration station (predating Ellis Island), where more than 8 million people arrived in the United States from 1855 to 1890. Over its active life, it has also functioned as a beer garden, exhibition hall, theater, and public aquarium. Castle Clinton National Monument was listed on the National Register of Historic Places on October 15, 1966.<br><br>Castle Clinton National Monument currently serves as a departure point for ferry to Statue of Liberty National Monument and Ellis Island.",
             location: {
-            center: [-74.01710, 40.70355],
-            zoom: 18.67,
-            pitch: 60.00,
-            bearing: -78.41
+            center: [-74.01781, 40.70349],
+            zoom: 18.26,
+            pitch: 40.00,
+            bearing: 89.44
             },
             onChapterEnter: [
      {
