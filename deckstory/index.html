@@ -29,6 +29,11 @@
         margin: 0 auto;
         }
 
+        .tableauSlider {
+        width: 100%;
+        margin: 0 auto;
+        }
+
         #map {
             top:0; 
             height: 100vh;
@@ -339,6 +344,108 @@ var customLayerPierA = {
 
 map.on("style.load", function() {
   map.addLayer(customLayerPierA, "waterway-label");
+});
+
+// Liberty Ship 3D Model
+
+var modelOriginLibertyShip = [-74.01688, 40.70230];
+var modelAltitudeLibertyShip = 5;
+var modelRotateLibertyShip = [Math.PI / 2, 0, 0];
+
+var modelAsMercatorCoordinateLibertyShip = mapboxgl.MercatorCoordinate.fromLngLat(
+  modelOriginLibertyShip,
+  modelAltitudeLibertyShip
+);
+
+
+var modelTransformLibertyShip = {
+  translateXLibertyShip: modelAsMercatorCoordinateLibertyShip.x,
+  translateYLibertyShip: modelAsMercatorCoordinateLibertyShip.y,
+  translateZLibertyShip: modelAsMercatorCoordinateLibertyShip.z,
+  rotateXLibertyShip: modelRotateLibertyShip[0],
+  rotateYLibertyShip: modelRotateLibertyShip[1],
+  rotateZLibertyShip: modelRotateLibertyShip[2],
+
+  scale: modelAsMercatorCoordinateLibertyShip.meterInMercatorCoordinateUnits()
+};
+
+var THREE = window.THREE;
+
+
+var customLayerLibertyShip = {
+  id: "LibertyShip_Island_3D_Model",
+  type: "custom",
+  renderingMode: "3d",
+  onAdd: function(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight);
+
+    var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+    directionalLight2.position.set(100, 100, 100).normalize();
+    this.scene.add(directionalLight2);
+
+    var loaderLibertyShip = new THREE.GLTFLoader();
+    loaderLibertyShip.load("https://allanwalkerit.github.io/libertyship/LiberyShip.gltf",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      }.bind(this)
+    );
+    this.map = map;
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true
+    });
+
+    this.renderer.autoClear = false;
+  },
+  render: function(gl, matrix) {
+    var rotationXLibertyShip = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      modelTransformLibertyShip.rotateXLibertyShip
+    );
+    var rotationYLibertyShip = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      modelTransformLibertyShip.rotateYLibertyShip
+    );
+    var rotationZLibertyShip = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      modelTransformLibertyShip.rotateZLibertyShip
+    );
+
+    var m = new THREE.Matrix4().fromArray(matrix);
+    var l = new THREE.Matrix4()
+      .makeTranslation(
+        modelTransformLibertyShip.translateXLibertyShip,
+        modelTransformLibertyShip.translateYLibertyShip,
+        modelTransformLibertyShip.translateZLibertyShip
+      )
+      .scale(
+        new THREE.Vector3(
+          modelTransformLibertyShip.scale,
+          -modelTransformLibertyShip.scale,
+          modelTransformLibertyShip.scale
+        )
+      )
+      .multiply(rotationXLibertyShip)
+      .multiply(rotationYLibertyShip)
+      .multiply(rotationZLibertyShip);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.state.reset();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  }
+};
+
+map.on("style.load", function() {
+  map.addLayer(customLayerLibertyShip, "waterway-label");
 });
 
 // Liberty Island 3D Model
@@ -692,16 +799,19 @@ map.on("load", function() {
       opacity: 0.75
     }));
 
-    map.addLayer(new MapboxLayer({
-      id: 'deckgl-PointCloudLayerNJ',
-      type: PointCloudLayer,
-      data: 'https://dl.dropboxusercontent.com/s/wqdzautt0mncee6/NJ.json',
-      getPosition: d => [d[0], d[1], d[2]],
-      getColor: d => [d[3], d[4], d[5]],
-      sizeUnits: 'meters',
-      pointSize: 0.5,
-      opacity: 0.25
-    }));
+// LIDAR for New Jersey
+
+//    map.addLayer(new MapboxLayer({
+//      id: 'deckgl-PointCloudLayerNJ',
+//      type: PointCloudLayer,
+//      data: 'https://dl.dropboxusercontent.com/s/wqdzautt0mncee6/NJ.json',
+//      getPosition: d => [d[0], d[1], d[2]],
+//      getColor: d => [d[3], d[4], d[5]],
+//      sizeUnits: 'meters',
+//      pointSize: 0.5,
+//      opacity: 0.25
+//    }));
+
 
 var marker = new mapboxgl.Marker();
 if (config.showMarkers) {
@@ -739,35 +849,25 @@ window.addEventListener('resize', scroller.resize);
 
 $(function() {
         var onePh = document.getElementById("tableauViz1");
-        var oneUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/StatueofLiberty?:showVizHome=no&:display_spinner=no&:jsdebug=n&:embed=y&:display_overlay=no&:display_static_image=no&:animate_transition=yes";
+        var oneUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/StatueofLiberty?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
   var vizOptions = {
   width: "100%",
   height: "100%",
             hideTabs: false,
             onFirstInteractive: function() {
-animate();
 }
         };
 viz1 = new tableauSoftware.Viz(onePh, oneUrl, vizOptions);
-    i=1;
+document.getElementById('slider').addEventListener('input', function(e) {
+var sliderval = parseInt(e.target.value, 10);
+viz1.getWorkbook().changeParameterValueAsync("XY1", sliderval);
 });
-function animate() {
-if(i<=63) {
-window.setTimeout("animate()","5000");
-animate1(i);
-i++;
-}
-if(i>=63) {
-i=-1;
-}
-}
-function animate1(a) {
-viz1.getWorkbook().changeParameterValueAsync("XY1", [a]);
-}
+});
+
 
 $(function() {
         var twoPh = document.getElementById("tableauViz2");
-        var twoUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/EllisIsland?:showVizHome=no&:display_spinner=no&:jsdebug=n&:embed=y&:display_overlay=no&:display_static_image=no&:animate_transition=yes";
+        var twoUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/EllisIsland?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
   var twovizOptions = {
   width: "100%",
   height: "100%",
