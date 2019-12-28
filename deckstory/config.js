@@ -13,7 +13,7 @@ var config = {
             id: 'Libery Intro',
             title: 'Liberty Island',
             image: '',
-            description: "<div id='tableauViz1' class='tableauPlaceholder'></div><input id='slider' class='tableauSlider' type='range' min='1' max='63' step='1' value='1' /><br>Liberty Island is a federally owned island in Upper New York Bay in the United States. Its most notable feature is the Statue of Liberty (Liberty Enlightening the World), a large statue by Frédéric Auguste Bartholdi that was dedicated in 1886. The island is an exclave of the New York City borough of Manhattan, surrounded by the waters of Jersey City, New Jersey.<br><br>Long known as Bedloe's Island, it was renamed by an act of the United States Congress in 1956. Liberty Island became part of the Statue of Liberty National Monument in 1937 through Presidential Proclamation 2250, signed by President Franklin D. Roosevelt. In 1966, it was listed on the National Register of Historic Places as part of Statue of Liberty National Monument, Ellis Island and Liberty Island.",
+            description: "<div id='tableauViz1' class='tableauPlaceholder'></div><input id='slidera' class='tableauSlider' type='range' min='1' max='63' step='1' value='1' /><br>Liberty Island is a federally owned island in Upper New York Bay in the United States. Its most notable feature is the Statue of Liberty (Liberty Enlightening the World), a large statue by Frédéric Auguste Bartholdi that was dedicated in 1886. The island is an exclave of the New York City borough of Manhattan, surrounded by the waters of Jersey City, New Jersey.<br><br>Long known as Bedloe's Island, it was renamed by an act of the United States Congress in 1956. Liberty Island became part of the Statue of Liberty National Monument in 1937 through Presidential Proclamation 2250, signed by President Franklin D. Roosevelt. In 1966, it was listed on the National Register of Historic Places as part of Statue of Liberty National Monument, Ellis Island and Liberty Island.",
             location: {
                 center: [-74.04507, 40.68983],
                 zoom: 17,
@@ -120,7 +120,7 @@ var config = {
             id: 'Ellis Intro',
             title: 'Eliis Island',
             image: '',
-            description: "<div id='tableauViz2' class='tableauPlaceholder'></div>Ellis Island is a federally owned island in New York Harbor, within the states of New York and New Jersey, that contains a museum and former immigration inspection station of the same name. As the nation's busiest immigrant inspection station from 1892 to 1954, it processed approximately 12 million immigrants to the United States through the Port of New York and New Jersey. Today, the island is part of the Statue of Liberty National Monument, a U.S. national monument. The north side of the island hosts a museum of immigration, accessible only by ferry. The south side of the island, including the Ellis Island Immigrant Hospital, is abandoned but accessible to the public through guided tours.<br><br>In the 19th century, Ellis Island was the site of Fort Gibson, a component of the fortifications of New York Harbor. It later became a naval magazine for storing artillery. The first inspection station opened in 1892 and was destroyed by fire in 1897. The second station opened in 1900 and housed facilities for medical quarantines as well as processing immigrants. After 1924, Ellis Island was used primarily as a detention center; during both World War I and World War II its facilities were also used by the United States military. Following the immigration station's closure, the buildings languished for several years until they partially reopened in 1976. The main building and adjacent structures were completely renovated in 1990.",
+            description: "<div id='tableauViz2' class='tableauPlaceholder'></div><input id='sliderb' class='tableauSlider' type='range' min='1' max='63' step='1' value='1' /><br>Ellis Island is a federally owned island in New York Harbor, within the states of New York and New Jersey, that contains a museum and former immigration inspection station of the same name. As the nation's busiest immigrant inspection station from 1892 to 1954, it processed approximately 12 million immigrants to the United States through the Port of New York and New Jersey. Today, the island is part of the Statue of Liberty National Monument, a U.S. national monument. The north side of the island hosts a museum of immigration, accessible only by ferry. The south side of the island, including the Ellis Island Immigrant Hospital, is abandoned but accessible to the public through guided tours.<br><br>In the 19th century, Ellis Island was the site of Fort Gibson, a component of the fortifications of New York Harbor. It later became a naval magazine for storing artillery. The first inspection station opened in 1892 and was destroyed by fire in 1897. The second station opened in 1900 and housed facilities for medical quarantines as well as processing immigrants. After 1924, Ellis Island was used primarily as a detention center; during both World War I and World War II its facilities were also used by the United States military. Following the immigration station's closure, the buildings languished for several years until they partially reopened in 1976. The main building and adjacent structures were completely renovated in 1990.",
             location: {
             center: [-74.04072, 40.69868],
             zoom: 16.89,
@@ -699,6 +699,113 @@ var config = {
   {
       layer: 'Firefly_NY2LI_2',
       opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 1
+  },
+  {
+      layer: 'ccnm',
+      opacity: 0
+  },
+  {
+      layer: 'ginm',
+      opacity: 0
+  },
+  {
+      layer: 'parks',
+      opacity: 0
+  },
+  {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Liberty_1',
+      opacity: 0
+  },
+  {
+      layer: 'LibertyStatePark',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_Battery_1',
+      opacity: 0
+  },
+  {
+      layer: 'TheBattery',
+      opacity: 0
+  },
+    {
+      layer: 'NJoutlines',
+      opacity: 1
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 1
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 1
+  },
+  {
+      layer: 'NJ',
+      opacity: 0
+  }
+            ],
+            onChapterExit: []
+        },
+                {
+            id: 'Islands',
+            title: 'Data',
+            image: '',
+            description: "<div id='tableauViz3' class='tableauPlaceholder'></div><input id='sliderc' class='tableauSlider' type='range' min='22' max='39' step='1' value='22' /><br>DataViz",
+            location: {
+            center: [-74.04379, 40.69367],
+            zoom: 15.48,
+            pitch: 0.00,
+            bearing: -59.98
+            },
+            onChapterEnter: [
+      {
+      layer: 'NY2LI',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 1
+  },
+  {
+      layer: 'Firefly_NY2LI_2',
+      opacity: 1
   },
   {
       layer: 'NJ2LI',

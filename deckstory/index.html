@@ -799,20 +799,6 @@ map.on("load", function() {
       opacity: 0.75
     }));
 
-// LIDAR for New Jersey
-
-//    map.addLayer(new MapboxLayer({
-//      id: 'deckgl-PointCloudLayerNJ',
-//      type: PointCloudLayer,
-//      data: 'https://dl.dropboxusercontent.com/s/wqdzautt0mncee6/NJ.json',
-//      getPosition: d => [d[0], d[1], d[2]],
-//      getColor: d => [d[3], d[4], d[5]],
-//      sizeUnits: 'meters',
-//      pointSize: 0.5,
-//      opacity: 0.25
-//    }));
-
-
 var marker = new mapboxgl.Marker();
 if (config.showMarkers) {
     marker.setLngLat(config.chapters[0].location.center).addTo(map);
@@ -858,9 +844,9 @@ $(function() {
 }
         };
 viz1 = new tableauSoftware.Viz(onePh, oneUrl, vizOptions);
-document.getElementById('slider').addEventListener('input', function(e) {
-var sliderval = parseInt(e.target.value, 10);
-viz1.getWorkbook().changeParameterValueAsync("XY1", sliderval);
+document.getElementById('slidera').addEventListener('input', function(e) {
+var slidervala = parseInt(e.target.value, 10);
+viz1.getWorkbook().changeParameterValueAsync("XY1", slidervala);
 });
 });
 
@@ -876,6 +862,27 @@ $(function() {
 }
         };
 viz2 = new tableauSoftware.Viz(twoPh, twoUrl, twovizOptions);
+document.getElementById('sliderb').addEventListener('input', function(e) {
+var slidervalb = parseInt(e.target.value, 10);
+viz2.getWorkbook().changeParameterValueAsync("XY2", slidervalb);
+});
+});
+
+$(function() {
+        var threePh = document.getElementById("tableauViz3");
+        var threeUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/RecreationalVisitors?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+  var threevizOptions = {
+  width: "100%",
+  height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+}
+        };
+viz3 = new tableauSoftware.Viz(threePh, threeUrl, threevizOptions);
+document.getElementById('sliderc').addEventListener('input', function(e) {
+var slidervalc = parseInt(e.target.value, 10);
+viz3.getWorkbook().changeParameterValueAsync("YEAR", slidervalc);
+});
 });
 
 </script>
