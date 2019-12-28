@@ -324,6 +324,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 1
   }
@@ -420,6 +444,18 @@ var config = {
       opacity: 1
   },
   {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -509,6 +545,18 @@ var config = {
   {
       layer: 'Firefly_Battery_1',
       opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 1
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 1
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 1
   },
   {
       layer: 'TheBattery',
@@ -610,6 +658,18 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -703,6 +763,18 @@ var config = {
   {
       layer: 'TheBattery',
       opacity: 0
+  },
+    {
+      layer: 'NJoutlines',
+      opacity: 1
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 1
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 1
   },
   {
       layer: 'NJ',
