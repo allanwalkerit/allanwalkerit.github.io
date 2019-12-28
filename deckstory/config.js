@@ -787,7 +787,7 @@ var config = {
             id: 'Islands',
             title: 'Data',
             image: '',
-            description: "<div id='tableauViz3' class='tableauPlaceholder'></div><input id='sliderc' class='tableauSlider' type='range' min='22' max='39' step='1' value='22' /><br>DataViz",
+            description: "<div id='tableauViz3' class='tableauPlaceholder'></div><input id='sliderc' class='tableauSlider' type='range' min='22' max='40' step='1' value='22' /><br>DataViz",
             location: {
             center: [-74.04379, 40.69367],
             zoom: 15.48,
