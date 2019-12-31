@@ -346,6 +346,8 @@ map.on("style.load", function() {
   map.addLayer(customLayerPierA, "waterway-label");
 });
 
+
+
 // Liberty Ship 3D Model
 
 var modelOriginLibertyShip = [-74.01688, 40.70230];
@@ -651,8 +653,8 @@ map.on("style.load", function() {
   map.addLayer(customLayerCRRNJT, "waterway-label");
 });
 
-var modelOrigin = [-74.04092, 40.69855];
-var modelAltitude = 5;
+var modelOrigin = [-74.04097, 40.69860];
+var modelAltitude = 0;
 var modelRotate = [Math.PI / 2, 0, 0];
 
 var modelAsMercatorCoordinate = mapboxgl.MercatorCoordinate.fromLngLat(
@@ -749,6 +751,108 @@ var customLayer = {
 
 map.on("style.load", function() {
 map.addLayer(customLayer, "waterway-label");
+});
+
+// Ellis Island Building Model
+
+var modelOriginEllisIslandBuilding = [-74.039547,40.699107];
+var modelAltitudeEllisIslandBuilding = 0;
+var modelRotateEllisIslandBuilding = [Math.PI / 2, 0, 0];
+
+var modelAsMercatorCoordinateEllisIslandBuilding = mapboxgl.MercatorCoordinate.fromLngLat(
+  modelOriginEllisIslandBuilding,
+  modelAltitudeEllisIslandBuilding
+);
+
+
+var modelTransformEllisIslandBuilding = {
+  translateXEllisIslandBuilding: modelAsMercatorCoordinateEllisIslandBuilding.x,
+  translateYEllisIslandBuilding: modelAsMercatorCoordinateEllisIslandBuilding.y,
+  translateZEllisIslandBuilding: modelAsMercatorCoordinateEllisIslandBuilding.z,
+  rotateXEllisIslandBuilding: modelRotateEllisIslandBuilding[0],
+  rotateYEllisIslandBuilding: modelRotateEllisIslandBuilding[1],
+  rotateZEllisIslandBuilding: modelRotateEllisIslandBuilding[2],
+
+  scale: modelAsMercatorCoordinateEllisIslandBuilding.meterInMercatorCoordinateUnits()
+};
+
+var THREE = window.THREE;
+
+
+var customLayerEllisIslandBuilding = {
+  id: "EllisIslandBuilding_Island_3D_Model",
+  type: "custom",
+  renderingMode: "3d",
+  onAdd: function(map, gl) {
+    this.camera = new THREE.Camera();
+    this.scene = new THREE.Scene();
+
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(100, -70, 100).normalize();
+    this.scene.add(directionalLight);
+
+    var directionalLight2 = new THREE.DirectionalLight(0xffffff);
+    directionalLight2.position.set(100, 70, 100).normalize();
+    this.scene.add(directionalLight2);
+
+    var loaderEllisIslandBuilding = new THREE.GLTFLoader();
+    loaderEllisIslandBuilding.load("https://allanwalkerit.github.io/ellisislandbuilding/EllisIslandBuilding.gltf",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      }.bind(this)
+    );
+    this.map = map;
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true
+    });
+
+    this.renderer.autoClear = false;
+  },
+  render: function(gl, matrix) {
+    var rotationXEllisIslandBuilding = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(1, 0, 0),
+      modelTransformEllisIslandBuilding.rotateXEllisIslandBuilding
+    );
+    var rotationYEllisIslandBuilding = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 1, 0),
+      modelTransformEllisIslandBuilding.rotateYEllisIslandBuilding
+    );
+    var rotationZEllisIslandBuilding = new THREE.Matrix4().makeRotationAxis(
+      new THREE.Vector3(0, 0, 1),
+      modelTransformEllisIslandBuilding.rotateZEllisIslandBuilding
+    );
+
+    var m = new THREE.Matrix4().fromArray(matrix);
+    var l = new THREE.Matrix4()
+      .makeTranslation(
+        modelTransformEllisIslandBuilding.translateXEllisIslandBuilding,
+        modelTransformEllisIslandBuilding.translateYEllisIslandBuilding,
+        modelTransformEllisIslandBuilding.translateZEllisIslandBuilding
+      )
+      .scale(
+        new THREE.Vector3(
+          modelTransformEllisIslandBuilding.scale,
+          -modelTransformEllisIslandBuilding.scale,
+          modelTransformEllisIslandBuilding.scale
+        )
+      )
+      .multiply(rotationXEllisIslandBuilding)
+      .multiply(rotationYEllisIslandBuilding)
+      .multiply(rotationZEllisIslandBuilding);
+
+    this.camera.projectionMatrix = m.multiply(l);
+    this.renderer.state.reset();
+    this.renderer.render(this.scene, this.camera);
+    this.map.triggerRepaint();
+  }
+};
+
+map.on("style.load", function() {
+  map.addLayer(customLayerEllisIslandBuilding, "waterway-label");
 });
 
 var scroller = scrollama();
