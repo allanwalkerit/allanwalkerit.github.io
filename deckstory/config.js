@@ -110,6 +110,18 @@ var config = {
       opacity: 1
   },
   {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -356,10 +368,10 @@ var config = {
             onChapterExit: []
         },
         {
-            id: 'NYIntro',
+            id: 'The Battery',
             title: 'The Battery',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Battery_Park.JPG/1200px-Battery_Park.JPG',
-            description: "The Battery (formerly known as Battery Park) is a 25-acre (10 ha) public park located at the southern tip of Manhattan Island in New York City facing New York Harbor. It is bounded by Battery Place on the north, State Street on the east, New York Harbor to the south, and the Hudson River to the west. The park contains attractions such as an old fort named Castle Clinton; multiple monuments; and the SeaGlass Carousel. <br><br>The surrounding area, known as South Ferry, contains multiple ferry terminals, including the Staten Island Ferry's Whitehall Terminal as well as boat launches to the Statue of Liberty National Monument.<br><br><center><b><i>3D Model of Pier A by Sketchup contributor 'jmdewey60'<br>LIDAR and orthoimagery courtesy NOAA</i></b></center>",
+            description: "The Battery (formerly known as Battery Park) is a 25-acre (10 ha) public park located at the southern tip of Manhattan Island in New York City facing New York Harbor. It is bounded by Battery Place on the north, State Street on the east, New York Harbor to the south, and the Hudson River to the west. The park contains attractions such as an old fort named Castle Clinton; multiple monuments; and the SeaGlass Carousel. <br><br>The surrounding area, known as South Ferry, contains multiple ferry terminals, including the Staten Island Ferry's Whitehall Terminal as well as boat launches to the Statue of Liberty National Monument.<br><br><center><b><i>3D Model of Pier A by Sketchup contributor 'jmdewey60'<br>LIDAR and orthoimagery courtesy NOAA<br>Image courtesy Wikipedia user 'Gryffindor' CC BY-SA 3.0</i></b></center>",
             location: {
             center: [-74.01525, 40.70308],
             zoom: 17.00,
@@ -466,7 +478,7 @@ var config = {
             id: 'Castle Clinton',
             title: 'Castle Clinton National Monument',
             image: 'https://www.nps.gov/common/uploads/grid_builder/cacl/crop16_9/AFF5989A-1DD8-B71B-0B427FCF399C7233.JPG',
-            description: "Castle Clinton or Fort Clinton, previously known as Castle Garden, is a circular sandstone fort now located in Battery Park, in Manhattan, New York City. Built from 1808 to 1811, it was the first U.S. immigration station (predating Ellis Island), where more than 8 million people arrived in the United States from 1855 to 1890. Over its active life, it has also functioned as a beer garden, exhibition hall, theater, and public aquarium. Castle Clinton National Monument was listed on the National Register of Historic Places on October 15, 1966.<br><br>Castle Clinton National Monument currently serves as a departure point for ferry to Statue of Liberty National Monument and Ellis Island.<br><br><center><b><i>3D Model of Miss Liberty by Sketchup contributor 'jmdewey60'<br>LIDAR and orthoimagery courtesy NOAA</i></b></center>",
+            description: "Castle Clinton or Fort Clinton, previously known as Castle Garden, is a circular sandstone fort now located in Battery Park, in Manhattan, New York City. Built from 1808 to 1811, it was the first U.S. immigration station (predating Ellis Island), where more than 8 million people arrived in the United States from 1855 to 1890. Over its active life, it has also functioned as a beer garden, exhibition hall, theater, and public aquarium. Castle Clinton National Monument was listed on the National Register of Historic Places on October 15, 1966.<br><br>Castle Clinton National Monument currently serves as a departure point for ferry to Statue of Liberty National Monument and Ellis Island.<br><br><center><b><i>3D Model of Miss Liberty by Sketchup contributor 'jmdewey60'<br>LIDAR and orthoimagery courtesy NOAA<br>Image courtesy NPS</i></b></center>",
             location: {
             center: [-74.01781, 40.70349],
             zoom: 18.26,
@@ -896,6 +908,18 @@ var config = {
       opacity: 1
   },
   {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -1003,6 +1027,30 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'EMBoutlines',
+      opacity: 1
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 1
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 1
+  },
+  {
+      layer: 'outlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
       opacity: 0
   }
@@ -1011,7 +1059,7 @@ var config = {
         },
         {
             id: 'Liberty',
-            title: 'Liberty Island',
+            title: 'The Statue of Liberty',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Liberty_Island_photo_D_Ramey_Logan.jpg/1200px-Liberty_Island_photo_D_Ramey_Logan.jpg',
             description: 'Liberty Island photo D Ramey Logan.jpg from Wikimedia Commons by D Ramey Logan, CC-BY 4.0',
             location: {
@@ -1095,6 +1143,18 @@ var config = {
   },
   {
       layer: 'TheBattery',
+      opacity: 0
+  },
+   {
+      layer: 'outlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
       opacity: 0
   },
   {
