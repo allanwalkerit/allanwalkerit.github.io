@@ -29,6 +29,12 @@
         margin: 0 auto;
         }
 
+        .tableauPlaceholderfixed {
+        width: 200px;
+        height: 400px;
+        margin: 0 auto;
+        }
+
         .tableauSlider {
         width: 100%;
         margin: 0 auto;
@@ -986,6 +992,23 @@ viz3 = new tableauSoftware.Viz(threePh, threeUrl, threevizOptions);
 document.getElementById('sliderc').addEventListener('input', function(e) {
 var slidervalc = parseInt(e.target.value, 10);
 viz3.getWorkbook().changeParameterValueAsync("YEAR", slidervalc);
+});
+});
+
+$(function() {
+        var fourPh = document.getElementById("tableauViz4");
+        var fourUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/3DModel?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
+  var fourvizOptions = {
+  width: "100%",
+  height: "100%",
+            hideTabs: false,
+            onFirstInteractive: function() {
+}
+        };
+viz4 = new tableauSoftware.Viz(fourPh, fourUrl, fourvizOptions);
+document.getElementById('sliderd').addEventListener('input', function(e) {
+var slidervald = parseInt(e.target.value, 10);
+viz4.getWorkbook().changeParameterValueAsync("XZ3", slidervald);
 });
 });
 
