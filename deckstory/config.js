@@ -7,7 +7,7 @@ var config = {
     title: 'Statue of Liberty National Monument',
     subtitle: 'Ellis Island and Liberty Island',
     byline: '',
-    footer: 'Sources: NJGIN, NYC Open Data, NOAA, NPS (DMCA), Wikipedia (CC-BY-SA | (GFDL), OpenStreetMap (© OpenStreetMap contributors), Sketchup - 3D Warehouse by Trimble, Inc ',
+    footer: 'Sources: NJGIN, NYC Open Data, NOAA, NPS (DMCA), Wikipedia (CC-BY-SA) | (GFDL), OpenStreetMap (© OpenStreetMap contributors), Sketchup - 3D Warehouse by Trimble, Inc ',
     chapters: [
         {
             id: 'Libery Intro',
@@ -585,7 +585,7 @@ var config = {
             id: 'NJIntro',
             title: 'Liberty State Park',
             image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg/1200px-Central_Railroad_of_New_Jersey_Terminal_-_22_Sept._2012.jpg',
-            description: "Liberty State Park is a park in the U.S. state of New Jersey, located on Upper New York Bay in Jersey City, opposite both Liberty Island and Ellis Island. The park opened in 1976 to coincide with bicentennial celebrations and is operated and maintained by the New Jersey Division of Parks and Forestry. Liberty State Park covers 1,212 acres (490 ha). The main part of the park is bordered by water on three sides: on the north by the Morris Canal Big Basin and on the south and east by Upper New York Bay. The New Jersey Turnpike Newark Bay Extension (I-78) marks its western perimeter.<br><br>Most of the park's area is on landfill created by the Central Railroad of New Jersey (CRRNJ) and the Lehigh Valley Railroad, defunct companies whose lines once terminated there. In the northeast corner of the park is the CRRNJ Terminal, a historic transportation building.",
+            description: "Liberty State Park is a park in the U.S. state of New Jersey, located on Upper New York Bay in Jersey City, opposite both Liberty Island and Ellis Island. The park opened in 1976 to coincide with bicentennial celebrations and is operated and maintained by the New Jersey Division of Parks and Forestry. Liberty State Park covers 1,212 acres (490 ha). The main part of the park is bordered by water on three sides: on the north by the Morris Canal Big Basin and on the south and east by Upper New York Bay. The New Jersey Turnpike Newark Bay Extension (I-78) marks its western perimeter.<br><br>Most of the park's area is on landfill created by the Central Railroad of New Jersey (CRRNJ) and the Lehigh Valley Railroad, defunct companies whose lines once terminated there. In the northeast corner of the park is the CRRNJ Terminal, a historic transportation building.<br><br><center><b><i>Image courtesy Wikipedia user 'Benjamin Kraft' CC BY-SA 2.0</i></b></center>",
             location: {
             center: [-74.05094, 40.70264],
             zoom: 14.00,
@@ -1061,7 +1061,7 @@ var config = {
             id: 'Liberty',
             title: 'The Statue of Liberty',
             image: '',
-            description: "<div id='tableauViz4' class='tableauPlaceholderfixed'></div><b>Rotate &#x293F;</b><input id='sliderd' class='tableauSlider' type='range' min='1' max='63' step='1' value='1' />",
+            description: "<div id='tableauViz4' class='tableauPlaceholderfixed'></div><b>Rotate &#x293F;</b><input id='sliderd' class='tableauSlider' type='range' min='1' max='63' step='1' value='1' /><br><br><center><b><i>3D Model in STL format by 'Yoshi Tomoimura' of 'Imura Works' under Personal Use licence<br>Converted for Tableau using Alteryx Gallery App by Philipp Riggs</i></b></center>",
             location: {
                 center: [-74.044727, 40.689512],
                 zoom: 17.66,
