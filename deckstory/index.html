@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Liberty Island</title>
+    <title>Statue of Liberty National Monument</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
@@ -352,9 +352,7 @@ map.on("style.load", function() {
   map.addLayer(customLayerPierA, "waterway-label");
 });
 
-
-
-// Liberty Ship 3D Model
+// Miss Liberty Ship 3D Model
 
 var modelOriginLibertyShip = [-74.01688, 40.70230];
 var modelAltitudeLibertyShip = 5;
@@ -559,6 +557,8 @@ map.on("style.load", function() {
 });
 
 
+// Central Railroad New Jersey Terminal 3D Model
+
 var modelOriginCRRNJT = [-74.03645, 40.70740];
 var modelAltitudeCRRNJT = 2;
 var modelRotateCRRNJT = [Math.PI / 2, 0, 0];
@@ -658,6 +658,8 @@ var customLayerCRRNJT = {
 map.on("style.load", function() {
   map.addLayer(customLayerCRRNJT, "waterway-label");
 });
+
+// Ellis Island 3D Model
 
 var modelOrigin = [-74.04097, 40.69860];
 var modelAltitude = 0;
@@ -759,7 +761,7 @@ map.on("style.load", function() {
 map.addLayer(customLayer, "waterway-label");
 });
 
-// Ellis Island Building Model
+// Ellis Island Main Building Model
 
 var modelOriginEllisIslandBuilding = [-74.039547,40.699107];
 var modelAltitudeEllisIslandBuilding = 0;
@@ -865,6 +867,8 @@ var scroller = scrollama();
 
 map.on("load", function() {
 
+// Liberty Island LIDAR
+
     map.addLayer(new MapboxLayer({
       id: 'deckgl-PointCloudLayerLiberty',
       type: PointCloudLayer,
@@ -875,6 +879,8 @@ map.on("load", function() {
       pointSize: 0.5,
       opacity: 0.25
     }));
+
+// Ellis Island LIDAR
 
     map.addLayer(new MapboxLayer({
       id: 'deckgl-PointCloudLayerEllis',
@@ -887,6 +893,8 @@ map.on("load", function() {
       opacity: 0.25
     }));
 
+// The Battery LIDAR
+
     map.addLayer(new MapboxLayer({
       id: 'deckgl-PointCloudLayerBattery',
       type: PointCloudLayer,
@@ -897,6 +905,8 @@ map.on("load", function() {
       pointSize: 0.5,
       opacity: 0.75
     }));
+
+// Castle Clinton LIDAR
 
     map.addLayer(new MapboxLayer({
       id: 'deckgl-PointCloudLayerBatteryBuildings',
@@ -943,6 +953,8 @@ if (config.showMarkers) {
 
 window.addEventListener('resize', scroller.resize);
 
+// Tableau Viz Liberty Island LIDAR
+
 $(function() {
         var onePh = document.getElementById("tableauViz1");
         var oneUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/StatueofLiberty?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
@@ -960,6 +972,7 @@ viz1.getWorkbook().changeParameterValueAsync("XY1", slidervala);
 });
 });
 
+// Tableau Viz Ellis Island LIDAR
 
 $(function() {
         var twoPh = document.getElementById("tableauViz2");
@@ -978,6 +991,8 @@ viz2.getWorkbook().changeParameterValueAsync("XY2", slidervalb);
 });
 });
 
+// Tableau Viz NPS Data
+
 $(function() {
         var threePh = document.getElementById("tableauViz3");
         var threeUrl = "https://public.tableau.com/views/StatueofLibertyNationalMonument/RecreationalVisitors?:showVizHome=no&:display_spinner=yes&:jsdebug=n&:embed=y&:display_overlay=yes&:display_static_image=yes&:animate_transition=yes";
@@ -994,6 +1009,8 @@ var slidervalc = parseInt(e.target.value, 10);
 viz3.getWorkbook().changeParameterValueAsync("YEAR", slidervalc);
 });
 });
+
+// Tableau Viz Statue of Liberty 3D Model
 
 $(function() {
         var fourPh = document.getElementById("tableauViz4");
