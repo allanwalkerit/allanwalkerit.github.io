@@ -21,20 +21,8 @@ var config = {
                 bearing: 38.40
             },
             onChapterEnter: [
-    {
-      layer: 'NY2LI',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 0
-  },
-  {
-      layer: 'NJ2LI',
+     {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
@@ -42,7 +30,19 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
       opacity: 0
   },
   {
@@ -58,19 +58,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -97,32 +141,24 @@ var config = {
       layer: 'TheBattery',
       opacity: 0
   },
-    {
-      layer: 'outlines',
-      opacity: 1
-  },
   {
-      layer: 'outlinesFirefly1',
-      opacity: 1
-  },
-  {
-      layer: 'outlinesFirefly2',
-      opacity: 1
-  },
-  {
-      layer: 'EMBoutlines',
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'EMBoutlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'EMBoutlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -140,20 +176,8 @@ var config = {
             bearing: -44.80
             },
             onChapterEnter: [
-    {
-      layer: 'NY2LI',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 0
-  },
-  {
-      layer: 'NJ2LI',
+     {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
@@ -161,7 +185,19 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
       opacity: 0
   },
   {
@@ -177,19 +213,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -216,20 +296,24 @@ var config = {
       layer: 'TheBattery',
       opacity: 0
   },
-    {
-      layer: 'outlines',
-      opacity: 1
+  {
+      layer: 'water_outline',
+      opacity: 0
   },
   {
-      layer: 'outlinesFirefly1',
-      opacity: 1
+      layer: 'water',
+      opacity: 0
   },
   {
-      layer: 'outlinesFirefly2',
-      opacity: 1
+      layer: 'road',
+      opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -247,57 +331,101 @@ var config = {
             bearing: 0.00
             },
             onChapterEnter: [
-     {
-      layer: 'NY2LI',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 1
-  },
-  {
-      layer: 'NJ2LI',
-      opacity: 1
+      {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 0
   },
   {
       layer: 'Firefly_NJ2LI_1',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
-      opacity: 1
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
+      opacity: 0
   },
   {
       layer: 'ccnm',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'ginm',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'parks',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'water_outline',
-      opacity: 1
+      layer: 'SOLoutlinesFirefly2',
+      opacity: 0
   },
   {
-      layer: 'water',
-      opacity: 1
+      layer: 'SOLoutlinesFirefly1',
+      opacity: 0
   },
   {
-      layer: 'road',
-      opacity: 1
+      layer: 'SOLoutlines',
+      opacity: 0
   },
   {
-      layer: 'NYC',
-      opacity: 1
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
+      opacity: 0
   },
   {
       layer: 'Firefly_Liberty_2',
@@ -324,44 +452,24 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'outlines',
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'outlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'outlinesFirefly2',
-      opacity: 0
-  },
-  {
-      layer: 'NJoutlines',
-      opacity: 0
-  },
-  {
-      layer: 'NJoutlinesFirefly1',
-      opacity: 0
-  },
-  {
-      layer: 'NJoutlinesFirefly2',
-      opacity: 0
-  },
-  {
-      layer: 'CCoutlines',
-      opacity: 0
-  },
-  {
-      layer: 'CCoutlinesFirefly1',
-      opacity: 0
-  },
-  {
-      layer: 'CCoutlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
-      opacity: 1
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
+      opacity: 0
   }
 
             ],
@@ -379,20 +487,8 @@ var config = {
             bearing: 54.44
             },
             onChapterEnter: [
-     {
-      layer: 'NY2LI',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 1
-  },
-  {
-      layer: 'NJ2LI',
+      {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
@@ -400,7 +496,19 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
       opacity: 0
   },
   {
@@ -416,19 +524,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
-      opacity: 1
-  },
-  {
-      layer: 'water',
-      opacity: 1
-  },
-  {
-      layer: 'road',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'SOLoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'SOLoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -445,30 +597,34 @@ var config = {
   },
   {
       layer: 'Firefly_Battery_2',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'Firefly_Battery_1',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'TheBattery',
-      opacity: 1
-  },
-  {
-      layer: 'CCoutlines',
       opacity: 0
   },
   {
-      layer: 'CCoutlinesFirefly1',
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'CCoutlinesFirefly2',
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -486,20 +642,8 @@ var config = {
             bearing: 89.44
             },
             onChapterEnter: [
-     {
-      layer: 'NY2LI',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 1
-  },
-  {
-      layer: 'NJ2LI',
+      {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
@@ -507,7 +651,19 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
       opacity: 0
   },
   {
@@ -523,19 +679,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
-      opacity: 1
-  },
-  {
-      layer: 'water',
-      opacity: 1
-  },
-  {
-      layer: 'road',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'SOLoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'SOLoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -559,23 +759,27 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'CCoutlines',
-      opacity: 1
-  },
-  {
-      layer: 'CCoutlinesFirefly1',
-      opacity: 1
-  },
-  {
-      layer: 'CCoutlinesFirefly2',
-      opacity: 1
-  },
-  {
       layer: 'TheBattery',
       opacity: 0
   },
   {
+      layer: 'water_outline',
+      opacity: 0
+  },
+  {
+      layer: 'water',
+      opacity: 0
+  },
+  {
+      layer: 'road',
+      opacity: 0
+  },
+  {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -593,12 +797,12 @@ var config = {
             bearing: 0.00
             },
             onChapterEnter: [
-      {
-      layer: 'NY2LI',
+       {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
-      layer: 'Firefly_NY2LI_1',
+      layer: 'Firefly_NJ2LI_1',
       opacity: 0
   },
   {
@@ -606,16 +810,16 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
       layer: 'NJ2LI',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NJ2LI_2',
-      opacity: 1
+      layer: 'NY2LI',
+      opacity: 0
   },
   {
       layer: 'ccnm',
@@ -630,32 +834,76 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
-      opacity: 1
-  },
-  {
-      layer: 'water',
-      opacity: 1
-  },
-  {
-      layer: 'road',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'SOLoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'SOLoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
       layer: 'Firefly_Liberty_2',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'Firefly_Liberty_1',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'LibertyStatePark',
-      opacity: 1
+      opacity: 0
   },
   {
       layer: 'Firefly_Battery_2',
@@ -670,19 +918,23 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'NJoutlines',
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -700,12 +952,12 @@ var config = {
             bearing: -126.40
             },
             onChapterEnter: [
-      {
-      layer: 'NY2LI',
+       {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
-      layer: 'Firefly_NY2LI_1',
+      layer: 'Firefly_NJ2LI_1',
       opacity: 0
   },
   {
@@ -713,16 +965,16 @@ var config = {
       opacity: 0
   },
   {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
       layer: 'NJ2LI',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NJ2LI_2',
-      opacity: 1
+      layer: 'NY2LI',
+      opacity: 0
   },
   {
       layer: 'ccnm',
@@ -737,19 +989,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -776,20 +1072,24 @@ var config = {
       layer: 'TheBattery',
       opacity: 0
   },
-    {
-      layer: 'NJoutlines',
-      opacity: 1
+  {
+      layer: 'water_outline',
+      opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly1',
-      opacity: 1
+      layer: 'water',
+      opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly2',
-      opacity: 1
+      layer: 'road',
+      opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -807,29 +1107,29 @@ var config = {
             bearing: 32.00
             },
             onChapterEnter: [
-      {
-      layer: 'NY2LI',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 1
-  },
-  {
-      layer: 'NJ2LI',
-      opacity: 1
+       {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 0
   },
   {
       layer: 'Firefly_NJ2LI_1',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
-      opacity: 1
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
+      opacity: 0
   },
   {
       layer: 'ccnm',
@@ -844,19 +1144,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -883,44 +1227,24 @@ var config = {
       layer: 'TheBattery',
       opacity: 0
   },
-    {
-      layer: 'NJoutlines',
+  {
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly2',
-      opacity: 0
-  },
-  {
-      layer: 'outlines',
-      opacity: 1
-  },
-  {
-      layer: 'outlinesFirefly1',
-      opacity: 1
-  },
-  {
-      layer: 'outlinesFirefly2',
-      opacity: 1
-  },
-  {
-      layer: 'EMBoutlines',
-      opacity: 0
-  },
-  {
-      layer: 'EMBoutlinesFirefly1',
-      opacity: 0
-  },
-  {
-      layer: 'EMBoutlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -938,29 +1262,29 @@ var config = {
             bearing: 14.38
             },
             onChapterEnter: [
-     {
-      layer: 'NY2LI',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 1
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 1
-  },
-  {
-      layer: 'NJ2LI',
-      opacity: 1
+      {
+      layer: 'Firefly_NJ2LI_2',
+      opacity: 0
   },
   {
       layer: 'Firefly_NJ2LI_1',
-      opacity: 1
+      opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
-      opacity: 1
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
+      opacity: 0
   },
   {
       layer: 'ccnm',
@@ -975,19 +1299,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -1015,43 +1383,23 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'NJoutlines',
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'NJoutlinesFirefly2',
-      opacity: 0
-  },
-  {
-      layer: 'EMBoutlines',
-      opacity: 1
-  },
-  {
-      layer: 'EMBoutlinesFirefly1',
-      opacity: 1
-  },
-  {
-      layer: 'EMBoutlinesFirefly2',
-      opacity: 1
-  },
-  {
-      layer: 'outlines',
-      opacity: 0
-  },
-  {
-      layer: 'outlinesFirefly1',
-      opacity: 0
-  },
-  {
-      layer: 'outlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
@@ -1069,20 +1417,8 @@ var config = {
                 pitch: 60
             },
             onChapterEnter: [
-{
-      layer: 'NY2LI',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_1',
-      opacity: 0
-  },
-  {
-      layer: 'Firefly_NY2LI_2',
-      opacity: 0
-  },
-  {
-      layer: 'NJ2LI',
+ {
+      layer: 'Firefly_NJ2LI_2',
       opacity: 0
   },
   {
@@ -1090,7 +1426,19 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'Firefly_NJ2LI_2',
+      layer: 'Firefly_NY2LI_2',
+      opacity: 0
+  },
+  {
+      layer: 'Firefly_NY2LI_1',
+      opacity: 0
+  },
+  {
+      layer: 'NJ2LI',
+      opacity: 0
+  },
+  {
+      layer: 'NY2LI',
       opacity: 0
   },
   {
@@ -1106,19 +1454,63 @@ var config = {
       opacity: 0
   },
   {
-      layer: 'water_outline',
+      layer: 'SOLoutlinesFirefly2',
       opacity: 0
   },
   {
-      layer: 'water',
+      layer: 'SOLoutlinesFirefly1',
       opacity: 0
   },
   {
-      layer: 'road',
+      layer: 'SOLoutlines',
       opacity: 0
   },
   {
-      layer: 'NYC',
+      layer: 'EMBoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'EMBoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'CCoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'NJoutlines',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly2',
+      opacity: 0
+  },
+  {
+      layer: 'outlinesFirefly1',
+      opacity: 0
+  },
+  {
+      layer: 'outlines',
       opacity: 0
   },
   {
@@ -1145,20 +1537,24 @@ var config = {
       layer: 'TheBattery',
       opacity: 0
   },
-   {
-      layer: 'outlines',
+  {
+      layer: 'water_outline',
       opacity: 0
   },
   {
-      layer: 'outlinesFirefly1',
+      layer: 'water',
       opacity: 0
   },
   {
-      layer: 'outlinesFirefly2',
+      layer: 'road',
       opacity: 0
   },
   {
       layer: 'NJ',
+      opacity: 0
+  },
+  {
+      layer: 'NYC',
       opacity: 0
   }
             ],
