@@ -13,12 +13,13 @@
     <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
     <script src="https://unpkg.com/three@0.106.2/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     
     <style>
         body {
             margin:0; 
             padding:0; 
-            font-family: sans-serif;
+            font-family: "Open Sans";
         }
         a, a:hover, a:visited {
             color: #0071bc;
@@ -32,6 +33,24 @@
         .tableauPlaceholderfixed {
         width: 200px;
         height: 450px;
+        margin: 0 auto;
+        }
+
+        .tableauPlaceholderfixedone {
+        width: 300px;
+        height: 200px;
+        margin: 0 auto;
+        }
+
+        .tableauPlaceholderfixedtwo {
+        width: 300px;
+        height: 250px;
+        margin: 0 auto;
+        }
+
+        .tableauPlaceholderfixedthree {
+        width: 300px;
+        height: 275px;
         margin: 0 auto;
         }
 
@@ -54,6 +73,7 @@
             text-align: center;
             background-color: #444;
             color: #fafafa;
+            border-radius: 15px;
         }
         #footer {
             width: 100%;
@@ -100,6 +120,7 @@
             padding:  25px 50px;
             line-height: 25px;
             font-size: 13px;
+            border-radius: 15px;
         }
 
         .step img {
