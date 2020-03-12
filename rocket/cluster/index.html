@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Crime ClustersC</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
+<style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    .legend {
+position: fixed;
+right: 30px;
+bottom: 30px;
+height: 200px;
+background-color: rgba(0, 0, 0, 0.75);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;
+padding: 10px;
+z-index: 1;
+}
 
+.legend div span {
+display: inline-block;
+margin-right: 5px;
+}
+
+#one {
+border-radius: 50%;
+height: 5px;
+width: 5px;
+background-color: #7e03a8;
+}
+
+#two {
+border-radius: 50%;
+height: 10px;
+width: 10px;
+background-color: #cb4778;
+}
+
+#three {
+border-radius: 50%;
+height: 15px;
+width: 15px;
+background-color: #f89541;
+}
+
+#four {
+border-radius: 50%;
+height: 20px;
+width: 20px;
+background-color: #f0f921;    
+}
+
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id='PopulationLegend' class='legend'>
+<h4>Crimes</h4>
+<div><span id="one"></span>20-191</div>
+<div><span id="two"></span>191-330</div>
+<div><span id="three"></span>330-587</div>
+<div><span id="four"></span>Greater than 587</div>
+<a href="https://www.ucrdatatool.gov/">Data: US DOJ FBI 2014 UCR</a>
+</div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v10',
+        center: [-121.574,37.681],
+        zoom: 8.33
+    });
+
+    map.on('load', function() {
+        map.addSource('crimes', {
+            type: 'geojson',
+            data:
+                'https://gist.githubusercontent.com/allanwalkerit/09b3ab72fb97b8a0327e97f75fcf20a9/raw/51e086c4dcef1fca5825d93c3c08e284174d22d3/ClusterCACrimes2014.geojson',
+            cluster: true,
+            clusterMaxZoom: 14,
+            clusterRadius: 50
+        });
+
+        map.addLayer({
+            id: 'clusters',
+            type: 'circle',
+            source: 'crimes',
+            filter: ['has', 'Sum'],
+            paint: {
+                'circle-color': [
+                    'step',
+                    ['get', 'Sum'],
+                   '#0d0887',
+                    20,
+                    '#7e03a8',
+                    191,
+                    '#cb4778',
+                    330,
+                    '#f89541',
+                    587,
+                    '#f0f921'
+                ],
+                'circle-radius': [
+                    'step',
+                    ['get', 'Sum'],
+              10,
+                20,
+                    20,
+                        191,
+                            30,
+                                330,
+                                    40,
+                                        587,
+                                            50
+                ]
+            }
+        });
+
+        map.addLayer({
+            id: 'cluster-count',
+            type: 'symbol',
+            source: 'crimes',
+            filter: ['has', 'Sum'],
+            layout: {
+                'text-field': '{Sum}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 12
+            }
+        });
+
+        map.on('click', function (e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+    if (!features.length) {
+        return;
+    }
+var feature = features[0];
+console.log(feature);
+var city = feature.properties.City;
+var robbery = feature.properties.Robbery;
+var assault = feature.properties.Assault;
+var burglary = feature.properties.Burglary;
+var motor = feature.properties.Motor;
+var sum = feature.properties.Sum;
+var popup = new mapboxgl.Popup()
+        .setLngLat(map.unproject(e.point))
+        .setHTML("City: "+city+'<br>'+"Robberies: "+robbery+'<br>'+"Assaults: "+assault+'<br>'+"Burglaries: "+burglary+'<br>'+"Motor Vehicle Thefts: "+motor+'<br>'+"Total: "+sum)
+        .addTo(map);
+
+        });
+        map.on('mouseenter', 'clusters', function() {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'clusters', function() {
+            map.getCanvas().style.cursor = '';
+        });
+    });
+</script>
+
+</body>
+</html>
+</html>
