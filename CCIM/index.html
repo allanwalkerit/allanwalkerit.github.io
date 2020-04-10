@@ -1,1 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>CCIM Proof of Concept</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css "type="text/css"/>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<style>
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+	#menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        bottom: 20px;
+        right: 20px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
 
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+</style>
+</head>
+<body>
+
+<nav id="menu"></nav>
+<div id="map"></div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v10',
+        zoom: 12.66,
+        center: [-122.394073, 37.629523]
+    });
+
+    map.addControl(
+new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+marker: false,
+mapboxgl: mapboxgl
+})
+);
+
+    var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+
+    map.on('load', function() {
+
+var layers = map.getStyle().layers;
+var firstSymbolId;
+for (var i = 0; i < layers.length; i++) {
+if (layers[i].type === 'symbol') {
+firstSymbolId = layers[i].id;
+break;
+}
+}
+
+        map.addSource('floodrisk', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.5b99b6q9'
+        });
+        map.addLayer({
+            'id': 'FEMA Flood Risk Buildings',
+            'type': 'line',
+            'source': 'floodrisk',
+            'source-layer': 'Californiia_Building_Footprints_Data',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'line-color': [
+  "match",
+  ["get", "FZone_Tp"],
+  [
+    "A",
+    "AE",
+    "A99",
+    "AH",
+    "AO"
+  ],
+  "hsl(0, 100%, 50%)",
+  ["VE"],
+  "hsl(360, 94%, 32%)",
+  "#1b2027"
+],
+                'line-width': 1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+        }
+},
+firstSymbolId
+);
+
+
+        map.addSource('FEMA NHFL', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.a861jk2m'
+        });
+        map.addLayer({
+            'id': 'FEMA NHFL',
+            'type': 'fill',
+            'source': 'FEMA NHFL',
+            'source-layer': 'California_NHFL',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'fill-color': [
+  "match",
+  ["get", "FLD_ZONE"],
+  [
+    "A",
+    "AE",
+    "A99",
+    "AH",
+    "AO"
+  ],
+  "hsl(0, 100%, 50%)",
+  ["VE"],
+  "hsl(0, 94%, 32%)",
+  "#1b2027"
+],
+                
+                'fill-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+  10,
+  0.25,
+  22,
+  0.25
+]
+            }
+},
+firstSymbolId
+);
+
+        map.addSource('FIRM', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.0rvmhv3j'
+        });
+        map.addLayer({
+            'id': 'FEMA FIRM Grid',
+            'type': 'line',
+            'source': 'FIRM',
+            'source-layer': 'California_FIRM_Grid',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#FFFFFF',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+ 10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('FEMA FIRM Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.3wwoip1l'
+        });
+        map.addLayer({
+            'id': 'FEMA FIRM Labels',
+            'type': 'symbol',
+            'source': 'FEMA FIRM Labels',
+            'source-layer': 'California_FIRM_Grid_Centroids',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'FIRM_ID'],
+{ 'font-scale': 0.75 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#FFFFFF',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+  10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('Counties', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.5yqt6mkg'
+        });
+        map.addLayer({
+            'id': 'Counties',
+            'type': 'line',
+            'source': 'Counties',
+            'source-layer': 'CCIMCounties',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#FFFFFF',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+ 10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('County Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.65hin3ex'
+        });
+        map.addLayer({
+            'id': 'County Labels',
+            'type': 'symbol',
+            'source': 'County Labels',
+            'source-layer': 'CCIMCounties_Lables',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'NAME'],
+{ 'font-scale': 1 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#FFFFFF',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+  10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('ZIPS', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.33jk1bn1'
+        });
+        map.addLayer({
+            'id': 'ZIPS',
+            'type': 'line',
+            'source': 'ZIPS',
+            'source-layer': 'California_ZCTA',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#FFFFFF',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+ 10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('ZIP Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.71p6bh0o'
+        });
+        map.addLayer({
+            'id': 'ZIP Labels',
+            'type': 'symbol',
+            'source': 'ZIP Labels',
+            'source-layer': 'California_ZCTA_Labels',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'ZCTA5CE10'],
+{ 'font-scale': 0.9 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#FFFFFF',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+  10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addLayer(
+{
+'id': '3D Buildings',
+'source': 'composite',
+'source-layer': 'building',
+'layout': {
+                'visibility': 'none'
+            },
+'filter': ['==', 'extrude', 'true'],
+'type': 'fill-extrusion',
+'minzoom': 15,
+'paint': {
+'fill-extrusion-color': '#1b2027',
+'fill-extrusion-height': [
+'interpolate',
+['linear'],
+['zoom'],
+15,
+0,
+15.05,
+['get', 'height']
+],
+'fill-extrusion-base': [
+'interpolate',
+['linear'],
+['zoom'],
+15,
+0,
+15.05,
+['get', 'min_height']
+],
+'fill-extrusion-opacity': 0.6
+}
+},
+firstSymbolId
+);
+
+map.addLayer({
+            'id': 'Buildings',
+            'type': 'fill',
+            'source': 'floodrisk',
+            'source-layer': 'Californiia_Building_Footprints_Data',
+            'layout': {
+                'visibility': 'visible'
+            },
+                'paint': {
+                'fill-color': '#FFFFFF',
+                'fill-opacity': 0
+            }
+},
+firstSymbolId
+);
+
+map.on('click', 'Buildings', function (e) {
+        new mapboxgl.Popup()
+            .setLngLat(map.unproject(e.point))
+            .setHTML('County: '+e.features[0].properties.COUNTY+'<br>'+'ZIP: '+e.features[0].properties.ZIP+'<br>'+'FEMA Flood Zone Type: '+e.features[0].properties.FZone_Tp+'<br>'+'FEMA Flood Zone Description: '+e.features[0].properties.FZone_Ds)
+            .addTo(map);
+             });
+    });
+
+
+
+    var toggleableLayerIds = ['FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels','3D Buildings'];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+            var clickedLayer = this.textContent;
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className = '';
+            } else {
+                this.className = 'active';
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+</script>
+
+</body>
+</html>
