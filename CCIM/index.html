@@ -4,12 +4,14 @@
 <meta charset="utf-8" />
 <title>CCIM Proof of Concept</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css "type="text/css"/>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <style>
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
@@ -54,12 +56,56 @@
     #menu a.active:hover {
         background: #3074a4;
     }
+
+#PopulationLegend {
+display:none;
+}
+
+.legend {
+position: absolute;
+left: 15px;
+bottom: 35px;
+background-color: rgba(0, 0, 0, 0.75);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #4264fb !important;
+padding: 10px;
+z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+width: 10px;
+margin-right: 5px;
+}
 </style>
 </head>
 <body>
 
 <nav id="menu"></nav>
 <div id="map"></div>
+
+<div id='PopulationLegend' class='legend'>
+<h4>2010 Population Density (60 sq meters resolution)</h4>
+<div><span style='background-color: #f0f921'></span>4535+</div>
+<div><span style='background-color: #f89541'></span>2955</div>
+<div><span style='background-color: #cb4778'></span>1626</div>
+<div><span style='background-color: #7e03a8'></span>234</div>
+<div><span style='background-color: #0d0887'></span>1</div>
+<a href="http://dx.doi.org/10.5066/F74J0C6M8">Data: USGS</a>
+</div>
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
@@ -465,6 +511,41 @@ map.addLayer({
 firstSymbolId
 );
 
+map.addSource('USGS Block Pop 2010', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.9o8i6hq2'
+        });
+
+map.addLayer({
+            'id': 'USGS Block Pop 2010',
+            'type': 'fill',
+            'source': 'USGS Block Pop 2010',
+            'source-layer': 'California_Block_Pop_2010',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "POP"],
+  1,
+  "#0d0887",
+  234,
+  "#7e03a8",
+  1626,
+  "#cb4778",
+  2955,
+  "#f89541",
+  4535,
+  "#f0f921"
+],
+                'fill-opacity': 0.25
+            }
+},
+firstSymbolId
+);
+
 map.on('click', 'Buildings', function (e) {
         new mapboxgl.Popup()
             .setLngLat(map.unproject(e.point))
@@ -475,10 +556,12 @@ map.on('click', 'Buildings', function (e) {
 
 
 
-    var toggleableLayerIds = ['FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels','3D Buildings'];
+    var toggleableLayerIds = ['FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels', 'USGS Block Pop 2010','3D Buildings'];
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
+
+
 
         var link = document.createElement('a');
         link.href = '#';
@@ -487,6 +570,7 @@ map.on('click', 'Buildings', function (e) {
 
         link.onclick = function(e) {
             var clickedLayer = this.textContent;
+
             e.preventDefault();
             e.stopPropagation();
 
@@ -499,8 +583,14 @@ map.on('click', 'Buildings', function (e) {
                 this.className = 'active';
                 map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
             }
-        };
 
+            if (clickedLayer === 'USGS Block Pop 2010' && this.className === 'active') {
+            $("#PopulationLegend").show();	
+            } else {
+            $("#PopulationLegend").hide();	
+            }
+        };
+       	
         var layers = document.getElementById('menu');
         layers.appendChild(link);
     }
