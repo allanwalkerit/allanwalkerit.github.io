@@ -511,6 +511,53 @@ map.addLayer({
 firstSymbolId
 );
 
+map.addSource('Traffic', {
+            type: 'vector',
+            url: 'mapbox://mapbox.mapbox-traffic-v1'
+        });
+        map.addLayer({
+            'id': 'Traffic',
+            'type': 'line',
+            'source': 'Traffic',
+            'source-layer': 'traffic',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': [
+  "match",
+  ["get", "congestion"],
+  ["low"],
+  "rgb(0, 255, 0)",
+  ["moderate"],
+  "hsl(60, 100%, 50%)",
+  ["heavy"],
+  "hsl(30, 100%, 50%)",
+  ["severe"],
+  "rgb(255, 0, 0)",
+  "hsla(0, 0%, 100%, 0)"
+],
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  9.99,
+  0,
+ 10,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
 map.addSource('USGS Block Pop 2010', {
             type: 'vector',
             url: 'mapbox://allanwalker.9o8i6hq2'
@@ -556,7 +603,7 @@ map.on('click', 'Buildings', function (e) {
 
 
 
-    var toggleableLayerIds = ['FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels', 'USGS Block Pop 2010','3D Buildings'];
+    var toggleableLayerIds = ['FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels', 'USGS Block Pop 2010', 'Traffic','3D Buildings'];
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
