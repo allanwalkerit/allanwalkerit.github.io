@@ -1,1 +1,940 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>CCIM MVP</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css" type="text/css"/>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css "type="text/css"/>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+<style>
+    body { margin: 0; padding: 0; }
+    #header { position: absolute; top: 0; height: 40px; width: 100%; background-color: #be0f34; color: #FFFFFF; font-family: 'Open Sans', sans-serif;}
+    
+    #map { position: absolute; top: 40px; bottom: 0; width: 100%; }
+
+    #menu {
+        background-color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        z-index: 1;
+        bottom: 20px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 10px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000000;
+    }
+
+    #menu a.active {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000000;
+    }
+
+    #menu a.active:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000000;
+    }
+
+#Income {
+}
+
+#Residence {
+display:none;
+}
+
+#Population {
+display:none;
+}
+
+
+.legend {
+position: absolute;
+left: 15px;
+bottom: 35px;
+background-color: rgba(255, 255, 255, 0.5);
+border-radius: 3px;
+border-top: : 3px solid #4264fb;
+border-left: : 3px solid #4264fb;
+border-right: : 3px solid #4264fb;
+border-bottom: : 3px solid #4264fb;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font-family: "Open Sans";
+font-size: small !important; 
+color: #000000;
+padding: 10px;
+z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+width: 10px;
+margin-right: 5px;
+}
+
+:root {
+  --radius: 2px;
+  --baseFg: dimgray;
+  --baseBg: white;
+  --accentFg: #006fc2;
+  --accentBg: #bae1ff;
+}
+
+.theme-CCIM {
+  --radius: 0;
+  --baseFg: white;
+  --baseBg: #be0f34;
+  --accentFg: white;
+  --accentBg: #be0f34;
+}
+
+select {
+  font: 400 12px/1.3 sans-serif;
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--baseFg);
+  border: 1px solid var(--baseFg);
+  line-height: 1;
+  outline: 0;
+  padding: 0.65em 2.5em 0.55em 0.75em;
+  border-radius: var(--radius);
+  background-color: var(--baseBg);
+  background-image: linear-gradient(var(--baseFg), var(--baseFg)),
+    linear-gradient(-135deg, transparent 50%, var(--accentBg) 50%),
+    linear-gradient(-225deg, transparent 50%, var(--accentBg) 50%),
+    linear-gradient(var(--accentBg) 42%, var(--accentFg) 42%);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 1px 100%, 20px 22px, 20px 22px, 20px 100%;
+  background-position: right 20px center, right bottom, right bottom, right bottom;   
+}
+
+select:hover {
+  background-image: linear-gradient(var(--accentFg), var(--accentFg)),
+    linear-gradient(-135deg, transparent 50%, var(--accentFg) 50%),
+    linear-gradient(-225deg, transparent 50%, var(--accentFg) 50%),
+    linear-gradient(var(--accentFg) 42%, var(--accentBg) 42%);
+}
+
+select:active {
+  background-image: linear-gradient(var(--accentFg), var(--accentFg)),
+    linear-gradient(-135deg, transparent 50%, var(--accentFg) 50%),
+    linear-gradient(-225deg, transparent 50%, var(--accentFg) 50%),
+    linear-gradient(var(--accentFg) 42%, var(--accentBg) 42%);
+  color: var(--accentBg);
+  border-color: var(--accentFg);
+  background-color: var(--accentFg);
+}
+
+.mapbox-directions-origin {
+display:none;
+}
+
+.mapbox-directions-destination {
+display:none;
+}
+
+.mapbox-directions-inputs button {
+display:none;
+}
+
+.mapbox-directions-instructions{
+display:none;
+}
+
+.mapboxgl-ctrl-geocoder--icon {
+display:none;
+}
+
+</style>
+</head>
+<body>
+
+<nav id="menu"></nav>
+<div id="header"><img style="vertical-align:middle" src="CCIMLogo.png" height=40px width=auto>
+  <span style="vertical-align:middle">&nbsp;Market Insights Map Explorer&nbsp;</span>
+    <select id="picker" class="theme-CCIM">
+        <option selected="selected" hidden="hidden">Choose Market</option>
+        <option value='DFW'>Dallas - Fort Worth, TX</option>
+        <option value='Denver'>Denver, CO</option>
+        <option value='SD'>San Diego, CA</option>
+        <option value='DC'>Washington, DC</option>
+  </select>
+</div>
+<div id="map"></div>
+
+<div id='Legend' class='legend'>
+<div id="Income" class='Income'>
+<h4>Average Household Income</h4>
+<div><span style='background-color: #99ebff'></span>$140678 +</div>
+<div><span style='background-color: #00ceff'></span>$113427 - $140678</div>
+<div><span style='background-color: #407fff'></span>$91122 - $113427</div>
+<div><span style='background-color: #2020ff'></span>$68748 - $91122</div>
+<div><span style='background-color: #000080'></span>$9421 - $68748</div>
+</div>
+<div id="Residence" class='Residence'>
+<h4>Average Length of Residence</h4>
+<div><span style='background-color: #fde725'></span>16 Years + +</div>
+<div><span style='background-color: #5dc962'></span>14 - 16 Years</div>
+<div><span style='background-color: #20908d'></span>11 - 14 Years</div>
+<div><span style='background-color: #3a528b'></span>8 - 11 Years</div>
+<div><span style='background-color: #440154'></span>1 - 8 Years</div>
+</div>
+<div id="Population" class='Population'>
+<h4>Average Household Population</h4>
+<div><span style='background-color: #f0f921'></span>3.2 +</div>
+<div><span style='background-color: #f89541'></span>2.6 - 3.2</div>
+<div><span style='background-color: #cb4778'></span>2.2 - 2.6</div>
+<div><span style='background-color: #7e03a8'></span>1.6 - 2.2</div>
+<div><span style='background-color: #0d0887'></span>0 - 1.6</div>
+</div>
+</div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        zoom: 10,
+        center: [-96.798272, 32.817756]
+    });
+
+    map.addControl(
+new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+marker: false,
+mapboxgl: mapboxgl
+})
+);
+
+map.addControl(
+new MapboxDirections({
+accessToken: mapboxgl.accessToken
+}),
+'top-left'
+);
+
+map.on('load', function() {
+
+var layers = map.getStyle().layers;
+var firstSymbolId;
+for (var i = 0; i < layers.length; i++) {
+if (layers[i].type === 'symbol') {
+firstSymbolId = layers[i].id;
+break;
+}
+}
+
+        map.addSource('Average Household Income', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.a5d4bbl2'
+        });
+        map.addLayer({
+            'id': 'Average Household Income',
+            'type': 'fill',
+            'source': 'Average Household Income',
+            'source-layer': 'Average_Household_Income-01ki28',
+            'layout': {
+                'visibility': 'visible'
+            },
+                'paint': {
+                'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "AvgHInc"],
+  9421,
+  "#000080",
+  68748,
+  "#2020ff",
+  91122,
+  "#407fff",
+  113427,
+  "#00ceff",
+  140678,
+  "#99ebff"
+  ],
+                'fill-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  0.25,
+  22,
+  0.1
+]
+        }
+},
+firstSymbolId
+);
+
+        map.addSource('Average Length of Residence', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.a7t6am4t'
+        });
+        map.addLayer({
+            'id': 'Average Length of Residence',
+            'type': 'fill',
+            'source': 'Average Length of Residence',
+            'source-layer': 'Average_Length_of_Residence-3ry21q',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "AvgTRes"],
+  1,
+  "#440154",
+  8.4215,
+  "#3a528b",
+ 11.4118,
+  "#20908d",
+  13.9434,
+  "#5dc962",
+ 16.4945,
+  "#fde725"
+  ],
+                'fill-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  0.25,
+  22,
+  0.1
+]
+        }
+},
+firstSymbolId
+);
+
+        map.addSource('floodrisk', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.bzkwlmkz'
+        });
+        map.addLayer({
+            'id': 'FEMA Flood Risk Buildings',
+            'type': 'line',
+            'source': 'floodrisk',
+            'source-layer': 'Buildings',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'line-color': [
+  "match",
+    ["get", "FLD_ZONE"],
+  [
+    "A",
+    "AE",
+    "A99",
+    "AH",
+    "AO"
+  ],
+  "hsl(0, 100%, 50%)",
+  ["VE"],
+  "hsl(360, 94%, 32%)",
+  "hsla(215, 0%, 100%, 0)"
+],
+                'line-width': 1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+        }
+},
+firstSymbolId
+);
+
+
+        map.addSource('FEMA NHFL', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.d2oqnt3h'
+        });
+        map.addLayer({
+            'id': 'FEMA NHFL',
+            'type': 'fill',
+            'source': 'FEMA NHFL',
+            'source-layer': 'NHFLs',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'fill-color': [
+  "match",
+  ["get", "FLD_ZONE"],
+  [
+    "A",
+    "AE",
+    "A99",
+    "AH",
+    "AO"
+  ],
+  "hsl(0, 100%, 50%)",
+  ["VE"],
+  "hsl(0, 94%, 32%)",
+  "#1b2027"
+],
+                
+                'fill-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  0.25,
+  22,
+  0.25
+]
+            }
+},
+firstSymbolId
+);
+
+        map.addSource('FIRM', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.cuerfp49'
+        });
+        map.addLayer({
+            'id': 'FEMA FIRM Grid',
+            'type': 'line',
+            'source': 'FIRM',
+            'source-layer': 'FIRMs-6s2f0w',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#000000',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+ 5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('FEMA FIRM Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.3nclhr1a'
+        });
+        map.addLayer({
+            'id': 'FEMA FIRM Labels',
+            'type': 'symbol',
+            'source': 'FEMA FIRM Labels',
+            'source-layer': 'FIRMs_Labels-aap3pq',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'FIRM_ID'],
+{ 'font-scale': 0.5 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#000000',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('Counties', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.4naix12x'
+        });
+        map.addLayer({
+            'id': 'Counties',
+            'type': 'line',
+            'source': 'Counties',
+            'source-layer': 'Counties-276g50',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#000000',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('County Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.c4ty5auy'
+        });
+        map.addLayer({
+            'id': 'County Labels',
+            'type': 'symbol',
+            'source': 'County Labels',
+            'source-layer': 'Counties_Labels-8c6k8x',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'County'],
+{ 'font-scale': 1 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#000000',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('ZIPS', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.5elojlpm'
+        });
+        map.addLayer({
+            'id': 'ZIPS',
+            'type': 'line',
+            'source': 'ZIPS',
+            'source-layer': 'ZIPs',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#000000',
+                'line-width': 0.1,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('ZIP Labels', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.1j96zy1p'
+        });
+        map.addLayer({
+            'id': 'ZIP Labels',
+            'type': 'symbol',
+            'source': 'ZIP Labels',
+            'source-layer': 'ZIPs_Labels-8k2vri',
+            'layout': {
+                'visibility': 'none',
+                'text-field': [
+'format',
+['get', 'ZIP'],
+{ 'font-scale': 0.75 }
+],
+'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+'text-offset': [0, 0],
+'text-anchor': 'top'
+            },
+            'paint': {
+                'text-color': '#000000',
+                'text-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addLayer(
+{
+'id': '3D Buildings',
+'source': 'composite',
+'source-layer': 'building',
+'layout': {
+                'visibility': 'none'
+            },
+'filter': ['==', 'extrude', 'true'],
+'type': 'fill-extrusion',
+'minzoom': 15,
+'paint': {
+'fill-extrusion-color': '#1b2027',
+'fill-extrusion-height': [
+'interpolate',
+['linear'],
+['zoom'],
+15,
+0,
+15.05,
+['get', 'height']
+],
+'fill-extrusion-base': [
+'interpolate',
+['linear'],
+['zoom'],
+15,
+0,
+15.05,
+['get', 'min_height']
+],
+'fill-extrusion-opacity': 0.6
+}
+},
+firstSymbolId
+);
+
+map.addLayer({
+            'id': 'Buildings',
+            'type': 'fill',
+            'source': 'floodrisk',
+            'source-layer': 'Buildings',
+            'layout': {
+                'visibility': 'visible'
+            },
+                'paint': {
+                'fill-color': '#FFFFFF',
+                'fill-opacity': 0
+            }
+},
+firstSymbolId
+);
+
+map.addSource('Traffic', {
+            type: 'vector',
+            url: 'mapbox://mapbox.mapbox-traffic-v1'
+        });
+        map.addLayer({
+            'id': 'Traffic',
+            'type': 'line',
+            'source': 'Traffic',
+            'source-layer': 'traffic',
+            'layout': {
+                'visibility': 'none',
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': [
+  "match",
+  ["get", "congestion"],
+  ["low"],
+  "rgb(0, 255, 0)",
+  ["moderate"],
+  "hsl(60, 100%, 50%)",
+  ["heavy"],
+  "hsl(30, 100%, 50%)",
+  ["severe"],
+  "rgb(255, 0, 0)",
+  "hsla(0, 0%, 100%, 0)"
+],
+                'line-width': 0.25,
+                'line-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  1,
+  22,
+  1
+]
+            }
+},
+firstSymbolId
+);
+
+map.addSource('Average Household Population', {
+            type: 'vector',
+            url: 'mapbox://allanwalker.0o0g04zv'
+        });
+
+map.addLayer({
+            'id': 'Average Household Population',
+            'type': 'fill',
+            'source': 'Average Household Population',
+            'source-layer': 'Blocks',
+            'layout': {
+                'visibility': 'none'
+            },
+                'paint': {
+                'fill-color': [
+  "interpolate",
+  ["linear"],
+  ["get", "AvgHPop"],
+  0,
+  "#0d0887",
+  1.6667,
+  "#7e03a8",
+  2.2000,
+  "#cb4778",
+  2.6667,
+  "#f89541",
+  3.2105,
+  "#f0f921"
+],
+                'fill-opacity': [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0,
+  0,
+  4.99,
+  0,
+  5,
+  0.25,
+  22,
+  0.1
+]
+            }
+},
+firstSymbolId
+);
+
+map.on('click', 'Buildings', function (e) {
+
+    if(typeof e.features[0].properties.FLD_ZONE === 'undefined') {
+        e.features[0].properties.FLD_ZONE = 'N/A';
+    } else if(e.features[0].properties.FLD_ZONE === null){
+        e.features[0].properties.FLD_ZONE = 'N/A';
+    }
+
+    if(typeof e.features[0].properties.FLD_DESC === 'undefined') {
+        e.features[0].properties.FLD_DESC = 'N/A';
+    } else if(e.features[0].properties.FLD_DESC === null){
+       e.features[0].properties.FLD_DESC = 'N/A';
+    }
+
+        new mapboxgl.Popup()
+            .setLngLat(map.unproject(e.point))
+            .setHTML('County: '+e.features[0].properties.County+'<br>'+'ZIP: '+e.features[0].properties.ZIP+'<br>'+'FEMA Flood Zone Type: '+e.features[0].properties.FLD_ZONE+'<br>'+'FEMA Flood Zone Description: '+e.features[0].properties.FLD_DESC)
+            .addTo(map);
+             });
+    });
+
+
+
+    var toggleableLayerIds = ['Average Household Income', 'Average Length of Residence', 'Average Household Population', 'FEMA Flood Risk Buildings', 'FEMA NHFL', 'FEMA FIRM Grid', 'FEMA FIRM Labels', 'Counties', 'County Labels', 'ZIPS', 'ZIP Labels', 'Traffic','3D Buildings'];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
+
+        link.onclick = function(e) {
+            var clickedLayer = this.textContent;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+            if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className = '';
+            } else {
+                this.className = 'active';
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+
+            if (clickedLayer === 'Average Household Income' && this.className === 'active') {
+            $("#Legend").show();
+            $(".Income").show();
+            } else {
+            $(".Income").hide();   
+            }
+
+            if (clickedLayer === 'Average Length of Residence' && this.className === 'active') {
+            $("#Legend").show();
+            $(".Residence").show();
+            } else {
+            $(".Residence").hide();   
+            }
+
+            if (clickedLayer === 'Average Household Population' && this.className === 'active') {
+            $("#Legend").show();
+            $(".Population").show();
+            } else {
+            $(".Population").hide();   
+            }
+        };
+        
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+
+$( "#picker" ).change(function() {
+  data(this.value);
+});
+
+function data(propValue){
+if (propValue == 'DFW') {
+map.flyTo({
+        center: [-96.798272, 32.817756],
+        zoom: 10,
+        bearing: 0,
+        pitch: 0,
+    });
+}
+if (propValue == 'Denver') {
+map.flyTo({
+        center: [-104.896958, 39.785164],
+        zoom: 10,
+        bearing: 0,
+        pitch: 0,
+    });
+}
+if (propValue == 'SD') {
+map.flyTo({
+        center: [-117.059671, 32.803598],
+        zoom: 10,
+        bearing: 0,
+        pitch: 0,
+    });
+}
+if (propValue == 'DC') {
+map.flyTo({
+        center: [-77.014576, 38.893627],
+        zoom: 10,
+        bearing: 0,
+        pitch: 0,
+    });
+}
+};
+
+</script>
+
+</body>
+</html>
