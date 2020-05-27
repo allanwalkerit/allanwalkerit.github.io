@@ -1,1 +1,107 @@
 
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Within Single Country</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0px; bottom: 0; width: 100%; }
+
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+</body>
+
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/allanwalker/ckaoha2il0pze1inujurzy5cr',
+        zoom: 1.5,
+        center: [0,0]
+    });
+
+map.on('style.load', function() {
+map.addSource('ne_countries', {
+  type: 'geojson',
+  data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson'
+});
+
+map.addLayer({
+'id': 'countriespolygon',
+'type': 'fill',
+'source': 'ne_countries',
+'layout': {},
+'paint': {
+'fill-color': 'black',
+'fill-opacity': 1
+}
+});
+
+map.addLayer({
+'id': 'countriesline',
+'type': 'line',
+'source': 'ne_countries',
+'layout': {},
+'paint': {
+'line-color': 'white',
+'line-width': 1,
+'line-opacity': 1
+}
+});
+
+map.on('click', function(e) {
+    var features = map.queryRenderedFeatures(e.point, {
+      layers: ['countriespolygon']
+    });
+map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+    var selectedgeom = features[0].geometry;
+
+if (map.getLayer('ne_populatedplaces')){
+map.removeLayer('ne_populatedplaces');
+map.removeSource('ne_populatedplaces');
+}
+
+map.addSource('ne_populatedplaces', {
+  type: 'geojson',
+  data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_populated_places.geojson'
+});
+
+map.addLayer({
+'id': 'ne_populatedplaces',
+'type': 'circle',
+'source': 'ne_populatedplaces',
+'layout': {},
+'paint': {
+'circle-color': ['case', ['within', selectedgeom], 'blue', 'red'],
+'circle-opacity' : 0.75,
+'circle-radius': 
+[
+  "interpolate",
+  ["linear"],
+  ["get", "RANK_MAX"],
+  0,
+  0,
+  14,
+  5
+]
+},
+});
+});
+});
+
+
+</script>
+
+
+</html>
