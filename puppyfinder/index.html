@@ -1,1 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lost Puppy</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+<link href='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.min.css' rel='stylesheet'>
+<script src='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src="https://use.fontawesome.com/de5297f409.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#header { position: absolute; top: 0; height: 50px; background-color: #00B246; width: 100%; z-index: 1}
 
+* {
+  box-sizing: border-box;
+}
+
+
+.column {
+  position: relative; 
+  top: 50px;
+  float: left;
+  padding: 10px;
+  height: calc(100vh - 50px);
+  background-color: #F4F4F7;
+}
+
+.left, .right {
+  width: 25%;
+}
+
+.middle {
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#map {
+	  width: 100%;
+      height: 60%;
+      top: 0;
+      margin: 0 auto;
+      position: relative;
+}
+
+.marker {
+  background-image: url('pup.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+}
+#form {
+    background: #000; 
+}
+
+.card-form{
+  width: 100%;
+  background: white;
+  }
+  .form-title{
+  	padding: 10px;
+    width: 100%;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .form-body{
+    padding: 10px;
+    }
+    .row{
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      }
+      input[type="text"]{
+        appearance: none;
+        width: 100%;
+        margin: 0 15px;
+        height: 35px;
+        padding: 5px 15px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        background: #e8ebed;
+        color: #576366;
+        font-size: 14px;
+      }
+    }
+  }
+  
+input[type='range'] {
+width: 100px;
+}
+
+  .rule{
+    height: 2px;
+    background: #e8ebed;
+    margin: 0px 35px;
+  }
+  
+  .form-footer{
+    margin: 0 25px 15px 25px;
+    padding: 15px 10px;
+    }
+
+    .styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #00B246;
+}
+
+.styled:hover {
+    background-color: #00B246;
+}
+
+.styled:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+    
+    span{
+      margin-left: 5px;
+    }
+
+</style>
+</head>
+
+<body>
+<div id="header"></div>
+
+<div class="row">
+  <div class="column left">
+  </div>
+  <div class="column middle">
+  <div id="map"></div>
+  <div id="wrapper">
+  <div id ="form">
+
+<div class="card-form">
+  <form class="signup">
+    <div class="form-title">Find your Lost Puppy!</div>
+    <div class="rule"></div>
+    <div class="form-body">
+     <a>Minutes since puppy went missing?</a><input id='sliderInputId' name="sliderInputName" type='range' min='1' max='10' step='1' value='5' oninput="sliderOutputId.value = sliderInputId.value" />
+        <output name="sliderOutputName" id="sliderOutputId">5</output>
+        <div class="row">
+        <input type="text" id="pupnameinput"placeholder="Puppy's Name*">
+      </div>
+      <div class="row">
+      	<input type="text" id="subjectinput" placeholder="Subject*">
+        <input type="text" id="messageinput" placeholder="Message*">
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="form-footer">
+      <button class="favorite styled" type="button">Add photo or video<span class="fa fa-upload"></span></button>
+      <button class="favorite styled" id="post" type="button">Post<span class="fa fa-map-marker"></span></button>
+      <button class="favorite styled" type="button">Puppy Found!<span class="fa fa-paw"></span></button>
+    </div>
+  </form>
+</div>
+</div>
+</div>
+  </div>
+  <div class="column right">
+  </div>
+</div>
+
+</body> 
+<script>
+
+var urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
+var profile = 'walking';
+var minutes = 5;
+var pupname = "Gidget";
+var subject = "Lost puppy at Maidu Park"
+var message = "Contact Allan on 415-595-5566"
+
+$(document).ready(function(){
+    $("#post").click(function(){
+        var pup = $("#pupnameinput").val();
+        var sub = $("#subjectinput").val();
+        var mes = $("#messageinput").val();
+    });
+});
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/allanwalker/ckb7cavi84uxf1io7wf78znx4',
+        center: [-121.253,38.733],
+        zoom: 15
+    });
+
+map.addControl(new mapboxgl.NavigationControl());
+
+var el = document.createElement('div');
+el.className = 'marker';
+
+var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+"Puppy's Name: " + pupname +"<br>"+ subject +"<br>"+ message +"<br>"+ "<img src='gidget.jpeg' width='160'/>"
+);
+
+var marker = new mapboxgl.Marker({element: el,draggable: true})
+    .setLngLat([-121.253,38.733])
+    .setPopup(popup)
+    .addTo(map);
+;
+
+document.getElementById('sliderInputId').addEventListener('input', function(e) {
+            var sliderval = parseInt(e.target.value, 10);
+            minutes = sliderval;
+        })
+
+function onDragEnd() {
+var lngLat = marker.getLngLat();
+var lon = lngLat.lng;
+var lat = lngLat.lat;
+var query = urlBase + profile + '/' + lon + ',' + lat + '?contours_minutes=' + minutes + '&polygons=true&access_token=' + mapboxgl.accessToken;
+$.ajax({
+    method: 'GET',
+    url: query
+  }).done(function(data) {
+    map.getSource('iso').setData(data);
+  })
+};
+
+map.on('style.load', function() {
+map.addSource('iso', {
+   type: 'geojson',
+   data: {
+     'type': 'FeatureCollection',
+     'features': []
+   }
+ });
+
+ map.addLayer({
+   'id': 'isoLayer',
+   'type': 'fill',
+   'source': 'iso',
+   'layout': {},
+   'paint': {
+     'fill-color': '#5a3fc0',
+     'fill-opacity': 0.3
+   }
+ }, "poi-label");
+});
+
+marker.on('dragend', onDragEnd);
+
+
+ 
+
+</script>
+ 
+</body>
+</html>
