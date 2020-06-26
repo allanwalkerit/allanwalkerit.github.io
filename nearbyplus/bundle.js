@@ -3,7 +3,7 @@
 const constants = {
   USER_LAYER_ID: 'userlayer',
   PROMOTED_LAYER_ID: 'promotedpois',
-  styleId: 'allanwalker/ckbwmtzx801f41ipb7s78yjp0',
+  styleId: 'allanwalker/ckb7cavi84uxf1io7wf78znx4',
   SEARCH_BASE_URL: 'https://api-poi-search-production.mapbox.com/poi/search',
   accessToken:
     'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA',
