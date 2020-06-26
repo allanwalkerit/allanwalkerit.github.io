@@ -28,13 +28,8 @@ body { margin: 0; padding: 0; }
   height: calc(100vh - 50px);
   background-color: #F4F4F7;
 }
-
-.top {
-top: 50px;
-	}
 	
 .left, .right {
-  top: 50px;
   width: 25%;
 }
 
@@ -145,8 +140,10 @@ font-size: large;
         opacity: 0;
         transform: translateY(-20%);
         pointer-events: none;
+	top: 50px;
+	left: 50px;
       "
-      class="transition scroll-hidden top left right info-panel bg-white shadow-darken25 round-bold w-auto wmax360 absolute z5 mt50 ml50 mr50"
+      class="transition scroll-hidden top left right info-panel bg-white shadow-darken25 round-bold w-auto wmax360 absolute z5 mt24 ml24 mr24"
     >
       <video
         autoplay
