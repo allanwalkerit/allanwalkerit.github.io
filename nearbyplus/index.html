@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>NearbyPlus</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
+<link href='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.min.css' rel='stylesheet'>
+<script src='https://api.mapbox.com/mapbox-assembly/v0.23.2/assembly.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+<script src="bundle.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#header { position: absolute; top: 0; height: 50px; background-color: #00B246; width: 100%; z-index: 1}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.column {
+  position: relative; 
+  top: 50px;
+  float: left;
+  padding: 10px;
+  height: calc(100vh - 50px);
+  background-color: #F4F4F7;
+}
+
+.left, .right {
+  width: 25%;
+}
+
+.middle {
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#map {
+	  width: 100%;
+      height: 75%;
+      top: 0;
+      margin: 0 auto;
+      position: relative;
+}
+
+.marker {
+  background-image: url('star.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+.listings {
+        height: 50%;
+        overflow: auto;
+        padding-bottom: 60px;
+      }
+
+      .listings .item {
+        display: block;
+        border-bottom: 1px solid #eee;
+        padding: 10px;
+        text-decoration: none;
+      }
+
+      .listings .item:last-child {
+        border-bottom: none;
+      }
+      .listings .item .title {
+        display: block;
+        color: #00853e;
+        font-weight: 700;
+      }
+
+      .listings .item .title small {
+        font-weight: 400;
+      }
+      .listings .item.active .title,
+      .listings .item .title:hover {
+        color: #8cc63f;
+      }
+      .listings .item.active {
+        background-color: #f8f8f8;
+      }
+      ::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+        border-left: 0;
+        background: rgba(0, 0, 0, 0.1);
+      }
+      ::-webkit-scrollbar-track {
+        background: none;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #00853e;
+        border-radius: 0;
+      }
+
+#block {
+font-size: large;
+}
+
+</style>
+</head>
+
+<body>
+<div id="header"></div>
+
+<div class="row">
+  <div class="column left"></div>
+  <div class="column middle">
+  <div id="map"></div>
+  <div id="wrapper">
+  <div id="block">Within 500 meters we found the following Points of Interest:</div>
+  <div id='listings' class='listings'></div>
+</div>
+</div>
+  <div class="column right">
+  </div>
+</div>
+
+<div
+      id="infopanel"
+      style="
+        transition: all 500ms;
+        opacity: 0;
+        transform: translateY(-20%);
+        pointer-events: none;
+      "
+      class="transition scroll-hidden top left right info-panel bg-white shadow-darken25 round-bold w-auto wmax360 absolute z5 mt24 ml24 mr24"
+    >
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+        src="./coffee.mp4"
+        class="absolute top bottom hmax-full w-auto"
+      ></video>
+
+      <div class="bg-darken25 relative color-white">
+        <div class="px18 py18">
+          <div class="border-b border--lighten25">
+            <h2 class="txt-fancy txt-h3">Starbucks</h2>
+            <p class="pb12 txt-em">
+              <span id="f-distance"> 1.2 mi from home </span> &#8226;
+              <span id="f-address">
+                Nagoya-Station Taikodori Minamiguchi
+              </span>
+            </p>
+          </div>
+          <div class="mt12">
+            <h3 class="inline txt-bold">COVID-19 Update:</h3>
+            <span>Open for takeout</span>
+          </div>
+        </div>
+        <div
+          style="background-color: #15531f;"
+          class="flex-parent flex-parent--center-cross px18 py18 round-bottom"
+        >
+          <div
+            id="icon"
+            class="mr12 px6 py6 flex-child flex-child--no-shrink w30 h30 round-full bg-lighten25"
+          >
+            <svg
+              role="presentation"
+              focusable="false"
+              class="icon"
+              style="height: 18px; width: 18px;"
+            >
+              <use
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                href="#icon-star"
+              />
+            </svg>
+          </div>
+          <div class="flex-child">
+            <h3 class="txt-bold">Promotion</h3>
+            <p class="">
+              50% off drinks with code
+              <span class="txt-bold">MAPBOX</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <button id="close" class="link link--white mt18 mr18 absolute top right">
+        <svg
+          role="presentation"
+          focusable="false"
+          class="icon"
+          style="height: 18px; width: 18px;"
+        >
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" href="#icon-close" />
+        </svg>
+      </button>
+    </div>
+
+</body> 
+</html>
