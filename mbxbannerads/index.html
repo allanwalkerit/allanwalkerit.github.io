@@ -1,1 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Mapbox Banner Ads</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<style>
 
+h1 {
+font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+font-family: 'Open Sans', sans-serif;
+}
+
+p {
+font-family: 'Open Sans', sans-serif;	
+}
+
+#MediumRectangle {
+width: 300px;
+height: 250px;
+background-image: url('pexels-stas-knop-1143755.jpg');
+font-family: 'Parisienne', cursive;
+font-size: x-large;
+}
+
+#Leaderboard {
+width: 728px;
+height: 90px;
+background-image: url('pexels-chris-schippers-421927.jpg');
+font-family: 'Homemade Apple', cursive;
+text-align: right;
+color: white;
+}
+
+#MobileLeaderboard {
+width: 320px;
+height: 50px;
+background-image: url('pexels-pierre-blaché-2778122.jpg');
+font-family: 'Playfair Display', serif;
+text-align: left;
+color: white;
+}
+
+#WideSkyscraper {
+width: 160px;
+height: 600px;
+background-image: url('pexels-berk-ozdemir-3779837.jpg');
+font-family: 'Nunito', sans-serif;
+text-align: center;
+}
+
+.ad {
+border-style: solid;
+border-width: 1px;
+border-color: black;
+border-radius: 5px;
+overflow: hidden;
+background-size: cover;
+background-position: center;
+padding: 5px;
+font-size: x-large;
+}
+
+#mapone {
+width: 375px;
+height: 250px;
+display: none;	
+}
+
+#maptwo {
+width: 728px;
+height: 90px;
+display: none;	
+}
+
+#mapthree {
+width: 320px;
+height: 50px;
+display: none;	
+}
+
+#mapfour {
+width: 160px;
+height: 600px;
+display: none;	
+}
+</style>
+</head>
+
+<body>
+<h1>Banner Ads Powered by Mapbox Search</h1>
+<h2>300 x 250 Medium Rectangle</h2>
+<p>This Proof of Concept shows the top four dimensions of banner ads by popularity across the internet.<br>These four examples make up 89% of all ad impressions.<br>The intent is for a customer to be able to build and easily embed adverts for their use-cases.<br><br>When clicked, the Mapbox JS SDK returns co-ordinates with an (optional) bounding box, and centers the map.<br>This can be achieved with the minimum of code, driving website traffic and giving the user an enhanced experience.</p> 
+<div id="MediumRectangle" class="ad" onclick="Paris()">Paris, France</div>
+<div id="mapone"></div>
+<h2>728×90 Leaderboard</h2>
+<div id="Leaderboard" class="ad" onclick="NewYork()">New York</div>
+<div id="maptwo"></div>
+<h2>320×50 Mobile Leaderboard</h2>
+<div id="MobileLeaderboard" class="ad" onclick="London()">London</div>
+<div id="mapthree"></div>
+<h2>160×600 Wide Skyscraper</h2>
+<div id="WideSkyscraper" class="ad" onclick="Tokyo()">Tokyo</div>
+<div id="mapfour"></div>
+</body> 
+<script type="text/javascript">
+
+var token = 'pk.eyJ1IjoiYWxsYW53YWxrZXIiLCJhIjoiY2phbHVlOHQ4MnZscDMycGJoaTdiaHRxOCJ9.OYLAoMVg6e3Ih4r65WJuvA';
+var mapstyle = 'mapbox://styles/mapbox/streets-v11';
+var mapboxClient = mapboxSdk({ accessToken: token });
+
+function Paris(){
+var querytext = document.getElementById("MediumRectangle").textContent;
+mapboxClient.geocoding.forwardGeocode({
+  query: querytext,
+  limit: 1
+})
+  .send()
+  .then(response => {
+    const match = response.body;
+    var response = (response.body);
+    var features = (response.features[0]);
+    var bbox = features.bbox;
+    var center = features.center;
+    mapboxgl.accessToken = token;
+    var mapone = new mapboxgl.Map({
+	container: 'mapone', 
+	style: mapstyle,
+	center: center
+});
+mapone.fitBounds([
+[bbox[0], bbox[1]],
+[bbox[2], bbox[3]]
+]);
+    document.getElementById("MediumRectangle").style.display = "none";
+    document.getElementById("mapone").style.display = "inline-block";
+    mapone.resize();
+  });
+}
+
+function NewYork(){
+var querytext = document.getElementById("Leaderboard").textContent;
+mapboxClient.geocoding.forwardGeocode({
+  query: querytext,
+  limit: 1
+})
+  .send()
+  .then(response => {
+    const match = response.body;
+    var response = (response.body);
+    var features = (response.features[0]);
+    var bbox = features.bbox;
+    var center = features.center;
+    mapboxgl.accessToken = token;
+    var maptwo = new mapboxgl.Map({
+	container: 'maptwo', 
+	style: mapstyle,
+	center: center,
+	zoom: 9
+});
+//mapfour.fitBounds([
+//[bbox[0], bbox[1]],
+//[bbox[2], bbox[3]]
+//]);
+    document.getElementById("Leaderboard").style.display = "none";
+    document.getElementById("maptwo").style.display = "inline-block";
+    maptwo.resize();
+  });
+}
+
+function London(){
+var querytext = document.getElementById("MobileLeaderboard").textContent;
+mapboxClient.geocoding.forwardGeocode({
+  query: querytext,
+  limit: 1
+})
+  .send()
+  .then(response => {
+    const match = response.body;
+    var response = (response.body);
+    var features = (response.features[0]);
+    var bbox = features.bbox;
+    var center = features.center;
+    mapboxgl.accessToken = token;
+    var mapthree = new mapboxgl.Map({
+	container: 'mapthree', 
+	style: mapstyle,
+	center: center,
+	zoom: 9
+});
+//mapfour.fitBounds([
+//[bbox[0], bbox[1]],
+//[bbox[2], bbox[3]]
+//]);
+    document.getElementById("MobileLeaderboard").style.display = "none";
+    document.getElementById("mapthree").style.display = "inline-block";
+    mapthree.resize();
+  });
+}
+
+function Tokyo(){
+var querytext = document.getElementById("WideSkyscraper").textContent;
+mapboxClient.geocoding.forwardGeocode({
+  query: querytext,
+  limit: 1
+})
+  .send()
+  .then(response => {
+    const match = response.body;
+    var response = (response.body);
+    var features = (response.features[0]);
+    var bbox = features.bbox;
+    var center = features.center;
+    mapboxgl.accessToken = token;
+    var mapfour = new mapboxgl.Map({
+	container: 'mapfour', 
+	style: mapstyle,
+	center: center,
+	zoom: 9
+});
+//mapfour.fitBounds([
+//[bbox[0], bbox[1]],
+//[bbox[2], bbox[3]]
+//]);
+    document.getElementById("WideSkyscraper").style.display = "none";
+    document.getElementById("mapfour").style.display = "inline-block";
+    mapfour.resize();
+  });
+}
+
+
+</script>
+
+</html>
